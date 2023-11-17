@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.ConfiguratorController">
+    <top>
+        <VBox>
+            <children>
+                <MenuBar BorderPane.alignment="CENTER">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Bestand">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#onImportOpenAPISpecificationMenuItemPressed" text="Import OpenAPI specification">
+                                    <accelerator>
+                                        <KeyCodeCombination alt="UP" code="I" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                                    </accelerator>
+                                </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#onOpenConfigMenuItemPressed" text="Open config">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                            </items>
+                        </Menu>
+                  <Menu mnemonicParsing="false" text="Gereedschap">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Licentiegenerator" />
+                    </items>
+                  </Menu>
+                    </menus>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </MenuBar>
+            </children>
+        </VBox>
+    </top>
+   <bottom>
+      <HBox prefWidth="614.0" spacing="2.0" BorderPane.alignment="CENTER">
+         <children>
+            <ProgressIndicator fx:id="busyProgressIndicator" prefHeight="24.0" prefWidth="24.0" visible="false">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </HBox.margin>
+            </ProgressIndicator>
+            <Label fx:id="labelForCurrentCommandName" />
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+            <TreeView fx:id="endpointsTreeView" prefHeight="300.0" prefWidth="200.0" />
+            <TreeTableView fx:id="propertyTreeTable" prefHeight="200.0" prefWidth="200.0" showRoot="false">
+              <columns>
+                <TreeTableColumn fx:id="propertyTreeTableNameColumn" prefWidth="155.0" text="Eigenschap" />
+                <TreeTableColumn fx:id="propertyTreeTableValueColumn" minWidth="0.0" prefWidth="154.0" text="Waarde" />
+              </columns>
+            </TreeTableView>
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>
