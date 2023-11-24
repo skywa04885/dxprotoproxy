@@ -5,75 +5,72 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55238971-0895-45d2-97e0-6105313dd9bc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/DXDomUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/DXJsonUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/IDXTreeItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ChangeConfigCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ConfiguratorApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ConfiguratorCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ConfiguratorController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXConfigTreeViewCellFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXConfiguratorImageCache.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXConfiguratorPreviewItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfigTreeItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfiguratorPreviewFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfiguratorTreeContextMenuCallbacks.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfiguratorTreeContextMenuFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfiguratorTreeFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXNewAPIViewController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXNewInstanceController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ImportOpenAPISpecificationCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ImportOpenAPISpecificationSelectFileCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/OpenConfigCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/OpenConfigSelectFileCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigApi.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigEndpoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigField.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigFields.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigHeader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigHeaders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigInstance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigResponses.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigUri.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigUriQueryParameter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigValidators.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpFieldsEncoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpFieldsFormat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpPathTemplate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpPathTemplateParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpPathTemplatePlaceholderSegment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpPathTemplateRenderer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpPathTemplateSegment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpPathTemplateTextSegment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpRequestMethod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/configurator-view.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/icons/add_FILL0_wght400_GRAD0_opsz24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/icons/bolt_FILL0_wght400_GRAD0_opsz24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/icons/delete_FILL0_wght400_GRAD0_opsz24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/icons/dns_FILL0_wght400_GRAD0_opsz24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/icons/globe_FILL0_wght400_GRAD0_opsz24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/icons/manufacturing_FILL0_wght400_GRAD0_opsz24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/icons/network_node_FILL0_wght400_GRAD0_opsz24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/images/server.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/new-api-view.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/new-instance-view.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/request-editor.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createApi/CreateApiWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createApi/DefaultCreateApiCallbacks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createApi/ICreateApiCallbacks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createInstance/CreateInstanceController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createInstance/CreateInstanceWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createInstance/DefaultCreateInstanceCallbacks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createInstance/ICreateInstanceCallbacks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/EndpointEditor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/EndpointEditorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/EndpointEditorFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/EndpointEditorSaveCallbackForCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/EndpointEditorSaveCallbackForUpdate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/EndpointEditorValidationCallbackForCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/EndpointEditorValidationCallbackForUpdate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/IEndpointEditorSaveCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/IEndpointEditorValidationCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/PrimaryWindow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/commands/Command.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/commands/ImportSwaggerFileCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/tree/PrimaryTreeItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/IRequestEditorSubmissionCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/IRequestEditorValidationCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/RequestEditor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/RequestEditorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/RequestEditorFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/RequestEditorField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/RequestEditorHeader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/RequestEditorQueryParameter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/RequestEditorSubmissionCallbackForCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/RequestEditorValidationCallbackForCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/endpointEditor/view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/requestEditor/view.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/responseEditor/view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ChangeConfigCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/commands/ChangeConfigCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ConfiguratorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ConfiguratorCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ConfiguratorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/PrimaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXConfigTreeViewCellFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/tree/PrimaryTreeViewCellFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXConfiguratorImageCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ConfiguratorImageCache.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXConfiguratorPreviewItem.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfigTreeItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfiguratorPreviewFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfiguratorTreeContextMenuCallbacks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/tree/IPrimaryTreeContextMenuCallbacks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfiguratorTreeContextMenuFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/tree/PrimaryTreeContextMenuFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXHttpConfiguratorTreeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/tree/PrimaryTreeFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXNewAPIViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createApi/CreateApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/DXNewInstanceController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ImportOpenAPISpecificationCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/ImportOpenAPISpecificationSelectFileCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/commands/SelectSwaggerFileCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/OpenConfigCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/commands/ImportConfigFileCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/OpenConfigSelectFileCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/commands/SelectConfigFileCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigEndpoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigUri.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigUri.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigValidators.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpConfigValidators.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpPathTemplateParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/DXHttpPathTemplateParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/configurator-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary/view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/new-api-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createApi/view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/new-instance-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createInstance/view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/request-editor.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,14 +81,19 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Class" />
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Record" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 5
+}]]></component>
   <component name="ProjectId" id="2XyqHiUCVYTkTo8e9BEGT4y7ffw" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -104,12 +106,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/luke/IdeaProjects/dxprotoproxy/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/icons",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/luker/Projecten/Duflex/dxprotoproxy",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -119,13 +125,24 @@
       <recent name="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy" />
       <recent name="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createRequest" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createInstance" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/createApi" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http" />
+      <recent name="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/http/primary" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.http" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.http.endpointEditor" />
       <recent name="com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.ConfiguratorApplication" />
+    <configuration name="Application" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.http.Application" />
       <module name="dxprotoproxy" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -143,10 +160,22 @@
       <workItem from="1699611583060" duration="2886000" />
       <workItem from="1699614483773" duration="16772000" />
       <workItem from="1700116842552" duration="29191000" />
+      <workItem from="1700808534079" duration="21387000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

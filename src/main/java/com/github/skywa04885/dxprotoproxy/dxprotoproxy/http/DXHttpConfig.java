@@ -1,13 +1,11 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.DXConfiguratorImageCache;
-import javafx.beans.binding.Bindings;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.ConfiguratorImageCache;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import org.w3c.dom.Element;
@@ -17,7 +15,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,7 +78,7 @@ public class DXHttpConfig implements IDXTreeItem {
 
     @Override
     public Node treeItemGraphic() {
-        return new ImageView(DXConfiguratorImageCache.instance().read("icons/manufacturing_FILL0_wght400_GRAD0_opsz24.png"));
+        return new ImageView(ConfiguratorImageCache.instance().read("icons/manufacturing_FILL0_wght400_GRAD0_opsz24.png"));
     }
 
     @Override

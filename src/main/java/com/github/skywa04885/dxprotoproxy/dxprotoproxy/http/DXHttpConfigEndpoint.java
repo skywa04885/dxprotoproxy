@@ -2,7 +2,7 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.DXDomUtils;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.DXConfiguratorImageCache;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.ConfiguratorImageCache;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -29,6 +29,14 @@ public class DXHttpConfigEndpoint implements IDXTreeItem {
 
     public SimpleStringProperty getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name.setValue(name);
+    }
+
+    public SimpleMapProperty<DXHttpRequestMethod, DXHttpConfigRequest> requestsProperty() {
+        return requests;
     }
 
     public Map<DXHttpRequestMethod, DXHttpConfigRequest> requests()
@@ -77,7 +85,7 @@ public class DXHttpConfigEndpoint implements IDXTreeItem {
 
     @Override
     public Node treeItemGraphic() {
-        return new ImageView(DXConfiguratorImageCache.instance().read("icons/globe_FILL0_wght400_GRAD0_opsz24.png"));
+        return new ImageView(ConfiguratorImageCache.instance().read("icons/globe_FILL0_wght400_GRAD0_opsz24.png"));
     }
 
     @Override

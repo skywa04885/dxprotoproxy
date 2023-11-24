@@ -9,7 +9,7 @@ public class DXHttpPathTemplateParser {
     public static Pattern PlaceholderPattern = Pattern.compile("^\\{(?<name>[a-zA-Z0-9_]+)\\}$",
             Pattern.CASE_INSENSITIVE);
 
-    public DXHttpPathTemplate Parse(final String template) {
+    public DXHttpPathTemplate parse(final String template) {
         final List<DXHttpPathTemplateSegment> segments = Arrays.stream(template.split("/"))
                 .map(templateSegment -> {
                     templateSegment = templateSegment.trim();

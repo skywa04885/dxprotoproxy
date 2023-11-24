@@ -1,9 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http;
 
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import org.w3c.dom.Element;
 
@@ -42,7 +40,7 @@ public class DXHttpConfigUri {
         if (pathString.isEmpty()) throw new RuntimeException("Path attribute is missing");
 
         final var pathTemplateParser = new DXHttpPathTemplateParser();
-        final var pathTemplate = pathTemplateParser.Parse(pathString);
+        final var pathTemplate = pathTemplateParser.parse(pathString);
 
         final var queryParametersElements = element.getElementsByTagName(QUERY_PARAMETERS_ELEMENT_TAG_NAME);
         if (queryParametersElements.getLength() == 0) throw new RuntimeException("Query parameters element missing");
