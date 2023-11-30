@@ -28,6 +28,6 @@ public enum DXHttpFieldsFormat {
         for (final var value : values())
             if (value.MimeType.equalsIgnoreCase(mimeType)) return value;
 
-        throw new RuntimeException("Unknown field format mime-type: " + mimeType);
+        return null;
     }
 }
