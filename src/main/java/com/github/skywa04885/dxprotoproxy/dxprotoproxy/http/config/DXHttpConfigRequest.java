@@ -111,7 +111,7 @@ public class DXHttpConfigRequest implements IDXTreeItem {
 
     @Override
     public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/bolt_FILL0_wght400_GRAD0_opsz24.png"));
+        return new ImageView(ConfiguratorImageCache.instance().read("icons/send.png"));
     }
 
     @Override

@@ -12,6 +12,17 @@ public class PrimaryTreeContextMenuFactory {
 
     }
 
+    private ContextMenu createResponseContextMenu(TreeCell<IDXTreeItem> treeCell) {
+        final var contextMenu = new ContextMenu();
+
+        final var modifyMenuItem = new MenuItem("Edit");
+        final var deleteMenuItem = new MenuItem("Delete");
+
+        contextMenu.getItems().addAll(modifyMenuItem, deleteMenuItem);
+
+        return contextMenu;
+    }
+
     private ContextMenu createEndpointContextMenu(TreeCell<IDXTreeItem> treeCell) {
         final var contextMenu = new ContextMenu();
 
@@ -122,6 +133,7 @@ public class PrimaryTreeContextMenuFactory {
         else if (value instanceof DXHttpConfigRequest) return createRequestContextMenu(treeCell);
         else if (value instanceof DXHttpConfigApi) return createApiContextMenu(treeCell);
         else if (value instanceof DXHttpConfig) return createConfigContextMenu(treeCell);
+        else if (value instanceof DXHttpConfigResponse) return createResponseContextMenu(treeCell);
 
         return createEmptyContextMenu(treeCell);
     }

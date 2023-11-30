@@ -2,10 +2,12 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.DXDomUtils;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.ConfiguratorImageCache;
 import io.swagger.v3.oas.models.headers.Header;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import org.w3c.dom.Element;
 
 import java.util.List;
@@ -77,7 +79,7 @@ public class DXHttpConfigResponse implements IDXTreeItem {
 
     @Override
     public Node treeItemGraphic() {
-        return null;
+        return new ImageView(ConfiguratorImageCache.instance().read("icons/reply.png"));
     }
 
     @Override
