@@ -33,4 +33,28 @@ public class DXHttpPathTemplate {
             }
         }).collect(Collectors.joining("/"));
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof DXHttpPathTemplate pathTemplate) {
+            // Make sure there are the same number of segments.
+            if (pathTemplate.segments.size() != segments.size()) {
+                return false;
+            }
+
+            // Make sure all the segments are equal.
+            for (int i = 0; i < segments.size(); ++i) {
+                final DXHttpPathTemplateSegment segment = segments.get(i);
+                final DXHttpPathTemplateSegment otherSegment = pathTemplate.segments.get(i);
+                if (!segment.equals(otherSegment)) {
+                    return false;
+                }
+            }
+
+            // Return true since they're the same.
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

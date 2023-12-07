@@ -1,4 +1,4 @@
-package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor;
+package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -6,16 +6,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ResponseEditorWindowBuilder {
-    private String title = "Edit response";
-    private ResponseEditorController controller = null;
+public class RequestEditorWindowBuilder {
+    private String title = "Request editor";
+    private RequestEditorController controller = null;
 
     /**
      * Uses the given title for the window.
      * @param title the title.
      * @return the current instance.
      */
-    public ResponseEditorWindowBuilder withTitle(String title) {
+    public RequestEditorWindowBuilder withTitle(String title) {
         this.title = title;
         return this;
     }
@@ -25,7 +25,7 @@ public class ResponseEditorWindowBuilder {
      * @param controller the controller to use.
      * @return the current instance.
      */
-    public ResponseEditorWindowBuilder withController(ResponseEditorController controller) {
+    public RequestEditorWindowBuilder withController(RequestEditorController controller) {
         this.controller = controller;
         return this;
     }
@@ -50,8 +50,8 @@ public class ResponseEditorWindowBuilder {
             stage.setScene(scene);
             stage.show();
 
-            // Creates the response editor window.
-            final var window = new ResponseEditorWindow(controller, stage);
+            // Creates the request editor window.
+            final var window = new RequestEditorWindow(controller, stage);
 
             // Gives the controller a reference to the window.
             controller.setWindow(window);

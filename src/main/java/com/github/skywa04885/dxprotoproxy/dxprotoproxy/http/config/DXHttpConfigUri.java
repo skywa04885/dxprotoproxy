@@ -27,12 +27,20 @@ public class DXHttpConfigUri {
         return Path.getValue();
     }
 
+    public void setPath(DXHttpPathTemplate pathTemplate) {
+        Path.set(pathTemplate);
+    }
+
     public SimpleObjectProperty<DXHttpPathTemplate> pathProperty() {
         return Path;
     }
 
     public SimpleMapProperty<String, DXHttpConfigUriQueryParameter> queryParametersProperty() {
         return QueryParameters;
+    }
+
+    public Map<String, DXHttpConfigUriQueryParameter> queryParameters() {
+        return QueryParameters.get();
     }
 
     public static DXHttpConfigUri FromElement(final Element element) {

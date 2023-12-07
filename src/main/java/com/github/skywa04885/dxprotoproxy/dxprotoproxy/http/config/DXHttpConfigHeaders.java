@@ -17,6 +17,10 @@ public class DXHttpConfigHeaders {
         Children = new SimpleMapProperty<>(null, "Headers", FXCollections.observableMap(children));
     }
 
+    public DXHttpConfigHeaders() {
+        this(new HashMap<>());
+    }
+
     public Map<String, DXHttpConfigHeader> children() {
         return Children;
     }

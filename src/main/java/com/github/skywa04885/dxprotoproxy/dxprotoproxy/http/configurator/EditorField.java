@@ -2,14 +2,20 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigField;
 import javafx.beans.property.SimpleStringProperty;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class EditorField {
+    @Nullable
     private final DXHttpConfigField configField;
+    @NotNull
     private final SimpleStringProperty name;
+    @NotNull
     private final SimpleStringProperty path;
+    @NotNull
     private final SimpleStringProperty value;
 
-    public EditorField(DXHttpConfigField configField, String name, String key, String  value) {
+    public EditorField(@Nullable DXHttpConfigField configField, @NotNull String name, @NotNull String key, @NotNull String value) {
         this.configField = configField;
         this.name = new SimpleStringProperty(null, "name", name);
         this.path = new SimpleStringProperty(null, "path", key);
@@ -20,7 +26,7 @@ public class EditorField {
         this(null, "", "", "");
     }
 
-    public DXHttpConfigField configField () {
+    public DXHttpConfigField configField() {
         return configField;
     }
 
@@ -69,7 +75,7 @@ public class EditorField {
     }
 
     public boolean isBlank() {
-        return value.get().isBlank() && name.get().isBlank() && path.get().isBlank();
+        return name.get().isBlank() && path.get().isBlank();
     }
 
     public boolean isNotBlank() {

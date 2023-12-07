@@ -4,6 +4,7 @@ import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigRequest;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigResponse;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.*;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ import java.util.List;
  * An implementation of the validation callback that is meant for the creation of a new response.
  */
 public class ResponseEditorValidationCallback implements IResponseEditorValidationCallback {
+    @Nullable
     private final DXHttpConfigRequest request;
+    @Nullable
     private final DXHttpConfigResponse response;
 
     /**
@@ -20,7 +23,7 @@ public class ResponseEditorValidationCallback implements IResponseEditorValidati
      * @param request  the request to which the response is going to belong.
      * @param response the existing response that's being modified.
      */
-    public ResponseEditorValidationCallback(DXHttpConfigRequest request, DXHttpConfigResponse response) {
+    public ResponseEditorValidationCallback(@Nullable DXHttpConfigRequest request, @Nullable DXHttpConfigResponse response) {
         this.request = request;
         this.response = response;
     }
@@ -34,7 +37,7 @@ public class ResponseEditorValidationCallback implements IResponseEditorValidati
     private String checkIfCodeAlreadyUsed(int code) {
         String error = null;
 
-        if ((this.response == null || this.response.code() != code) && request.responses().children().containsKey(code)) {
+        if ((this.response == null || this.response.code() != code) && request != null && request.responses().children().containsKey(code)) {
             error = "Response with code " + code + " is already specified";
         }
 

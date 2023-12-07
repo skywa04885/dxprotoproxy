@@ -33,7 +33,7 @@ public class EditorHeader {
     }
 
     public boolean hasNoConfigHeader() {
-        return configHeader != null;
+        return configHeader == null;
     }
 
     public SimpleStringProperty nameProperty() {

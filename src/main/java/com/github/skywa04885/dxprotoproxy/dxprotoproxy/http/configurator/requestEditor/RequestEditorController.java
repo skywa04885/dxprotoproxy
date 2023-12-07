@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -65,15 +67,22 @@ public class RequestEditorController implements Initializable {
     public Button cancelButton;
 
     // Instance variables.
-    private final RequestEditor window;
+    @NotNull
+    private final IRequestEditorSubmissionCallback submissionCallback;
+    @NotNull
+    private final IRequestEditorValidationCallback validationCallback;
+    @Nullable
+    private RequestEditorWindow window;
 
     /**
-     * Constructs a new request editor controller.
-     *
-     * @param window the window.
+     * Creates a new request editor controller with the given callbacks.
+     * @param submissionCallback the submission callback.
+     * @param validationCallback the validation callback.
      */
-    public RequestEditorController(RequestEditor window) {
-        this.window = window;
+    public RequestEditorController(@NotNull IRequestEditorSubmissionCallback submissionCallback,
+                                   @NotNull IRequestEditorValidationCallback validationCallback) {
+        this.submissionCallback = submissionCallback;
+        this.validationCallback = validationCallback;
     }
 
     /**
@@ -96,6 +105,8 @@ public class RequestEditorController implements Initializable {
      * Saves the edited request.
      */
     private void save() {
+        assert window != null;
+
         // Gets all the values.
         final String pathTemplate = pathTextField.getText();
         final DXHttpRequestMethod requestMethod = methodComboBox.getValue();
@@ -108,7 +119,7 @@ public class RequestEditorController implements Initializable {
                 .filter(field -> !field.isEmpty()).toList();
 
         // Validates the values.
-        final String error = window.validationCallback().validate(pathTemplate, queryParameters,requestMethod,
+        final String error = validationCallback.validate(pathTemplate, queryParameters,requestMethod,
                 headers, fields, bodyFormat);
 
         // Shows the error if it's there.
@@ -118,10 +129,10 @@ public class RequestEditorController implements Initializable {
         }
 
         // Submits the request.
-        window.submissionCallback().submit(pathTemplate, queryParameters,requestMethod, headers, fields, bodyFormat);
+        submissionCallback.submit(pathTemplate, queryParameters,requestMethod, headers, fields, bodyFormat);
 
         // Closes the editor.
-        window.close();
+        window.stage().close();
     }
 
     /**
@@ -137,7 +148,17 @@ public class RequestEditorController implements Initializable {
      * Cancels the editing of the request.
      */
     private void cancel() {
-        window.close();
+        assert window != null;
+
+        window.stage().close();
+    }
+
+    /**
+     * Sets the request editor window.
+     * @param window the request editor window.
+     */
+    public void setWindow(@NotNull RequestEditorWindow window) {
+        this.window = window;
     }
 
     /**

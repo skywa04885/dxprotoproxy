@@ -54,8 +54,6 @@ public class DXHttpConfigField {
         final String name = element.getAttribute(NAME_ATTRIBUTE_NAME).trim();
         if (name.isEmpty()) throw new RuntimeException("Name attribute missing from body field");
 
-        System.out.println(name);
-
         String value = element.getAttribute(VALUE_ATTRIBUTE_NAME).trim();
         value = value.isEmpty() ? null : value;
 

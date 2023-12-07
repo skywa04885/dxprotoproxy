@@ -5,22 +5,41 @@ import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.*;
 import javafx.scene.control.*;
 
 public class PrimaryTreeContextMenuFactory {
-    private final IPrimaryTreeContextMenuCallbacks configuratorTreeContextMenuCallbacks;
+    private final IPrimaryTreeContextMenuCallbacks callbacks;
 
     public PrimaryTreeContextMenuFactory(IPrimaryTreeContextMenuCallbacks configuratorTreeContextMenuCallbacks) {
-        this.configuratorTreeContextMenuCallbacks = configuratorTreeContextMenuCallbacks;
+        this.callbacks = configuratorTreeContextMenuCallbacks;
 
     }
 
+    /**
+     * Creates the context menu for a response.
+     * @param treeCell the tree cell that contains the response.
+     * @return the context menu.
+     */
     private ContextMenu createResponseContextMenu(TreeCell<IDXTreeItem> treeCell) {
-        final var contextMenu = new ContextMenu();
+        // Checks if the value of the tree item is a response, if not, throw an error.
+        if (treeCell.getTreeItem().getValue() instanceof DXHttpConfigResponse configResponse) {
+            // Creates the context menu.
+            final var contextMenu = new ContextMenu();
 
-        final var modifyMenuItem = new MenuItem("Edit");
-        final var deleteMenuItem = new MenuItem("Delete");
+            // Creates the context menu items.
+            final var modifyMenuItem = new MenuItem("Modify");
+            final var deleteMenuItem = new MenuItem("Delete");
 
-        contextMenu.getItems().addAll(modifyMenuItem, deleteMenuItem);
+            // Sets the actions for the menu items.
+            modifyMenuItem.setOnAction(event -> callbacks.modifyResponse(configResponse));
+            deleteMenuItem.setOnAction(event -> callbacks.deleteResponse(configResponse));
 
-        return contextMenu;
+            // Adds all the items to the context menu.
+            contextMenu.getItems().addAll(modifyMenuItem, deleteMenuItem);
+
+            // Returns the context menu.
+            return contextMenu;
+        } else {
+            throw new Error("Cannot create response context menu for object of type: "
+                    + treeCell.getTreeItem().getValue().getClass().getName());
+        }
     }
 
     private ContextMenu createEndpointContextMenu(TreeCell<IDXTreeItem> treeCell) {
@@ -32,7 +51,7 @@ public class PrimaryTreeContextMenuFactory {
 
         addRequestMenuItem.setOnAction(event -> {
             if (treeCell.getTreeItem().getValue() instanceof DXHttpConfigEndpoint httpConfigEndpoint) {
-                configuratorTreeContextMenuCallbacks.onAddRequestToEndpoint(httpConfigEndpoint);
+                callbacks.onAddRequestToEndpoint(httpConfigEndpoint);
             } else {
                 throw new Error("Endpoint context menu opened on a non-endpoint tree item");
             }
@@ -54,17 +73,17 @@ public class PrimaryTreeContextMenuFactory {
 
         addEndpointMenuItem.setOnAction(event -> {
             final DXHttpConfigApi httpConfigApi = (DXHttpConfigApi) treeCell.getTreeItem().getValue();
-            configuratorTreeContextMenuCallbacks.onAddNewEndpointToApi(httpConfigApi);
+            callbacks.onAddNewEndpointToApi(httpConfigApi);
         });
 
         addInstanceMenuItem.setOnAction(event -> {
             final DXHttpConfigApi httpConfigApi = (DXHttpConfigApi) treeCell.getTreeItem().getValue();
-            configuratorTreeContextMenuCallbacks.onAddNewInstanceToApi(httpConfigApi);
+            callbacks.onAddNewInstanceToApi(httpConfigApi);
         });
 
         deleteInstanceMenuItem.setOnAction(event -> {
             final DXHttpConfigApi httpConfigApi = (DXHttpConfigApi) treeCell.getTreeItem().getValue();
-            configuratorTreeContextMenuCallbacks.onRemoveApiFromConfig(httpConfigApi);
+            callbacks.onRemoveApiFromConfig(httpConfigApi);
         });
 
         return contextMenu;
@@ -79,7 +98,7 @@ public class PrimaryTreeContextMenuFactory {
         deleteMenuItem.setOnAction(event -> {
             final DXHttpConfigApi httpConfigApi = (DXHttpConfigApi) treeCell.getTreeItem().getParent().getValue();
             final DXHttpConfigInstance httpConfigInstance = (DXHttpConfigInstance) treeCell.getTreeItem().getValue();
-            configuratorTreeContextMenuCallbacks.onRemoveInstanceFromApi(httpConfigApi, httpConfigInstance);
+            callbacks.onRemoveInstanceFromApi(httpConfigApi, httpConfigInstance);
         });
 
         contextMenu.getItems().addAll(modifyMenuItem, deleteMenuItem);
@@ -98,7 +117,7 @@ public class PrimaryTreeContextMenuFactory {
 
         createResponseMenuItem.setOnAction(event -> {
             final DXHttpConfigRequest request = (DXHttpConfigRequest) treeCell.getTreeItem().getValue();
-            configuratorTreeContextMenuCallbacks.createResponseForRequest(request);
+            callbacks.createResponse(request);
         });
 
         return contextMenu;
@@ -117,7 +136,7 @@ public class PrimaryTreeContextMenuFactory {
 
         addApiMenuItem.setOnAction(event -> {
             final DXHttpConfig config = (DXHttpConfig) treeCell.getTreeItem().getValue();
-            configuratorTreeContextMenuCallbacks.onAddNewApiToConfig(config);
+            callbacks.onAddNewApiToConfig(config);
         });
 
         return contextMenu;

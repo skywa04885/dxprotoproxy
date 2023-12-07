@@ -22,6 +22,10 @@ public class DXHttpConfigFields {
         Format = new SimpleObjectProperty<>(null, "Format", format);
     }
 
+    public DXHttpConfigFields() {
+        this(new HashMap<>(), DXHttpFieldsFormat.None);
+    }
+
     public Map<String, DXHttpConfigField> children() {
         return Fields;
     }

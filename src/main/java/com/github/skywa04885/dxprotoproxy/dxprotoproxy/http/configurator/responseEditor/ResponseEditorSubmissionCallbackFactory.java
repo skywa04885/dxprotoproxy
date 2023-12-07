@@ -17,12 +17,10 @@ public class ResponseEditorSubmissionCallbackFactory {
     /**
      * Creates a new submission callback meant for the updating of an existing response.
      *
-     * @param configRequest  the request that the response belongs to.
      * @param configResponse the response.
      * @return the submission callback.
      */
-    public static ResponseEditorSubmissionCallback update(DXHttpConfigRequest configRequest,
-                                                          DXHttpConfigResponse configResponse) {
-        return new ResponseEditorSubmissionCallback(configRequest, configResponse);
+    public static ResponseEditorSubmissionCallback update(DXHttpConfigResponse configResponse) {
+        return new ResponseEditorSubmissionCallback(null, configResponse);
     }
 }

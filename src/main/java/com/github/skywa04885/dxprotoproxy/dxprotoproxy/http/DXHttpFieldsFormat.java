@@ -3,7 +3,8 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http;
 public enum DXHttpFieldsFormat {
     JSON("JSON", "application/json"),
     XML("XML", "application/xml"),
-    FormURLEncoded("FormURLEncoded", "x-www-form-urlencoded");
+    FormURLEncoded("FormURLEncoded", "x-www-form-urlencoded"),
+    None("None", null);
 
     public final String Name;
     public final String MimeType;

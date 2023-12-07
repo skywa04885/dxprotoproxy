@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Element;
 
 import java.util.HashMap;
@@ -20,17 +21,26 @@ public class DXHttpConfigRequest implements IDXTreeItem {
     public static final String ELEMENT_TAG_NAME = "Request";
     public static final String METHOD_ATTRIBUTE_NAME = "Method";
 
+    @NotNull
+    private final DXHttpConfigEndpoint parent;
+    @NotNull
     public final DXHttpConfigUri Uri;
+    @NotNull
     public final SimpleObjectProperty<DXHttpRequestMethod> Method;
+    @NotNull
     public final DXHttpConfigHeaders Headers;
+    @NotNull
     public final DXHttpConfigFields Fields;
+    @NotNull
     public final DXHttpConfigResponses Responses;
 
-    public DXHttpConfigRequest(@NotNull final DXHttpConfigUri uri,
+    public DXHttpConfigRequest(@NotNull DXHttpConfigEndpoint parent,
+                               @NotNull final DXHttpConfigUri uri,
                                @NotNull final DXHttpRequestMethod method,
                                @NotNull final DXHttpConfigHeaders headers,
                                @NotNull final DXHttpConfigFields fields,
                                @NotNull final DXHttpConfigResponses responses) {
+        this.parent = parent;
         Uri = uri;
         Method = new SimpleObjectProperty<>(null, "method", method);
         Headers = headers;
@@ -38,31 +48,55 @@ public class DXHttpConfigRequest implements IDXTreeItem {
         Responses = responses;
     }
 
+    @NotNull
+    public DXHttpConfigEndpoint parent() {
+        return parent;
+    }
+
+    @NotNull
+    public DXHttpConfigFields fields() {
+        return Fields;
+    }
+
+    @NotNull
+    public DXHttpConfigHeaders headers() {
+        return Headers;
+    }
+
+    @NotNull
     public DXHttpRequestMethod method() {
         return Method.getValue();
     }
 
+    public void setMethod(@NotNull DXHttpRequestMethod method) {
+        Method.set(method);
+    }
+
+    @NotNull
     public SimpleObjectProperty<DXHttpRequestMethod> methodProperty() {
         return Method;
     }
 
+    @NotNull
     public DXHttpConfigResponses responses() {
         return Responses;
     }
 
+    @NotNull
     public DXHttpConfigUri uri() {
         return Uri;
     }
 
+    @NotNull
     public ObservableValue<String> methodStringProperty() {
         return Method.map(DXHttpRequestMethod::label);
     }
 
-    public static DXHttpConfigRequest FromElement(final Element element) {
+    public static DXHttpConfigRequest FromElement(@NotNull DXHttpConfigEndpoint parent, @NotNull Element element) {
         if (!element.getTagName().equals(ELEMENT_TAG_NAME)) throw new RuntimeException("Tag name mismatch");
 
         final var uriElements = DXDomUtils.GetChildElementsWithTagName(element, DXHttpConfigUri.ELEMENT_TAG_NAME);
-        if (uriElements.size() == 0) throw new RuntimeException("Uri element is missing");
+        if (uriElements.isEmpty()) throw new RuntimeException("Uri element is missing");
         else if (uriElements.size() > 1) throw new RuntimeException("Too many uri elements");
         final var uriElement = (Element) uriElements.get(0);
 
@@ -85,19 +119,20 @@ public class DXHttpConfigRequest implements IDXTreeItem {
 
         if (headers == null) headers = new DXHttpConfigHeaders(new HashMap<>());
 
-        DXHttpConfigFields fields = null;
-
+        DXHttpConfigFields fields;
         if (fieldsElements.size() == 1) {
             final var fieldsElement = (Element) fieldsElements.get(0);
             fields = DXHttpConfigFields.FromElement(fieldsElement);
-        } else if (fieldsElements.size() > 1) throw new RuntimeException("Too many fields elements");
-
-        if (fields == null) fields = new DXHttpConfigFields(new HashMap<>(), DXHttpFieldsFormat.JSON);
+        } else if (fieldsElements.size() > 1) {
+            throw new RuntimeException("Too many fields elements");
+        } else {
+            fields = new DXHttpConfigFields();
+        }
 
         final List<Element> responsesElements = DXDomUtils.GetChildElementsWithTagName(element,
                 DXHttpConfigResponses.ELEMENT_TAG_NAME);
 
-        if (responsesElements.size() == 0)
+        if (responsesElements.isEmpty())
             throw new RuntimeException("Responses element is missing");
         else if (responsesElements.size() > 1)
             throw new RuntimeException("Too many responses elements");
@@ -106,7 +141,7 @@ public class DXHttpConfigRequest implements IDXTreeItem {
 
         final var responses = DXHttpConfigResponses.FromElement(responsesElement);
 
-        return new DXHttpConfigRequest(uri, method, headers, fields, responses);
+        return new DXHttpConfigRequest(parent, uri, method, headers, fields, responses);
     }
 
     @Override

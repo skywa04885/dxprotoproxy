@@ -1,9 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorField;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorHeader;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.ValidatorForResponseCode;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigResponse;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -53,11 +53,14 @@ public class ResponseEditorController implements Initializable {
     @FXML
     public Button cancelButton;
 
+    @Nullable
+    private final DXHttpConfigResponse configResponse;
     private final IResponseEditorValidationCallback validationCallback;
     private final IResponseEditorSubmissionCallback submissionCallback;
     private ResponseEditorWindow window = null;
 
-    public ResponseEditorController(IResponseEditorValidationCallback validationCallback, IResponseEditorSubmissionCallback submissionCallback) {
+    public ResponseEditorController(DXHttpConfigResponse configResponse, IResponseEditorValidationCallback validationCallback, IResponseEditorSubmissionCallback submissionCallback) {
+        this.configResponse = configResponse;
         this.validationCallback = validationCallback;
         this.submissionCallback = submissionCallback;
     }
@@ -219,6 +222,21 @@ public class ResponseEditorController implements Initializable {
         headersTableViewValueColumn.setOnEditCommit(this::onHeadersTableViewValueColumnEditCommit);
         headersTableViewNameColumn.setOnEditCommit(this::onHeadersTableViewNameColumnEditCommit);
 
+        // Checks if we're modifying an existing response, if so, insert its headers into the table.
+        if (configResponse != null) {
+            // Creates the editor headers from the config headers.
+            final List<EditorHeader> editorHeaders = configResponse
+                    .headers()
+                    .children()
+                    .values()
+                    .stream()
+                    .map(EditorHeaderFactory::create)
+                    .toList();
+
+            // Adds all the newly created editor headers.
+            headersTableView.getItems().addAll(editorHeaders);
+        }
+
         // Updates the headers table view.
         updateHeadersTableView();
     }
@@ -308,6 +326,21 @@ public class ResponseEditorController implements Initializable {
         bodyTableViewValueColumn.setOnEditCommit(this::onBodyTableViewValueColumnEditCommit);
         bodyTableViewNameColumn.setOnEditCommit(this::onBodyTableViewNameColumnEditCommit);
 
+        // Checks if we're modifying an existing response, if so, insert its fields into the table.
+        if (configResponse != null) {
+            // Creates the editor fields from the fields headers.
+            final List<EditorField> editorFields = configResponse
+                    .fields()
+                    .children()
+                    .values()
+                    .stream()
+                    .map(EditorFieldFactory::create)
+                    .toList();
+
+            // Adds all the newly created editor fields.
+            bodyTableView.getItems().addAll(editorFields);
+        }
+
         // Updates the columns.
         updateBodyTableView();
     }
@@ -332,8 +365,12 @@ public class ResponseEditorController implements Initializable {
                 1
         ));
 
-        // Sets the initial value.
-        codeSpinner.getValueFactory().setValue(200);
+        // Sets the initial value (either 200 by default or the value of the current response we're modifying).
+        if (configResponse != null) {
+            codeSpinner.getValueFactory().setValue(configResponse.code());
+        } else {
+            codeSpinner.getValueFactory().setValue(200);
+        }
     }
 
     /**

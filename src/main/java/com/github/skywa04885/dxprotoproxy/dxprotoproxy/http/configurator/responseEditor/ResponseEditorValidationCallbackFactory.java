@@ -17,12 +17,10 @@ public class ResponseEditorValidationCallbackFactory {
     /**
      * Creates a new validation callback meant for the updating of an existing response.
      *
-     * @param configRequest  the request that the response belongs to.
      * @param configResponse the response.
      * @return the validation callback.
      */
-    public static ResponseEditorValidationCallback update(DXHttpConfigRequest configRequest,
-                                                          DXHttpConfigResponse configResponse) {
-        return new ResponseEditorValidationCallback(configRequest, configResponse);
+    public static ResponseEditorValidationCallback update(DXHttpConfigResponse configResponse) {
+        return new ResponseEditorValidationCallback(null, configResponse);
     }
 }

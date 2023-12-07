@@ -15,8 +15,8 @@ import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.tree.PrimaryTreeViewCellFactory;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.tree.PrimaryTreeContextMenuFactory;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.tree.PrimaryTreeFactory;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor.RequestEditor;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor.RequestEditorFactory;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor.RequestEditorControllerFactory;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor.RequestEditorWindow;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor.ResponseEditorControllerFactory;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor.ResponseEditorWindow;
 import javafx.application.Platform;
@@ -107,16 +107,16 @@ public class PrimaryController implements Initializable {
         final DXHttpConfig httpConfig = httpConfig();
 
         final var callbacks = new IPrimaryTreeContextMenuCallbacks() {
+            /**
+             * Creates a new response.
+             * @param configRequest the request to which the response will belong.
+             */
             @Override
-            public void createResponseForRequest(DXHttpConfigRequest configRequest) {
-                try {
-                    ResponseEditorWindow
-                            .newBuilder()
-                            .withController(ResponseEditorControllerFactory.create(configRequest))
-                            .build();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
+            public void createResponse(DXHttpConfigRequest configRequest) {
+                ResponseEditorWindow
+                        .newBuilder()
+                        .withController(ResponseEditorControllerFactory.create(configRequest))
+                        .build();
             }
 
             @Override
@@ -163,13 +163,34 @@ public class PrimaryController implements Initializable {
 
             @Override
             public void onAddRequestToEndpoint(DXHttpConfigEndpoint httpConfigEndpoint) {
-                try {
-                    final var requestEditorFactory = new RequestEditorFactory();
-                    RequestEditor requestEditor = requestEditorFactory.forCreate(httpConfigEndpoint);
-                    requestEditor.show();
-                } catch (Exception ioException) {
-                    ioException.printStackTrace();
-                }
+                RequestEditorWindow.
+                        newBuilder()
+                        .withController(RequestEditorControllerFactory.create(httpConfigEndpoint))
+                        .build();
+            }
+
+            /**
+             * Opens the window that will modify the given response.
+             * @param configResponse the response that needs to be modified.
+             */
+            @Override
+            public void modifyResponse(DXHttpConfigResponse configResponse) {
+                ResponseEditorWindow
+                        .newBuilder()
+                        .withController(ResponseEditorControllerFactory.update(configResponse))
+                        .build();
+            }
+
+            /**
+             * Deletes the given response.
+             * @param configResponse the response that needs to be deleted.
+             */
+            @Override
+            public void deleteResponse(DXHttpConfigResponse configResponse) {
+                configResponse
+                        .parent()
+                        .children()
+                        .remove(configResponse.code());
             }
         };
 

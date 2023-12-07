@@ -1,6 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config;
 
 import javafx.beans.property.SimpleStringProperty;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Element;
 
 public class DXHttpConfigUriQueryParameter {
@@ -11,7 +13,7 @@ public class DXHttpConfigUriQueryParameter {
     public final SimpleStringProperty Key;
     public final SimpleStringProperty Value;
 
-    public DXHttpConfigUriQueryParameter(final String key, final String value) {
+    public DXHttpConfigUriQueryParameter(@NotNull String key, @Nullable String value) {
         Key = new SimpleStringProperty(null, "Sleutel", key);
         Value = new SimpleStringProperty(null, "Waarde", value);
     }
@@ -26,5 +28,23 @@ public class DXHttpConfigUriQueryParameter {
         value = value.isEmpty() ? null : value;
 
         return new DXHttpConfigUriQueryParameter(key, value);
+    }
+
+    @NotNull
+    public String key() {
+        return Key.get();
+    }
+
+    public void setKey(@NotNull  String key) {
+        Key.set(key);
+    }
+
+    @Nullable
+    public String value() {
+        return Value.get();
+    }
+
+    public void setValue(@Nullable String value) {
+        Value.set(value);
     }
 }

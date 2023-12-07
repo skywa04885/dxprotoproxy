@@ -1,7 +1,5 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http;
 
-import javafx.beans.property.SimpleStringProperty;
-
 public class DXHttpPathTemplatePlaceholderSegment extends DXHttpPathTemplateSegment {
     private final String name;
 
@@ -11,5 +9,14 @@ public class DXHttpPathTemplatePlaceholderSegment extends DXHttpPathTemplateSegm
 
     public String name() {
         return this.name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof DXHttpPathTemplatePlaceholderSegment other) {
+            return other.name.equals(name);
+        }
+
+        return false;
     }
 }

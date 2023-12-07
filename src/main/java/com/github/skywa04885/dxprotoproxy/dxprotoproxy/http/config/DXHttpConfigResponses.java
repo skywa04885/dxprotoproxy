@@ -18,6 +18,10 @@ public class DXHttpConfigResponses {
         Responses = new SimpleMapProperty<>(null, "Reacties", FXCollections.observableMap(responses));
     }
 
+    public DXHttpConfigResponses() {
+        this(new HashMap<>());
+    }
+
     public Map<Integer, DXHttpConfigResponse> children() {
         return Responses;
     }
@@ -31,22 +35,33 @@ public class DXHttpConfigResponses {
     }
 
     public static DXHttpConfigResponses FromElement(final Element element) {
+        // Make sure that the given element has the correct tag.
         if (!element.getTagName().equals(ELEMENT_TAG_NAME))
             throw new RuntimeException("Tag name mismatch, expected: " + ELEMENT_TAG_NAME + ", got: "
                     + element.getTagName());
 
+        // Create the config responses.
+        final var configResponses = new DXHttpConfigResponses();
+
+        // Get all the response elements.
         final List<Element> responseElements = DXDomUtils.GetChildElementsWithTagName(element,
                 DXHttpConfigResponse.ELEMENT_NAME);
 
-        final Map<Integer, DXHttpConfigResponse> responses = new HashMap<>();
+        // Process all the response elements.
+        responseElements.forEach(responseElement -> {
+            // Creates the response from the XML element.
+            final var response = DXHttpConfigResponse.FromElement(configResponses, responseElement);
 
-        for (final Element responseElement : responseElements) {
-            final var response = DXHttpConfigResponse.FromElement(responseElement);
-            if (responses.containsKey(response.Code.getValue()))
-                throw new RuntimeException("Duplicate response code " + response.Code.getValue());
-            responses.put(response.Code.getValue(), response);
-        }
+            // Checks if we're dealing with duplicate codes.
+            if (configResponses.children().containsKey(response.code())) {
+                throw new RuntimeException("Duplicate response code " + response.code());
+            }
 
-        return new DXHttpConfigResponses(responses);
+            // Puts the response in the responses object.
+            configResponses.children().put(response.code(), response);
+        });
+
+        // Return the config responses.
+        return configResponses;
     }
 }
