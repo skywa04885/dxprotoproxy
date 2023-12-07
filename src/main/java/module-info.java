@@ -17,6 +17,7 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     requires io.swagger.models;
     requires io.swagger.v3.oas.models;
     requires java.logging;
+    requires syntheticafx.theme.standard;
 
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator;
@@ -26,10 +27,10 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.commands to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary;
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary to javafx.fxml;
-    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.createApi;
-    opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.createApi to javafx.fxml;
-    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.createInstance;
-    opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.createInstance to javafx.fxml;
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEditor;
+    opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEditor to javafx.fxml;
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.instanceEditor;
+    opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.instanceEditor to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.tree;
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.tree to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.endpointEditor;

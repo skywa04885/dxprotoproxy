@@ -2,20 +2,19 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primar
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.Window;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 
 public class PrimaryWindow extends Window<PrimaryController> {
-    /**
-     * Creates a new primary window.
-     * @param stage the stage.
-     * @throws IOException gets thrown when the loading of the view fails.
-     */
-    public PrimaryWindow(Stage stage) throws IOException {
-        super(stage);
+    private @NotNull PrimaryController controller;
+    private final @NotNull Stage stage;
 
-        controller = new PrimaryController();
+    public PrimaryWindow(@NotNull PrimaryController controller, @NotNull Stage stage) {
+        this.controller = controller;
+        this.stage = stage;
+    }
 
-        loadView(PrimaryWindow.class.getResource("view.fxml"));
+    public @NotNull Stage stage() {
+        return stage;
     }
 }

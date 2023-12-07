@@ -1,10 +1,10 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpPathTemplateRenderer;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpRequestMethod;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorField;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorHeader;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorQueryParameter;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigRequest;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -67,6 +68,8 @@ public class RequestEditorController implements Initializable {
     public Button cancelButton;
 
     // Instance variables.
+    @Nullable
+    private final DXHttpConfigRequest configRequest;
     @NotNull
     private final IRequestEditorSubmissionCallback submissionCallback;
     @NotNull
@@ -76,17 +79,22 @@ public class RequestEditorController implements Initializable {
 
     /**
      * Creates a new request editor controller with the given callbacks.
+     *
+     * @param configRequest      the existing request.
      * @param submissionCallback the submission callback.
      * @param validationCallback the validation callback.
      */
-    public RequestEditorController(@NotNull IRequestEditorSubmissionCallback submissionCallback,
+    public RequestEditorController(@Nullable DXHttpConfigRequest configRequest,
+                                   @NotNull IRequestEditorSubmissionCallback submissionCallback,
                                    @NotNull IRequestEditorValidationCallback validationCallback) {
+        this.configRequest = configRequest;
         this.submissionCallback = submissionCallback;
         this.validationCallback = validationCallback;
     }
 
     /**
      * Shows the validation error alert with the given message.
+     *
      * @param error error.
      */
     private void showValidationErrorAlert(String error) {
@@ -119,7 +127,7 @@ public class RequestEditorController implements Initializable {
                 .filter(field -> !field.isEmpty()).toList();
 
         // Validates the values.
-        final String error = validationCallback.validate(pathTemplate, queryParameters,requestMethod,
+        final String error = validationCallback.validate(pathTemplate, queryParameters, requestMethod,
                 headers, fields, bodyFormat);
 
         // Shows the error if it's there.
@@ -129,7 +137,7 @@ public class RequestEditorController implements Initializable {
         }
 
         // Submits the request.
-        submissionCallback.submit(pathTemplate, queryParameters,requestMethod, headers, fields, bodyFormat);
+        submissionCallback.submit(pathTemplate, queryParameters, requestMethod, headers, fields, bodyFormat);
 
         // Closes the editor.
         window.stage().close();
@@ -155,6 +163,7 @@ public class RequestEditorController implements Initializable {
 
     /**
      * Sets the request editor window.
+     *
      * @param window the request editor window.
      */
     public void setWindow(@NotNull RequestEditorWindow window) {
@@ -176,7 +185,13 @@ public class RequestEditorController implements Initializable {
     private void initializeMethodComboBox() {
         // Sets the items of the method combo box and sets get as the default method.
         methodComboBox.setItems(FXCollections.observableList(Arrays.stream(DXHttpRequestMethod.values()).toList()));
-        methodComboBox.getSelectionModel().select(DXHttpRequestMethod.Get);
+
+        // Sets the default method.
+        if (configRequest != null) {
+            methodComboBox.getSelectionModel().select(configRequest.method());
+        } else {
+            methodComboBox.getSelectionModel().select(DXHttpRequestMethod.Get);
+        }
     }
 
     /**
@@ -185,7 +200,13 @@ public class RequestEditorController implements Initializable {
     private void initializeFormatComboBox() {
         // Sets the items of the format combo box and sets json as the default format.
         formatComboBox.setItems(FXCollections.observableList(Arrays.stream(DXHttpFieldsFormat.values()).toList()));
-        formatComboBox.getSelectionModel().select(DXHttpFieldsFormat.JSON);
+
+        // Sets the default format.
+        if (configRequest != null) {
+            formatComboBox.getSelectionModel().select(configRequest.fields().format());
+        } else {
+            formatComboBox.getSelectionModel().select(DXHttpFieldsFormat.JSON);
+        }
     }
 
     /**
@@ -206,7 +227,7 @@ public class RequestEditorController implements Initializable {
 
     /**
      * Updates the uri query parameters table view (removing empty ones and making sure the last one is meant for
-     *  creation).
+     * creation).
      */
     private void updateUriQueryParametersTableView() {
         uriQueryParametersTableView.getItems().removeIf(EditorQueryParameter::isEmpty);
@@ -373,6 +394,21 @@ public class RequestEditorController implements Initializable {
         headersTableViewValueColumn.setOnEditCommit(this::onHeadersTableViewValueColumnEditCommit);
         headersTableViewNameColumn.setOnEditCommit(this::onHeadersTableViewNameColumnEditCommit);
 
+        // Checks if we're modifying an existing response, if so, insert its headers into the table.
+        if (configRequest != null) {
+            // Creates the editor headers from the config headers.
+            final List<EditorHeader> editorHeaders = configRequest
+                    .headers()
+                    .children()
+                    .values()
+                    .stream()
+                    .map(EditorHeaderFactory::create)
+                    .toList();
+
+            // Adds all the newly created editor headers.
+            headersTableView.getItems().addAll(editorHeaders);
+        }
+
         // Updates the headers table view.
         updateHeadersTableView();
     }
@@ -407,6 +443,21 @@ public class RequestEditorController implements Initializable {
         bodyTableViewValueColumn.setOnEditCommit(this::onBodyTableViewValueColumnEditCommit);
         bodyTableViewNameColumn.setOnEditCommit(this::onBodyTableViewNameColumnEditCommit);
 
+        // Checks if we're modifying an existing response, if so, insert its fields into the table.
+        if (configRequest != null) {
+            // Creates the editor fields from the fields headers.
+            final List<EditorField> editorFields = configRequest
+                    .fields()
+                    .children()
+                    .values()
+                    .stream()
+                    .map(EditorFieldFactory::create)
+                    .toList();
+
+            // Adds all the newly created editor fields.
+            bodyTableView.getItems().addAll(editorFields);
+        }
+
         // Updates the columns.
         updateBodyTableView();
     }
@@ -437,8 +488,35 @@ public class RequestEditorController implements Initializable {
         uriQueryParametersTableViewKeyColumn.setOnEditCommit(this::onUriQueryParametersTableViewKeyColumnEditCommit);
         uriQueryParametersTableViewValueColumn.setOnEditCommit(this::onUriQueryParametersTableViewValueColumnEditCommit);
 
+        // If we're modifying an existing request, put its parameters inside the table.
+        if (configRequest != null) {
+            // Creates the editor query parameters from the config query parameters.
+            final List<EditorQueryParameter> queryParameters = configRequest
+                    .uri()
+                    .queryParameters()
+                    .values()
+                    .stream()
+                    .map(EditorQueryParameterFactory::create)
+                    .toList();
+
+            // Adds all the editor query parameters to the table.
+            uriQueryParametersTableView
+                    .getItems()
+                    .addAll(queryParameters);
+        }
+
         // Updates the columns.
         updateUriQueryParametersTableView();
+    }
+
+    /**
+     * Initializes the path.
+     */
+    private void initializePath() {
+        if (configRequest != null) {
+            final var pathTemplateRenderer = new DXHttpPathTemplateRenderer(configRequest.uri().path());
+            pathTextField.setText(pathTemplateRenderer.Render(Collections.emptyMap()));
+        }
     }
 
     /**
@@ -458,6 +536,7 @@ public class RequestEditorController implements Initializable {
         initializeFormatComboBox();
         initializeHeadersTableView();
         initializeBodyTableView();
+        initializePath();
         initializeUriQueryParametersTableView();
     }
 }

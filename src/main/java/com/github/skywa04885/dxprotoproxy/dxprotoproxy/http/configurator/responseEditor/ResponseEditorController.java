@@ -234,7 +234,9 @@ public class ResponseEditorController implements Initializable {
                     .toList();
 
             // Adds all the newly created editor headers.
-            headersTableView.getItems().addAll(editorHeaders);
+            headersTableView
+                    .getItems()
+                    .addAll(editorHeaders);
         }
 
         // Updates the headers table view.
@@ -351,7 +353,13 @@ public class ResponseEditorController implements Initializable {
     private void initializeFormatComboBox() {
         // Sets the items of the format combo box and sets json as the default format.
         formatComboBox.setItems(FXCollections.observableList(Arrays.stream(DXHttpFieldsFormat.values()).toList()));
-        formatComboBox.getSelectionModel().select(DXHttpFieldsFormat.JSON);
+
+        // Sets the default format.
+        if (configResponse != null) {
+            formatComboBox.getSelectionModel().select(configResponse.fields().format());
+        } else {
+            formatComboBox.getSelectionModel().select(DXHttpFieldsFormat.JSON);
+        }
     }
 
     /**

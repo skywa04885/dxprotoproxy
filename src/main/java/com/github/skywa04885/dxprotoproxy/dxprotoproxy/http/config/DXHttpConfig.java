@@ -83,6 +83,6 @@ public class DXHttpConfig implements IDXTreeItem {
 
     @Override
     public ObservableValue<String> treeItemText() {
-        return new SimpleStringProperty(null, null, "Configuratie");
+        return new SimpleStringProperty(null, null, "HTTP");
     }
 }

@@ -4,6 +4,7 @@ import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigRequest;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigResponse;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.*;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -26,6 +27,14 @@ public class ResponseEditorValidationCallback implements IResponseEditorValidati
     public ResponseEditorValidationCallback(@Nullable DXHttpConfigRequest request, @Nullable DXHttpConfigResponse response) {
         this.request = request;
         this.response = response;
+    }
+
+    public ResponseEditorValidationCallback(@NotNull DXHttpConfigRequest configRequest) {
+        this(configRequest, null);
+    }
+
+    public ResponseEditorValidationCallback(@Nullable DXHttpConfigResponse configResponse) {
+        this(null, configResponse);
     }
 
     /**

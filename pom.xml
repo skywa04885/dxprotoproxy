@@ -17,6 +17,20 @@
 
     <dependencies>
         <dependency>
+            <groupId>syntheticafx.theme</groupId>
+            <artifactId>syntheticafx.theme.standard</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/dependencies/syntheticafx.theme.standard.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>syntheticafx</groupId>
+            <artifactId>syntheticafx.base</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/dependencies/syntheticafx.base.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>20</version>

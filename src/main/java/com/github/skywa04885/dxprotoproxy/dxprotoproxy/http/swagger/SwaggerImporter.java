@@ -161,8 +161,6 @@ public class SwaggerImporter {
             endpointRequests.put(DXHttpRequestMethod.Post, parsePathOperation(httpConfigUri, DXHttpRequestMethod.Get, pathItem, pathItem.getPost()));
         }
 
-        DXHttpConfigEndpoint endpoint = new DXHttpConfigEndpoint(endpointName, endpointRequests);
-
     }
 
     public void importFromFile(File file) {

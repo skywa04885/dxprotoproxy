@@ -13,8 +13,9 @@ public class RequestEditorControllerFactory {
      */
     public static RequestEditorController create(@NotNull DXHttpConfigEndpoint configEndpoint) {
         return new RequestEditorController(
-                RequestEditorSubmissionCallbackFactory.create(configEndpoint),
-                RequestEditorValidationCallbackFactory.create(configEndpoint)
+                null,
+                new RequestEditorSubmissionCallback(configEndpoint),
+                new RequestEditorValidationCallback(configEndpoint)
         );
     }
 
@@ -26,8 +27,9 @@ public class RequestEditorControllerFactory {
      */
     public static RequestEditorController modify(@NotNull DXHttpConfigRequest configRequest) {
         return new RequestEditorController(
-                RequestEditorSubmissionCallbackFactory.modify(configRequest),
-                RequestEditorValidationCallbackFactory.modify(configRequest)
+                configRequest,
+                new RequestEditorSubmissionCallback(configRequest),
+                new RequestEditorValidationCallback(configRequest)
         );
     }
 }

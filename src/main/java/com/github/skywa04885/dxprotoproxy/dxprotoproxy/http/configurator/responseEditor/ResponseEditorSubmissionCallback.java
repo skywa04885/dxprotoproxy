@@ -4,6 +4,7 @@ import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.*;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorField;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorHeader;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -27,6 +28,14 @@ public class ResponseEditorSubmissionCallback implements IResponseEditorSubmissi
     public ResponseEditorSubmissionCallback(@Nullable DXHttpConfigRequest request, @Nullable DXHttpConfigResponse response) {
         this.request = request;
         this.response = response;
+    }
+
+    public ResponseEditorSubmissionCallback(@NotNull DXHttpConfigRequest configRequest) {
+        this(configRequest, null);
+    }
+
+    public ResponseEditorSubmissionCallback(@Nullable DXHttpConfigResponse configResponse) {
+        this(null, configResponse);
     }
 
     /**

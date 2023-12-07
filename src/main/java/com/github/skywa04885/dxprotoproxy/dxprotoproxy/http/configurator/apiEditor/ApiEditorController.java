@@ -1,16 +1,19 @@
-package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.createApi;
+package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEditor;
 
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CreateApiController implements Initializable {
+public class ApiEditorController implements Initializable {
     @FXML
     public TextField nameTextField;
     @FXML
@@ -20,20 +23,23 @@ public class CreateApiController implements Initializable {
     @FXML
     public Button cancelButton;
 
-    private final CreateApiWindow window;
+    private final @Nullable DXHttpConfigApi configApi;
+    private final @NotNull IApiEditorValidationCallback validationCallback;
+    private final @NotNull IApiEditorSubmissionCallback submissionCallback;
+    private @Nullable ApiEditorWindow window;
 
-    /**
-     * Creates a new api controller.
-     * @param window the window.
-     */
-    public CreateApiController(CreateApiWindow window) {
+    public ApiEditorController(@Nullable DXHttpConfigApi configApi,
+                               @NotNull IApiEditorValidationCallback validationCallback,
+                               @NotNull IApiEditorSubmissionCallback submissionCallback) {
+        this.configApi = configApi;
+        this.validationCallback = validationCallback;
+        this.submissionCallback = submissionCallback;
+    }
+
+    public void setWindow(@NotNull ApiEditorWindow window) {
         this.window = window;
     }
 
-    /**
-     * Shows the validation error alert with the given error.
-     * @param error the error message.
-     */
     private void showValidationErrorAlert(String error) {
         final var alert = new Alert(Alert.AlertType.ERROR);
 
@@ -49,25 +55,24 @@ public class CreateApiController implements Initializable {
      * @param actionEvent the event triggering the submission.
      */
     private void submit(ActionEvent actionEvent) {
+        assert window != null;
+
         // Gets all the values.
         final String name = nameTextField.getText();
         final String httpVersion = httpVersionTextField.getText();
 
         // Calls the validation callback.
-        final String error = window.getCallbacks().validate(name, httpVersion);
+        final String error = validationCallback.validate(name, httpVersion);
         if (error != null) {
             showValidationErrorAlert(error);
             return;
         }
 
         // Calls the submit callback.
-        window.getCallbacks().submit(name, httpVersion);
+        submissionCallback.submit(name, httpVersion);
 
         // Closes the stage.
-        window.close();
-
-        // Closes the stage.
-        window.close();
+        window.stage().close();
     }
 
     /**
@@ -75,13 +80,29 @@ public class CreateApiController implements Initializable {
      * @param actionEvent the event that triggered the cancellation.
      */
     private void cancel(ActionEvent actionEvent) {
-        this.window.close();
+        assert window != null;
+
+        window.stage().close();
+    }
+
+    private void initializeNameField() {
+        if (configApi != null) {
+            nameTextField.setText(configApi.name());
+        }
+    }
+
+    private void initializeHttpVersion() {
+        if (configApi != null) {
+            httpVersionTextField.setText(configApi.httpVersion());
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Sets the action event handlers for the buttons.
         addButton.setOnAction(this::submit);
         cancelButton.setOnAction(this::cancel);
+
+        initializeNameField();
+        initializeHttpVersion();
     }
 }

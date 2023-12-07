@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Element;
 
 import java.util.HashMap;
@@ -23,21 +24,24 @@ public class DXHttpConfigApi implements IDXTreeItem {
     public static final String INSTANCES_ELEMENT_TAG_NAME = "Instances";
     public static final String ENDPOINTS_ELEMENT_TAG_NAME = "Endpoints";
 
-    public final SimpleStringProperty Name;
-    public final SimpleStringProperty HttpVersion;
-    public final MapProperty<String, DXHttpConfigInstance> Instances;
-    public final MapProperty<String, DXHttpConfigEndpoint> Endpoints;
-    private final DXHttpConfig parent;
+    public final @NotNull SimpleStringProperty Name;
+    public final @NotNull SimpleStringProperty HttpVersion;
+    public final @NotNull MapProperty<String, DXHttpConfigInstance> Instances;
+    public final @NotNull MapProperty<String, DXHttpConfigEndpoint> Endpoints;
+    private final @NotNull DXHttpConfig parent;
 
-    public DXHttpConfigApi(String name, final String httpVersion,
-                           Map<String, DXHttpConfigInstance> instances,
-                           Map<String, DXHttpConfigEndpoint> endpoints,
-                           DXHttpConfig parent) {
+    public DXHttpConfigApi(@NotNull DXHttpConfig parent, @NotNull String name, @NotNull String httpVersion,
+                           @NotNull Map<String, DXHttpConfigInstance> instances,
+                           @NotNull Map<String, DXHttpConfigEndpoint> endpoints) {
         Name = new SimpleStringProperty(null, "Naam", name);
         HttpVersion = new SimpleStringProperty(null, "HTTP Versie", httpVersion);
         Instances = new SimpleMapProperty<>(null, "Instanties", FXCollections.observableMap(instances));
         Endpoints = new SimpleMapProperty<>(null, "Eindpunten", FXCollections.observableMap(endpoints));
         this.parent = parent;
+    }
+
+    public DXHttpConfigApi(@NotNull DXHttpConfig parent, @NotNull String name, @NotNull String httpVersion) {
+        this(parent, name, httpVersion, new HashMap<>(), new HashMap<>());
     }
 
     public Map<String, DXHttpConfigInstance> instances() {
@@ -48,6 +52,7 @@ public class DXHttpConfigApi implements IDXTreeItem {
         return Instances;
     }
 
+    @NotNull
     public Map<String, DXHttpConfigEndpoint> endpoints() {
         return Endpoints.getValue();
     }
@@ -56,11 +61,7 @@ public class DXHttpConfigApi implements IDXTreeItem {
         return Endpoints;
     }
 
-    public DXHttpConfigApi(final String name, final String httpVersion, final DXHttpConfig parent) {
-        this(name, httpVersion, new HashMap<>(), new HashMap<>(), parent);
-    }
-
-    public DXHttpConfig parent() {
+    public @NotNull DXHttpConfig parent() {
         return parent;
     }
 
@@ -78,6 +79,10 @@ public class DXHttpConfigApi implements IDXTreeItem {
 
     public SimpleStringProperty httpVersionProperty() {
         return HttpVersion;
+    }
+
+    public void setHttpVersion(String httpVersion) {
+        this.HttpVersion.set(httpVersion);
     }
 
     public ObservableStringValue getName() {
@@ -102,37 +107,37 @@ public class DXHttpConfigApi implements IDXTreeItem {
 
         final var instancesElements = DXDomUtils.GetChildElementsWithTagName(element, INSTANCES_ELEMENT_TAG_NAME);
 
-        if (instancesElements.size() == 0)
+        if (instancesElements.isEmpty())
             throw new RuntimeException("Instances element is missing");
         else if (instancesElements.size() > 1)
             throw new RuntimeException("Too many instances elements");
 
+        final var configApi = new DXHttpConfigApi(parent, name, httpVersion);
+
         final var instancesElement = (Element) instancesElements.get(0);
         final var instanceElements = DXDomUtils.GetChildElementsWithTagName(instancesElement, DXHttpConfigInstance.TAG_NAME);
-        final var instances = new HashMap<String, DXHttpConfigInstance>();
 
         for (final Element item : instanceElements) {
-            final var instance = DXHttpConfigInstance.FromElement(item);
-            instances.put(instance.name.getValue(), instance);
+            final var instance = DXHttpConfigInstance.FromElement(configApi, item);
+            configApi.instances().put(instance.name.getValue(), instance);
         }
 
         final var endpointsElements = DXDomUtils.GetChildElementsWithTagName(element, ENDPOINTS_ELEMENT_TAG_NAME);
 
-        if (endpointsElements.size() == 0)
+        if (endpointsElements.isEmpty())
             throw new RuntimeException("Endpoints element is missing");
         else if (endpointsElements.size() > 1)
             throw new RuntimeException("Too many endpoints elements");
 
         final var endpointsElement = (Element) endpointsElements.get(0);
         final var endpointElements = DXDomUtils.GetChildElementsWithTagName(endpointsElement, DXHttpConfigEndpoint.TAG_NAME);
-        final var endpoints = new HashMap<String, DXHttpConfigEndpoint>();
 
         for (final Element value : endpointElements) {
-            final var endpoint = DXHttpConfigEndpoint.FromElement(value);
-            endpoints.put(endpoint.name.getValue(), endpoint);
+            final var endpoint = DXHttpConfigEndpoint.FromElement(configApi, value);
+            configApi.endpoints().put(endpoint.name.getValue(), endpoint);
         }
 
-        return new DXHttpConfigApi(name, httpVersion, instances, endpoints, parent);
+        return configApi;
     }
 
     @Override

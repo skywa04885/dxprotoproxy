@@ -4,6 +4,7 @@ import com.github.skywa04885.dxprotoproxy.dxprotoproxy.DXDomUtils;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.ConfiguratorImageCache;
 import io.swagger.v3.oas.models.headers.Header;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -98,6 +99,7 @@ public class DXHttpConfigResponse implements IDXTreeItem {
 
     @Override
     public ObservableValue<String> treeItemText() {
-        return Code.asString();
+        return Bindings.createStringBinding(() -> Code.get() + " - " + Fields.format().name(), Code,
+                Fields.formatProperty());
     }
 }

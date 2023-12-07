@@ -13,8 +13,8 @@ public class ResponseEditorControllerFactory {
     public static ResponseEditorController create(DXHttpConfigRequest configRequest) {
         return new ResponseEditorController(
                 null,
-                ResponseEditorValidationCallbackFactory.create(configRequest),
-                ResponseEditorSubmissionCallbackFactory.create(configRequest)
+                new ResponseEditorValidationCallback(configRequest),
+                new ResponseEditorSubmissionCallback(configRequest)
         );
     }
 
@@ -24,11 +24,11 @@ public class ResponseEditorControllerFactory {
      * @param configResponse the response that must be updated.
      * @return the controller.
      */
-    public static ResponseEditorController update(DXHttpConfigResponse configResponse) {
+    public static ResponseEditorController modify(DXHttpConfigResponse configResponse) {
         return new ResponseEditorController(
                 configResponse,
-                ResponseEditorValidationCallbackFactory.update(configResponse),
-                ResponseEditorSubmissionCallbackFactory.update(configResponse)
+                new ResponseEditorValidationCallback(configResponse),
+                new ResponseEditorSubmissionCallback(configResponse)
         );
     }
 }

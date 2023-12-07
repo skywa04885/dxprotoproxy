@@ -38,6 +38,10 @@ public class DXHttpConfigFields {
         return Format.get();
     }
 
+    public  SimpleObjectProperty<DXHttpFieldsFormat> formatProperty() {
+        return Format;
+    }
+
     public DXHttpConfigField GetFieldByName(final String name) {
         return Fields.get(name);
     }

@@ -4,6 +4,7 @@ import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigH
 
 public class EditorHeaderFactory {
     public static EditorHeader create(DXHttpConfigHeader configHeader) {
-        return new EditorHeader(configHeader, configHeader.name(), configHeader.key(), configHeader.value() == null ? "" : configHeader.value());
+        return new EditorHeader(configHeader, configHeader.name(), configHeader.key(),
+                configHeader.value() == null ? "" : configHeader.value());
     }
 }

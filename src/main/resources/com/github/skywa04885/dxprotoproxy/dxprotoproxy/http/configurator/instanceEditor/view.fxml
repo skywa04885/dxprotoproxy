@@ -8,8 +8,8 @@
    <bottom>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
-          <Button mnemonicParsing="false" onAction="#submit" text="Voeg toe" />
-            <Button mnemonicParsing="false" onAction="#cancel" text="Annuleer" />
+          <Button mnemonicParsing="false" onAction="#submit" text="Submit" />
+            <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" />
         </items>
       </ToolBar>
    </bottom>
@@ -28,9 +28,9 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Naam *" />
+                  <Label text="Name *" />
                   <Label text="Host *" GridPane.rowIndex="1" />
-                  <Label text="Poort *" GridPane.rowIndex="2" />
+                  <Label text="Port *" GridPane.rowIndex="2" />
                   <Label text="Protocol *" GridPane.rowIndex="3" />
                   <TextField fx:id="nameTextField" GridPane.columnIndex="1" />
                   <TextField fx:id="hostTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />

@@ -21,19 +21,23 @@ public class DXHttpConfigEndpoint implements IDXTreeItem {
     public static final String TAG_NAME = "Endpoint";
     public static final String NAME_ATTRIBUTE_NAME = "Name";
 
-    @NotNull
+    private @NotNull DXHttpConfigApi parent;
+    public @NotNull SimpleStringProperty name;
+    public @NotNull SimpleMapProperty<DXHttpRequestMethod, DXHttpConfigRequest> requests;
 
-    public SimpleStringProperty name;
-    @NotNull
-    public SimpleMapProperty<DXHttpRequestMethod, DXHttpConfigRequest> requests;
-
-    public DXHttpConfigEndpoint(@NotNull String name, @NotNull Map<DXHttpRequestMethod, DXHttpConfigRequest> requests) {
+    public DXHttpConfigEndpoint(@NotNull DXHttpConfigApi parent, @NotNull String name,
+                                @NotNull Map<DXHttpRequestMethod, DXHttpConfigRequest> requests) {
+        this.parent = parent;
         this.name = new SimpleStringProperty(null, "Naam", name);
         this.requests = new SimpleMapProperty<>(null, "Verzoeken", FXCollections.observableMap(requests));
     }
 
-    public DXHttpConfigEndpoint(@NotNull String name) {
-        this(name, new HashMap<>());
+    public DXHttpConfigEndpoint(@NotNull DXHttpConfigApi parent, @NotNull String name) {
+        this(parent, name, new HashMap<>());
+    }
+
+    public @NotNull DXHttpConfigApi parent() {
+        return parent;
     }
 
     @NotNull
@@ -76,7 +80,7 @@ public class DXHttpConfigEndpoint implements IDXTreeItem {
         return requests.get(method);
     }
 
-    public static DXHttpConfigEndpoint FromElement(@NotNull Element element) {
+    public static DXHttpConfigEndpoint FromElement(@NotNull DXHttpConfigApi parent, @NotNull Element element) {
         if (!element.getTagName().equals(TAG_NAME)) throw new RuntimeException("Tag name mismatch");
 
         final String name = element.getAttribute(NAME_ATTRIBUTE_NAME).trim();
@@ -85,7 +89,7 @@ public class DXHttpConfigEndpoint implements IDXTreeItem {
         final var requestElements = DXDomUtils.GetChildElementsWithTagName(element,
                 DXHttpConfigRequest.ELEMENT_TAG_NAME);
 
-        final var configEndpoint = new DXHttpConfigEndpoint(name);
+        final var configEndpoint = new DXHttpConfigEndpoint(parent, name);
 
         for (final Element value : requestElements) {
             final var request = DXHttpConfigRequest.FromElement(configEndpoint, value);
