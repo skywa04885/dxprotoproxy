@@ -28,6 +28,12 @@
                                     </Fields>
                                     <Headers/>
                                 </Response>
+                                <Response Code="500">
+                                    <Fields Format="JSON"/>
+                                    <Headers>
+                                        <Header Key="test" Name="123"/>
+                                    </Headers>
+                                </Response>
                                 <Response Code="200">
                                     <Fields Format="JSON">
                                         <Field Name="Timezone" Path="timezone"/>
@@ -62,9 +68,26 @@
                             <Responses>
                                 <Response Code="200">
                                     <Fields Format="JSON">
-                                        <Field Name="Test" Path="test" Value=""/>
+                                        <Field Name="Test" Path="test"/>
                                     </Fields>
                                     <Headers/>
+                                </Response>
+                            </Responses>
+                            <Fields Format="JSON"/>
+                            <Headers/>
+                        </Request>
+                    </Endpoint>
+                    <Endpoint Name="Test123">
+                        <Request Method="GET">
+                            <Uri Path="pad/{hello}">
+                                <QueryParameters/>
+                            </Uri>
+                            <Responses>
+                                <Response Code="400">
+                                    <Fields Format="JSON"/>
+                                    <Headers>
+                                        <Header Key="Hello" Name="H" Value="123"/>
+                                    </Headers>
                                 </Response>
                             </Responses>
                             <Fields Format="JSON"/>
