@@ -1,6 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config;
 
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.DXDomUtils;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.ConfigRoot;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.ConfiguratorImageCache;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -8,72 +10,74 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DXHttpConfig implements IDXTreeItem {
-    public static final String ELEMENT_TAG_NAME = "Apis";
+    public static final String TAG_NAME = "Http";
 
-    public final SimpleMapProperty<String, DXHttpConfigApi> HttpApis;
+    private @Nullable ConfigRoot parent;
+    private @NotNull HttpConfigApis httpConfigApis;
 
-    public DXHttpConfig(final Map<String, DXHttpConfigApi> httpApis) {
-        HttpApis = new SimpleMapProperty<>(null, "HTTP APIs", FXCollections.observableMap(httpApis));
+    public DXHttpConfig(@NotNull HttpConfigApis httpConfigApis) {
+        this.httpConfigApis = httpConfigApis;
     }
 
     public DXHttpConfig() {
-        this(new HashMap<>());
+        this(new HttpConfigApis());
     }
 
-    public Map<String, DXHttpConfigApi> httpApis() {
-        return HttpApis.getValue();
+    public void setParent(@Nullable ConfigRoot parent) {
+        this.parent = parent;
     }
 
-    public SimpleMapProperty<String, DXHttpConfigApi> httpApisProperty() {
-        return HttpApis;
+    public @Nullable ConfigRoot parent() {
+        return parent;
     }
 
-    public DXHttpConfigApi GetApiByName(final String name) {
-        return HttpApis.get(name);
+    public @NotNull HttpConfigApis httpConfigApis() {
+        return httpConfigApis;
+    }
+
+    private static HttpConfigApis httpConfigApisFromElement(@NotNull Element element) {
+        final var apisElements = DXDomUtils.GetChildElementsWithTagName(element, HttpConfigApis.TAG_NAME);
+
+        if (apisElements.isEmpty()) {
+            throw new RuntimeException("Apis element is missing");
+        } else if (apisElements.size() > 1) {
+            throw new RuntimeException("Too many apis elements");
+        }
+
+        final var apisElement = (Element) apisElements.get(0);
+
+        return HttpConfigApis.fromElement(apisElement);
     }
 
     public static DXHttpConfig FromElement(final Element element) {
-        final var httpConfig = new DXHttpConfig();
-
-        for (var i = 0; i < element.getChildNodes().getLength(); ++i) {
-            final var childNode = element.getChildNodes().item(i);
-            if (childNode instanceof Element childElement)
-            {
-                final DXHttpConfigApi api = DXHttpConfigApi.FromElement(childElement, httpConfig);
-                if (httpConfig.httpApis().containsKey(api.Name.getValue())) throw new RuntimeException("Duplicate API name: " + api.Name.getValue());
-                httpConfig.httpApis().put(api.Name.getValue(), api);
-            }
+        if (!element.getTagName().equals(TAG_NAME)) {
+            throw new RuntimeException("Tag name mismatch, expected " + TAG_NAME + " got " + element.getTagName());
         }
+
+        final HttpConfigApis httpConfigApis = httpConfigApisFromElement(element);
+
+        final var httpConfig = new DXHttpConfig(httpConfigApis);
+
+        httpConfigApis.setParent(httpConfig);
 
         return httpConfig;
     }
 
-    public static DXHttpConfig ReadFromFile(final File file) throws IOException {
-        try (var inputStream = new FileInputStream(file)) {
-            final var documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            final var documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            final var document = documentBuilder.parse(inputStream);
+    public @NotNull Element toElement(@NotNull Document document) {
+        final var element = document.createElement(TAG_NAME);
 
-            final var documentElement = document.getDocumentElement();
-            if (!documentElement.getTagName().equals(ELEMENT_TAG_NAME))
-                throw new RuntimeException("Document tag name mismatch");
+        element.appendChild(httpConfigApis.toElement(document));
 
-            return DXHttpConfig.FromElement(documentElement);
-        } catch (ParserConfigurationException | SAXException e) {
-            throw new RuntimeException(e);
-        }
+        return element;
     }
 
     @Override

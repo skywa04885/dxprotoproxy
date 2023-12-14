@@ -2,6 +2,7 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEdi
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfig;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigApis;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -44,7 +45,7 @@ public class ApiEditorWindowFactory {
     }
 
     @NotNull
-    public static ApiEditorWindow create(@NotNull DXHttpConfig httpConfig) {
-        return create(ApiEditorControllerFactory.create(httpConfig), "Create API");
+    public static ApiEditorWindow create(@NotNull HttpConfigApis httpConfigApis) {
+        return create(ApiEditorControllerFactory.create(httpConfigApis), "Create API");
     }
 }

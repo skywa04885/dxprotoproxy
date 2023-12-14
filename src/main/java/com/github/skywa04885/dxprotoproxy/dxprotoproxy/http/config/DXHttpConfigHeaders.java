@@ -3,6 +3,8 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.DXDomUtils;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.collections.FXCollections;
+import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.HashMap;
@@ -23,6 +25,15 @@ public class DXHttpConfigHeaders {
 
     public Map<String, DXHttpConfigHeader> children() {
         return Children;
+    }
+
+    public @NotNull Element toElement(@NotNull Document document) {
+        final var element = document.createElement(ELEMENT_TAG_NAME);
+
+        Children.values().forEach(httpConfigHeader ->
+                element.appendChild(httpConfigHeader.toElement(document)));
+
+        return element;
     }
 
     public static DXHttpConfigHeaders FromElement(final Element element) {

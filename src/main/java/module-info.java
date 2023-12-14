@@ -23,8 +23,6 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy;
-    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.commands;
-    opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.commands to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary;
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEditor;
@@ -40,4 +38,6 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config;
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor;
+
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.config;
 }

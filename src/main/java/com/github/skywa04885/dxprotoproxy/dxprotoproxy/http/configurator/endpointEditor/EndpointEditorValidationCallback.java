@@ -3,34 +3,35 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.endpoi
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigEndpoint;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigValidators;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigEndpoints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class EndpointEditorValidationCallback implements IEndpointEditorValidationCallback {
-    private final @Nullable DXHttpConfigApi configApi;
+    private final @Nullable HttpConfigEndpoints httpConfigEndpoints;
     private final @Nullable DXHttpConfigEndpoint configEndpoint;
 
     /**
      * Creates a new endpoint editor validation callback.
      *
-     * @param configApi      the config api.
+     * @param httpConfigEndpoints      the config endpoints.
      * @param configEndpoint the config endpoint.s
      */
-    public EndpointEditorValidationCallback(@Nullable DXHttpConfigApi configApi,
+    public EndpointEditorValidationCallback(@Nullable HttpConfigEndpoints httpConfigEndpoints,
                                       @Nullable DXHttpConfigEndpoint configEndpoint) {
-        assert (configEndpoint == null && configApi != null) || (configEndpoint != null && configApi == null);
-
-        this.configApi = configApi;
+        this.httpConfigEndpoints = httpConfigEndpoints;
         this.configEndpoint = configEndpoint;
     }
 
     /**
      * Creates a new endpoint editor validation callback meant for creating endpoints.
      *
-     * @param configApi the api that the endpoint should be created for.
+     * @param httpConfigEndpoints the config endpoints.
      */
-    public EndpointEditorValidationCallback(@Nullable DXHttpConfigApi configApi) {
-        this(configApi, null);
+    public EndpointEditorValidationCallback(@Nullable HttpConfigEndpoints httpConfigEndpoints) {
+        this(httpConfigEndpoints, null);
     }
 
     /**
@@ -52,18 +53,17 @@ public class EndpointEditorValidationCallback implements IEndpointEditorValidati
 
         // Checks if the name is already in use.
         if (configEndpoint == null) {
-            assert configApi != null;
+            assert httpConfigEndpoints != null;
 
             // Checks if the name is already in use.
-            if (configApi.endpoints().containsKey(name)) {
+            if (httpConfigEndpoints.children().containsKey(name)) {
                 return "Name already in use";
             }
         } else {
             // Gets the api.
-            final @NotNull DXHttpConfigApi configApi = configEndpoint.parent();
-
             // Checks if the name changed, and if it has, whether or not it's already in use.
-            if (!configEndpoint.name().equals(name) && configApi.endpoints().containsKey(name)) {
+            if (!configEndpoint.name().equals(name) &&
+                    Objects.requireNonNull(configEndpoint.parent()).children().containsKey(name)) {
                 return "Name already in use";
             }
         }

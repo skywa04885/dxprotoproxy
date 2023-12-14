@@ -5,6 +5,8 @@ import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.HashMap;
@@ -44,6 +46,17 @@ public class DXHttpConfigFields {
 
     public DXHttpConfigField GetFieldByName(final String name) {
         return Fields.get(name);
+    }
+
+    public @NotNull Element toElement(@NotNull Document document) {
+        final var element = document.createElement(ELEMENT_TAG_NAME);
+
+        element.setAttribute(FORMAT_ATTRIBUTE_NAME, format().name());
+
+        Fields.values().forEach(httpConfigField ->
+                element.appendChild(httpConfigField.toElement(document)));
+
+        return element;
     }
 
     public static DXHttpConfigFields FromElement(final Element element) {

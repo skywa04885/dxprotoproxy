@@ -1,29 +1,29 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.instanceEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigInstance;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigValidators;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigInstances;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class InstanceEditorValidationCallback implements IInstanceEditorValidationCallback {
-    private final @Nullable DXHttpConfigApi configApi;
+    private final @NotNull HttpConfigInstances httpConfigInstances;
     private final @Nullable DXHttpConfigInstance configInstance;
 
-    public InstanceEditorValidationCallback(@Nullable DXHttpConfigApi configApi,
+    public InstanceEditorValidationCallback(@NotNull HttpConfigInstances httpConfigInstances,
                                             @Nullable DXHttpConfigInstance configInstance) {
-        assert (configInstance == null && configApi != null) || (configInstance != null && configApi == null);
-
-        this.configApi = configApi;
+        this.httpConfigInstances = httpConfigInstances;
         this.configInstance = configInstance;
     }
 
-    public InstanceEditorValidationCallback(@Nullable DXHttpConfigApi configApi) {
-        this(configApi, null);
+    public InstanceEditorValidationCallback(@NotNull HttpConfigInstances httpConfigInstances) {
+        this(httpConfigInstances, null);
     }
 
-    public InstanceEditorValidationCallback(@Nullable DXHttpConfigInstance configInstance) {
-        this(null, configInstance);
+    public InstanceEditorValidationCallback(@NotNull DXHttpConfigInstance configInstance) {
+        this(Objects.requireNonNull(configInstance.parent()), configInstance);
     }
 
     /**
@@ -48,16 +48,13 @@ public class InstanceEditorValidationCallback implements IInstanceEditorValidati
             return "Invalid protocol";
         }
 
-        if (configApi == null) {
-            assert configInstance != null;
-            if (!configInstance.name().equals(name) && configInstance.parent().instances().containsKey(name)) {
-                return "Name already in use";
-            }
-        } else {
-            if (configApi.instances().containsKey(name)) {
-                return "Name already in use";
-            }
+        if (configInstance != null && !configInstance.name().equals(name)
+                && httpConfigInstances.children().containsKey(name)) {
+            return "Name already in use";
+        } else if (httpConfigInstances.children().containsKey(name)) {
+            return "Name already in use";
         }
+
 
         return null;
     }

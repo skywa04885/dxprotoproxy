@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Root>
+    <Http>
+        <Apis>
+            <Api HttpVersion="http/1.1" Name="MIR">
+                <Instances>
+                    <Instance Host="127.0.0.1" Name="Inst1" Port="80" Protocol="http"/>
+                </Instances>
+                <Endpoints>
+                    <Endpoint Name="EP1">
+                        <Request Method="GET">
+                            <Uri Path="test/{abc}">
+                                <QueryParameters>
+                                    <Parameter Key="value" Value="asdasjdasuiodi"/>
+                                </QueryParameters>
+                            </Uri>
+                            <Responses>
+                                <Response Code="200">
+                                    <Fields Format="JSON"/>
+                                    <Headers/>
+                                </Response>
+                            </Responses>
+                            <Fields Format="JSON">
+                                <Field Name="asd1239012378912" Path="asdasd" Value="body"/>
+                            </Fields>
+                            <Headers>
+                                <Header Key="test" Name="header" Value="With Value"/>
+                            </Headers>
+                        </Request>
+                    </Endpoint>
+                </Endpoints>
+            </Api>
+        </Apis>
+    </Http>
+</Root>

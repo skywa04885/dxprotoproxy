@@ -52,19 +52,38 @@ public class PrimaryTreeContextMenuFactory {
         return contextMenu;
     }
 
+    private ContextMenu createInstancesContextMenu(@NotNull HttpConfigInstances httpConfigInstances) {
+        final var contextMenu = new ContextMenu();
+
+        final var addInstanceMenuItem = new MenuItem("Create instance");
+
+        contextMenu.getItems().addAll(addInstanceMenuItem);
+
+        addInstanceMenuItem.setOnAction(event -> callbacks.createInstance(httpConfigInstances));
+
+        return contextMenu;
+    }
+
+    private ContextMenu createEndpointsContextMenu(@NotNull HttpConfigEndpoints httpConfigEndpoints) {
+        final var contextMenu = new ContextMenu();
+
+        final var createEndpointMenuItem = new MenuItem("Create endpoint");
+
+        contextMenu.getItems().addAll(createEndpointMenuItem);
+
+        createEndpointMenuItem.setOnAction(event -> callbacks.createEndpoint(httpConfigEndpoints));
+
+        return contextMenu;
+    }
+
     private ContextMenu createApiContextMenu(DXHttpConfigApi httpConfigApi) {
         final var contextMenu = new ContextMenu();
 
-        final var addEndpointMenuItem = new MenuItem("Create endpoint");
-        final var addInstanceMenuItem = new MenuItem("Create instance");
         final var deleteInstanceMenuItem = new MenuItem("Delete");
         final var modifyInstanceMenuItem = new MenuItem("Modify");
 
-        contextMenu.getItems().addAll(addEndpointMenuItem, addInstanceMenuItem, deleteInstanceMenuItem,
-                modifyInstanceMenuItem);
+        contextMenu.getItems().addAll(deleteInstanceMenuItem, modifyInstanceMenuItem);
 
-        addEndpointMenuItem.setOnAction(event -> callbacks.createEndpoint(httpConfigApi));
-        addInstanceMenuItem.setOnAction(event -> callbacks.createInstance(httpConfigApi));
         deleteInstanceMenuItem.setOnAction(event -> callbacks.deleteApi(httpConfigApi));
         modifyInstanceMenuItem.setOnAction(event -> callbacks.modifyApi(httpConfigApi));
 
@@ -105,14 +124,20 @@ public class PrimaryTreeContextMenuFactory {
         return new ContextMenu();
     }
 
-    private ContextMenu createConfigContextMenu(DXHttpConfig httpConfig) {
+    private ContextMenu createHttpApisContextMenu(@NotNull HttpConfigApis httpConfigApis) {
         final var contextMenu = new ContextMenu();
 
         final var addApiMenuItem = new MenuItem("Create API");
 
         contextMenu.getItems().addAll(addApiMenuItem);
 
-        addApiMenuItem.setOnAction(event -> callbacks.createApi(httpConfig));
+        addApiMenuItem.setOnAction(event -> callbacks.createApi(httpConfigApis));
+
+        return contextMenu;
+    }
+
+    private ContextMenu createConfigContextMenu(DXHttpConfig httpConfig) {
+        final var contextMenu = new ContextMenu();
 
         return contextMenu;
     }
@@ -134,6 +159,12 @@ public class PrimaryTreeContextMenuFactory {
             return createConfigContextMenu(httpConfig);
         } else if (value instanceof DXHttpConfigResponse httpConfigResponse) {
             return createResponseContextMenu(httpConfigResponse);
+        } else if (value instanceof HttpConfigInstances httpConfigInstances) {
+            return createInstancesContextMenu(httpConfigInstances);
+        } else if (value instanceof HttpConfigEndpoints httpConfigEndpoints) {
+            return createEndpointsContextMenu(httpConfigEndpoints);
+        } else if (value instanceof HttpConfigApis httpConfigApis) {
+            return createHttpApisContextMenu(httpConfigApis);
         }
 
         return createEmptyContextMenu(treeCell);

@@ -2,6 +2,7 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.endpoi
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigEndpoint;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigEndpoints;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -51,11 +52,11 @@ public class EndpointEditorWindowFactory {
 
     /**
      * Creates a new endpoint creation window.
-     * @param configApi the api that should contain the endpoint.
+     * @param httpConfigEndpoints the endpoints.
      * @return the window.
      */
     @NotNull
-    public static EndpointEditorWindow create(@NotNull DXHttpConfigApi configApi) {
-        return create(EndpointEditorControllerFactory.create(configApi), "Create endpoint");
+    public static EndpointEditorWindow create(@NotNull HttpConfigEndpoints httpConfigEndpoints) {
+        return create(EndpointEditorControllerFactory.create(httpConfigEndpoints), "Create endpoint");
     }
 }

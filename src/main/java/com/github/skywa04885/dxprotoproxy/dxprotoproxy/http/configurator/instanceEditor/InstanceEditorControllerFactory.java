@@ -2,13 +2,14 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.instan
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigInstance;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigInstances;
 import org.jetbrains.annotations.NotNull;
 
 public class InstanceEditorControllerFactory {
-    public static @NotNull InstanceEditorController create(@NotNull DXHttpConfigApi configApi) {
+    public static @NotNull InstanceEditorController create(@NotNull HttpConfigInstances httpConfigInstances) {
         return new InstanceEditorController(null,
-                new InstanceEditorValidationCallback(configApi),
-                new InstanceEditorSubmissionCallback(configApi));
+                new InstanceEditorValidationCallback(httpConfigInstances),
+                new InstanceEditorSubmissionCallback(httpConfigInstances));
     }
 
     public static @NotNull InstanceEditorController modify(@NotNull DXHttpConfigInstance configInstance) {

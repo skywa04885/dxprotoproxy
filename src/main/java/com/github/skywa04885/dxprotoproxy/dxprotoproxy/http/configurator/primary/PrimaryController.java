@@ -1,104 +1,79 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.ConfigReader;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.ConfigRoot;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.ConfigWriter;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.*;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEditor.ApiEditorWindowFactory;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.endpointEditor.EndpointEditorWindowFactory;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.instanceEditor.InstanceEditorWindowFactory;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.commands.Command;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.commands.SelectSwaggerFileCommand;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.commands.SelectConfigFileCommand;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.tree.*;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor.RequestEditorWindowFactory;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor.ResponseEditorWindowFactory;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
+import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.*;
 
 public class PrimaryController implements Initializable {
-    public SimpleObjectProperty<DXHttpConfig> config = new SimpleObjectProperty<>(null, "Configuration", new DXHttpConfig());
+    public SimpleObjectProperty<ConfigRoot> config = new SimpleObjectProperty<>(null, "Configuration", new ConfigRoot());
 
-    @FXML
-    public BorderPane borderPane;
-    @FXML
-    public Label labelForCurrentCommandName;
-    @FXML
-    public ProgressIndicator busyProgressIndicator;
     @FXML
     public TreeView<IDXTreeItem> endpointsTreeView;
 
-    private final LinkedList<Command> commandLinkedList = new LinkedList<>();
-    private final ExecutorService executorService = Executors.newFixedThreadPool(1);
-    private Future<Void> commandExecutor = CompletableFuture.completedFuture(null);
-    private final PrimaryTreeClipboard treeClipboard = new PrimaryTreeClipboard();
+    @FXML
+    public MenuItem saveConfigAsMenuItem;
 
-    public DXHttpConfig httpConfig() {
+    private final PrimaryTreeClipboard treeClipboard = new PrimaryTreeClipboard();
+    private @Nullable PrimaryWindow window;
+    private final FileChooser fileChooser = new FileChooser();
+
+    public ConfigRoot configRoot() {
         return config.getValue();
     }
 
-    private Void executeCommands() {
-        try {
-            Platform.runLater(() -> {
-                busyProgressIndicator.setVisible(true);
-            });
-
-            while (true) {
-                Command command;
-
-                synchronized (this.commandLinkedList) {
-                    if (this.commandLinkedList.isEmpty()) break;
-                    command = this.commandLinkedList.removeFirst();
-                }
-
-                Platform.runLater(() -> labelForCurrentCommandName.setText(command.name));
-
-                command.execute();
-            }
-
-            Platform.runLater(() -> {
-                labelForCurrentCommandName.setText("");
-                busyProgressIndicator.setVisible(false);
-            });
-        } catch (final InterruptedException ignore) {
-
-        }
-
-        return null;
-    }
-
-    public void addCommand(final Command command) {
-        synchronized (this.commandLinkedList) {
-            commandLinkedList.addLast(command);
-        }
-
-        if (commandExecutor.isDone()) {
-            commandExecutor = executorService.submit(this::executeCommands);
-        }
+    public void setWindow(@NotNull PrimaryWindow window) {
+        this.window = window;
     }
 
     @FXML
     public void onImportOpenAPISpecificationMenuItemPressed() {
-        addCommand(new SelectSwaggerFileCommand(this));
     }
 
     @FXML
     public void onOpenConfigMenuItemPressed() {
-        addCommand(new SelectConfigFileCommand(this));
+        assert window != null;
+
+        final File file = fileChooser.showOpenDialog(window.stage());
+
+        if (file == null) {
+            return;
+        }
+
+        try {
+            config.set(ConfigReader.read(file));
+        } catch (IOException | ParserConfigurationException | SAXException ioException) {
+
+        }
     }
 
     private void asd() {
-        final DXHttpConfig httpConfig = httpConfig();
-
         final var callbacks = new IPrimaryTreeContextMenuCallbacks() {
             /**
              * Creates a new response.
@@ -110,8 +85,8 @@ public class PrimaryController implements Initializable {
             }
 
             @Override
-            public void createApi(@NotNull DXHttpConfig httpConfig) {
-                ApiEditorWindowFactory.create(httpConfig);
+            public void createApi(@NotNull HttpConfigApis httpConfigApis) {
+                ApiEditorWindowFactory.create(httpConfigApis);
             }
 
             @Override
@@ -121,13 +96,14 @@ public class PrimaryController implements Initializable {
 
             @Override
             public void deleteApi(@NotNull DXHttpConfigApi httpConfigApi) {
-                final DXHttpConfig httpConfig = httpConfigApi.parent();
-                httpConfig.httpApis().remove(httpConfigApi.name());
+                Objects.requireNonNull(httpConfigApi.parent())
+                        .children()
+                        .remove(httpConfigApi.name());
             }
 
             @Override
-            public void createInstance(@NotNull DXHttpConfigApi httpConfigApi) {
-                InstanceEditorWindowFactory.create(httpConfigApi);
+            public void createInstance(@NotNull HttpConfigInstances httpConfigInstances) {
+                InstanceEditorWindowFactory.create(httpConfigInstances);
             }
 
             @Override
@@ -137,15 +113,14 @@ public class PrimaryController implements Initializable {
 
             @Override
             public void deleteInstance(@NotNull DXHttpConfigInstance configInstance) {
-                configInstance
-                        .parent()
-                        .instances()
+                Objects.requireNonNull(configInstance.parent())
+                        .children()
                         .remove(configInstance.name());
             }
 
             @Override
-            public void createEndpoint(@NotNull DXHttpConfigApi httpConfigApi) {
-                EndpointEditorWindowFactory.create(httpConfigApi);
+            public void createEndpoint(@NotNull HttpConfigEndpoints httpConfigEndpoints) {
+                EndpointEditorWindowFactory.create(httpConfigEndpoints);
             }
 
             /**
@@ -155,9 +130,8 @@ public class PrimaryController implements Initializable {
              */
             @Override
             public void deleteEndpoint(@NotNull DXHttpConfigEndpoint configEndpoint) {
-                configEndpoint
-                        .parent()
-                        .endpoints()
+                Objects.requireNonNull(configEndpoint.parent())
+                        .children()
                         .remove(configEndpoint.name());
             }
 
@@ -228,7 +202,7 @@ public class PrimaryController implements Initializable {
 
         final var treeFactory = new PrimaryTreeFactory();
 
-        endpointsTreeView.setRoot(treeFactory.createForConfig(httpConfig));
+        endpointsTreeView.setRoot(treeFactory.createForConfigRoot(configRoot()));
     }
 
     /**
@@ -238,13 +212,48 @@ public class PrimaryController implements Initializable {
      * @param oldConfig       The old config.
      * @param newConfig       The new config.
      */
-    private void onConfigChangedListener(ObservableValue<? extends DXHttpConfig> observableValue, DXHttpConfig oldConfig, DXHttpConfig newConfig) {
+    private void onConfigChangedListener(ObservableValue<? extends ConfigRoot> observableValue, ConfigRoot oldConfig, ConfigRoot newConfig) {
         asd();
+    }
+
+    private void saveConfigAsMenuItemActionHandler(@NotNull ActionEvent actionEvent) {
+        assert window != null;
+
+        final File file = fileChooser.showSaveDialog(window.stage());
+
+        if (file == null) {
+            return;
+        }
+
+        try {
+            ConfigWriter.write(configRoot(), file);
+        } catch (ParserConfigurationException | TransformerException | IOException exception) {
+            final var alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Failed to write config");
+            alert.setContentText(exception.getMessage());
+            alert.show();
+        }
+    }
+
+    private void initializeFileChooser() {
+        final var fileChooserExtensionFilter = new FileChooser.ExtensionFilter("Config file (*.xml)",
+                "*.xml");
+
+        fileChooser
+                .setSelectedExtensionFilter(fileChooserExtensionFilter);
+    }
+
+    private void initializeSaveConfigAsMenuItem() {
+        saveConfigAsMenuItem
+                .setOnAction(this::saveConfigAsMenuItemActionHandler);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         config.addListener(this::onConfigChangedListener);
         asd();
+
+        initializeFileChooser();
+        initializeSaveConfigAsMenuItem();
     }
 }

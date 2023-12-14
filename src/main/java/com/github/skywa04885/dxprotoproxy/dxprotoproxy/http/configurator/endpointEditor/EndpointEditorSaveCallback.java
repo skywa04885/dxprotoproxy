@@ -2,36 +2,36 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.endpoi
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigEndpoint;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigEndpoints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class EndpointEditorSaveCallback implements IEndpointEditorSaveCallback {
-    private final @Nullable DXHttpConfigApi configApi;
+    private final @Nullable HttpConfigEndpoints configEndpoints;
     private final @Nullable DXHttpConfigEndpoint configEndpoint;
 
     /**
      * Creates a new endpoint editor submission callback.
      *
-     * @param configApi      the config api.
-     * @param configEndpoint the config endpoint.s
+     * @param configEndpoints      the config endpoints.
+     * @param configEndpoint the config endpoint.
      */
-    public EndpointEditorSaveCallback(@Nullable DXHttpConfigApi configApi,
+    public EndpointEditorSaveCallback(@Nullable HttpConfigEndpoints configEndpoints,
                                       @Nullable DXHttpConfigEndpoint configEndpoint) {
-        assert (configEndpoint == null && configApi != null) || (configEndpoint != null && configApi == null);
-
-        this.configApi = configApi;
+        this.configEndpoints = configEndpoints;
         this.configEndpoint = configEndpoint;
     }
 
     /**
      * Creates a new endpoint editor submission callback meant for creating endpoints.
      *
-     * @param configApi the api that the endpoint should be created for.
+     * @param configEndpoints the config endpoints.
      */
-    public EndpointEditorSaveCallback(@Nullable DXHttpConfigApi configApi) {
-        this(configApi, null);
+    public EndpointEditorSaveCallback(@Nullable HttpConfigEndpoints configEndpoints) {
+        this(configEndpoints, null);
     }
 
     /**
@@ -52,12 +52,13 @@ public class EndpointEditorSaveCallback implements IEndpointEditorSaveCallback {
         assert configEndpoint != null;
 
         // gets the config api.
-        final @NotNull DXHttpConfigApi configApi = configEndpoint.parent();
+        final @NotNull HttpConfigEndpoints configApi =
+                Objects.requireNonNull(configEndpoint.parent());
 
         // Updates the name of the config endpoint.
-        configApi.endpoints().remove(configEndpoint.name());
+        configApi.children().remove(configEndpoint.name());
         configEndpoint.setName(name);
-        configApi.endpoints().put(name, configEndpoint);
+        configApi.children().put(name, configEndpoint);
     }
 
     /**
@@ -66,11 +67,12 @@ public class EndpointEditorSaveCallback implements IEndpointEditorSaveCallback {
      * @param name the name of the endpoint to craete.
      */
     private void create(@NotNull String name) {
-        assert configApi != null;
+        assert configEndpoints != null;
 
         // Creates the new config endpoint and puts it in the map.
-        final var configEndpoint = new DXHttpConfigEndpoint(configApi, name);
-        configApi.endpoints().put(name, configEndpoint);
+        final var configEndpoint = new DXHttpConfigEndpoint(name);
+        configEndpoint.setParent(configEndpoints);
+        configEndpoints.children().put(name, configEndpoint);
     }
 
     /**

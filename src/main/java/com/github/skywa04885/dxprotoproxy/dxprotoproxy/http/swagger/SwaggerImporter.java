@@ -149,7 +149,8 @@ public class SwaggerImporter {
 
         final var httpConfigUriQueryParameters = new HashMap<String, DXHttpConfigUriQueryParameter>();
 
-        final var httpConfigUri = new DXHttpConfigUri(httpPathTemplate, httpConfigUriQueryParameters);
+        final var httpConfigQueryParameters = new HttpConfigQueryParameters(httpConfigUriQueryParameters);
+        final var httpConfigUri = new DXHttpConfigUri(httpPathTemplate, httpConfigQueryParameters);
 
         final var endpointRequests = new HashMap<DXHttpRequestMethod, DXHttpConfigRequest>();
 

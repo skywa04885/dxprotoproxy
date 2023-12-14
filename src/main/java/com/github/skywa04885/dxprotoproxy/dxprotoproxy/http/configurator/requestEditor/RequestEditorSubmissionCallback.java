@@ -58,7 +58,10 @@ public class RequestEditorSubmissionCallback implements IRequestEditorSubmission
         assert configRequest != null;
 
         // Gets the query parameters.
-        final Map<String, DXHttpConfigUriQueryParameter> configQueryParameters = configRequest.uri().queryParameters();
+        final Map<String, DXHttpConfigUriQueryParameter> configQueryParameters = configRequest
+                .uri()
+                .queryParameters()
+                .children();
 
         // Creates all the new query parameters.
         editorQueryParameters
@@ -299,12 +302,13 @@ public class RequestEditorSubmissionCallback implements IRequestEditorSubmission
                         EditorQueryParameter::httpConfigUriQueryParameter));
 
         // Constructs the request.
-        final var httpConfigUri = new DXHttpConfigUri(httpPathTemplate, queryParameterMap);
+        final var httpConfigQueryParameters = new HttpConfigQueryParameters(queryParameterMap);
+        final var httpConfigUri = new DXHttpConfigUri(httpPathTemplate, httpConfigQueryParameters);
         final var httpConfigHeaders = new DXHttpConfigHeaders(headerMap);
         final var httpConfigFields = new DXHttpConfigFields(fieldmap, format);
         final var httpConfigResponses = new DXHttpConfigResponses(new HashMap<>());
-        final var httpConfigRequest = new DXHttpConfigRequest(configEndpoint, httpConfigUri, method, httpConfigHeaders,
-                httpConfigFields, httpConfigResponses);
+        final var httpConfigRequest = new DXHttpConfigRequest(httpConfigUri, method, httpConfigHeaders, httpConfigFields, httpConfigResponses);
+        httpConfigRequest.setParent(configEndpoint);
 
         // Inserts the request into the endpoint.
         configEndpoint.getRequests().put(method, httpConfigRequest);

@@ -1,49 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Apis>
-    <Api Name="Weather" HttpVersion="HTTP/1.1">
-        <Instances>
-            <Instance Name="OpenWeatherMap" Host="api.openweathermap.org" Port="443" Protocol="https" />
-            <Instance Name="OpenWeatherMap1" Host="api.openweathermap.org1" Port="5000" Protocol="https" />
-            <Instance Name="OpenWeatherMap2" Host="api.openweathermap.org3" Port="443" Protocol="https" />
-        </Instances>
-        <Endpoints>
-            <Endpoint Name="Current">
-                <Request Method="GET">
-                    <Uri Path="/data/2.5/weather">
-                        <QueryParameters>
-                            <Parameter Key="lat" />
-                            <Parameter Key="lon" />
-                            <Parameter Key="appid" Value="ddee795da0b9247de0e2c614267b0976" />
-                            <Parameter Key="units" Value="metric" />
-                            <Parameter Key="lang" Value="nl" />
-                        </QueryParameters>
-                    </Uri>
-                    <Responses>
-                        <Response Code="200">
-                            <Fields Format="json">
-                                <Field Name="Humidity" Path="main.humidity" />
-                                <Field Name="Temperature" Path="main.temp" />
-                                <Field Name="Pressure" Path="main.pressure" />
-                                <Field Name="WindSpeed" Path="wind.speed" />
-                                <Field Name="Timezone" Path="timezone" />
-                            </Fields>
-                        </Response>
-                        <Response Code="401">
-                            <Fields Format="json">
-                                <Field Name="Code" Path="cod" />
-                                <Field Name="Message" Path="message" />
-                            </Fields>
-                        </Response>
-                    </Responses>
-                </Request>
-            </Endpoint>
-        </Endpoints>
-    </Api>
-    <Api Name="Test" HttpVersion="HTTP/1.1">
-        <Instances>
-        </Instances>
-        <Endpoints>
+<Root>
+    <Http host="0.0.0.0" port="8080">
+        <Apis>
+            <Api Name="Weather" HttpVersion="HTTP/1.1">
+                <Instances>
+                    <Instance Name="OpenWeatherMap" Host="api.openweathermap.org" Port="443" Protocol="https" />
+                    <Instance Name="OpenWeatherMap1" Host="api.openweathermap.org1" Port="5000" Protocol="https" />
+                    <Instance Name="OpenWeatherMap2" Host="api.openweathermap.org3" Port="443" Protocol="https" />
+                </Instances>
+                <Endpoints>
+                    <Endpoint Name="Current">
+                        <Request Method="GET">
+                            <Uri Path="/data/2.5/weather">
+                                <QueryParameters>
+                                    <Parameter Key="lat" />
+                                    <Parameter Key="lon" />
+                                    <Parameter Key="appid" Value="ddee795da0b9247de0e2c614267b0976" />
+                                    <Parameter Key="units" Value="metric" />
+                                    <Parameter Key="lang" Value="nl" />
+                                </QueryParameters>
+                            </Uri>
+                            <Responses>
+                                <Response Code="200">
+                                    <Fields Format="json">
+                                        <Field Name="Humidity" Path="main.humidity" />
+                                        <Field Name="Temperature" Path="main.temp" />
+                                        <Field Name="Pressure" Path="main.pressure" />
+                                        <Field Name="WindSpeed" Path="wind.speed" />
+                                        <Field Name="Timezone" Path="timezone" />
+                                    </Fields>
+                                </Response>
+                                <Response Code="401">
+                                    <Fields Format="json">
+                                        <Field Name="Code" Path="cod" />
+                                        <Field Name="Message" Path="message" />
+                                    </Fields>
+                                </Response>
+                            </Responses>
+                        </Request>
+                    </Endpoint>
+                </Endpoints>
+            </Api>
+            <Api Name="Test" HttpVersion="HTTP/1.1">
+                <Instances>
+                </Instances>
+                <Endpoints>
 
-        </Endpoints>
-    </Api>
-</Apis>
+                </Endpoints>
+            </Api>
+        </Apis>
+    </Http>
+</Root>

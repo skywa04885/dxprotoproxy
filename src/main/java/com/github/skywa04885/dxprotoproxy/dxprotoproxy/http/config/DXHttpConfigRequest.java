@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.HashMap;
@@ -21,26 +22,18 @@ public class DXHttpConfigRequest implements IDXTreeItem {
     public static final String ELEMENT_TAG_NAME = "Request";
     public static final String METHOD_ATTRIBUTE_NAME = "Method";
 
-    @NotNull
-    private final DXHttpConfigEndpoint parent;
-    @NotNull
-    public final DXHttpConfigUri Uri;
-    @NotNull
-    public final SimpleObjectProperty<DXHttpRequestMethod> Method;
-    @NotNull
-    public final DXHttpConfigHeaders Headers;
-    @NotNull
-    public final DXHttpConfigFields Fields;
-    @NotNull
-    public final DXHttpConfigResponses Responses;
+    private @Nullable DXHttpConfigEndpoint parent;
+    public final @NotNull DXHttpConfigUri Uri;
+    public final @NotNull SimpleObjectProperty<DXHttpRequestMethod> Method;
+    public final @NotNull DXHttpConfigHeaders Headers;
+    public final @NotNull DXHttpConfigFields Fields;
+    public final @NotNull DXHttpConfigResponses Responses;
 
-    public DXHttpConfigRequest(@NotNull DXHttpConfigEndpoint parent,
-                               @NotNull final DXHttpConfigUri uri,
-                               @NotNull final DXHttpRequestMethod method,
-                               @NotNull final DXHttpConfigHeaders headers,
-                               @NotNull final DXHttpConfigFields fields,
-                               @NotNull final DXHttpConfigResponses responses) {
-        this.parent = parent;
+    public DXHttpConfigRequest(@NotNull DXHttpConfigUri uri,
+                               @NotNull DXHttpRequestMethod method,
+                               @NotNull DXHttpConfigHeaders headers,
+                               @NotNull DXHttpConfigFields fields,
+                               @NotNull DXHttpConfigResponses responses) {
         Uri = uri;
         Method = new SimpleObjectProperty<>(null, "method", method);
         Headers = headers;
@@ -48,23 +41,23 @@ public class DXHttpConfigRequest implements IDXTreeItem {
         Responses = responses;
     }
 
-    @NotNull
-    public DXHttpConfigEndpoint parent() {
+    public @Nullable DXHttpConfigEndpoint parent() {
         return parent;
     }
 
-    @NotNull
-    public DXHttpConfigFields fields() {
+    public void setParent(@Nullable DXHttpConfigEndpoint parent) {
+        this.parent = parent;
+    }
+
+    public @NotNull DXHttpConfigFields fields() {
         return Fields;
     }
 
-    @NotNull
-    public DXHttpConfigHeaders headers() {
+    public @NotNull DXHttpConfigHeaders headers() {
         return Headers;
     }
 
-    @NotNull
-    public DXHttpRequestMethod method() {
+    public @NotNull DXHttpRequestMethod method() {
         return Method.getValue();
     }
 
@@ -72,7 +65,6 @@ public class DXHttpConfigRequest implements IDXTreeItem {
         Method.set(method);
     }
 
-    @NotNull
     public SimpleObjectProperty<DXHttpRequestMethod> methodProperty() {
         return Method;
     }
@@ -92,7 +84,7 @@ public class DXHttpConfigRequest implements IDXTreeItem {
         return Method.map(DXHttpRequestMethod::label);
     }
 
-    public static DXHttpConfigRequest FromElement(@NotNull DXHttpConfigEndpoint parent, @NotNull Element element) {
+    public static DXHttpConfigRequest FromElement(@NotNull Element element) {
         if (!element.getTagName().equals(ELEMENT_TAG_NAME)) throw new RuntimeException("Tag name mismatch");
 
         final var uriElements = DXDomUtils.GetChildElementsWithTagName(element, DXHttpConfigUri.ELEMENT_TAG_NAME);
@@ -141,7 +133,20 @@ public class DXHttpConfigRequest implements IDXTreeItem {
 
         final var responses = DXHttpConfigResponses.FromElement(responsesElement);
 
-        return new DXHttpConfigRequest(parent, uri, method, headers, fields, responses);
+        return new DXHttpConfigRequest(uri, method, headers, fields, responses);
+    }
+
+    public @NotNull Element toElement(@NotNull Document document) {
+        final var element = document.createElement(ELEMENT_TAG_NAME);
+
+        element.setAttribute(METHOD_ATTRIBUTE_NAME, method().label());
+
+        element.appendChild(uri().toElement(document));
+        element.appendChild(responses().toElement(document));
+        element.appendChild(fields().toElement(document));
+        element.appendChild(headers().toElement(document));
+
+        return element;
     }
 
     @Override

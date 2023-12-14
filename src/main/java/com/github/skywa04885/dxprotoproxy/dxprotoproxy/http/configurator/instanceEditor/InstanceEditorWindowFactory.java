@@ -2,6 +2,7 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.instan
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigInstance;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigInstances;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -44,7 +45,7 @@ public class InstanceEditorWindowFactory {
     }
 
     @NotNull
-    public static InstanceEditorWindow create(@NotNull DXHttpConfigApi configApi) {
-        return create(InstanceEditorControllerFactory.create(configApi), "Create instance");
+    public static InstanceEditorWindow create(@NotNull HttpConfigInstances configInstances) {
+        return create(InstanceEditorControllerFactory.create(configInstances), "Create instance");
     }
 }

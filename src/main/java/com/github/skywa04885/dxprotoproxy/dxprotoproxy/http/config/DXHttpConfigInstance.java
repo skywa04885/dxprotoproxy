@@ -8,6 +8,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class DXHttpConfigInstance implements IDXTreeItem {
@@ -17,13 +19,13 @@ public class DXHttpConfigInstance implements IDXTreeItem {
     public static final String PORT_ATTRIBUTE_NAME = "Port";
     public static final String PROTOCOL_ATTRIBUTE_NAME = "Protocol";
 
-    private final @NotNull DXHttpConfigApi parent;
+    private @Nullable HttpConfigInstances parent;
     public final SimpleStringProperty name;
     public final SimpleStringProperty host;
     public final SimpleIntegerProperty port;
     public final SimpleStringProperty protocol;
 
-    public DXHttpConfigInstance(@NotNull DXHttpConfigApi parent, final String name, final String host, final int port, final String protocol) {
+    public DXHttpConfigInstance(final String name, final String host, final int port, final String protocol) {
         this.parent = parent;
         this.name = new SimpleStringProperty(null, "name", name);
         this.host = new SimpleStringProperty(null, "host", host);
@@ -31,13 +33,17 @@ public class DXHttpConfigInstance implements IDXTreeItem {
         this.protocol = new SimpleStringProperty(null, "protocol", protocol);
     }
 
-    public DXHttpConfigInstance(@NotNull DXHttpConfigApi parent)
+    public DXHttpConfigInstance()
     {
-        this(parent, "", "", 0, "");
+        this("", "", 0, "");
     }
 
-    public @NotNull DXHttpConfigApi parent() {
+    public @Nullable HttpConfigInstances parent() {
         return parent;
+    }
+
+    public void setParent(@Nullable HttpConfigInstances parent) {
+        this.parent = parent;
     }
 
     public String name() {
@@ -88,7 +94,7 @@ public class DXHttpConfigInstance implements IDXTreeItem {
         this.protocol.set(protocol);
     }
 
-    public static DXHttpConfigInstance FromElement(@NotNull DXHttpConfigApi parent, Element element) {
+    public static DXHttpConfigInstance FromElement(Element element) {
         final var name = element.getAttribute(NAME_ATTRIBUTE_NAME).trim();
         if (name.isEmpty()) throw new RuntimeException("Name attribute is missing");
 
@@ -109,7 +115,18 @@ public class DXHttpConfigInstance implements IDXTreeItem {
         final var protocol = element.getAttribute(PROTOCOL_ATTRIBUTE_NAME).trim();
         if (protocol.isEmpty()) throw new RuntimeException("Protocol missing");
 
-        return new DXHttpConfigInstance(parent, name, host, port, protocol);
+        return new DXHttpConfigInstance(name, host, port, protocol);
+    }
+
+    public @NotNull Element toElement(@NotNull Document document) {
+        final var element = document.createElement(TAG_NAME);
+
+        element.setAttribute(NAME_ATTRIBUTE_NAME, name());
+        element.setAttribute(HOST_ATTRIBUTE_NAME, host());
+        element.setAttribute(PORT_ATTRIBUTE_NAME, Integer.toString(port()));
+        element.setAttribute(PROTOCOL_ATTRIBUTE_NAME, protocol());
+
+        return element;
     }
 
     @Override

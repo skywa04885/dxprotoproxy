@@ -2,13 +2,14 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEdi
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfig;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigApis;
 import org.jetbrains.annotations.NotNull;
 
 public class ApiEditorControllerFactory {
-    public static ApiEditorController create(@NotNull DXHttpConfig httpConfig) {
+    public static ApiEditorController create(@NotNull HttpConfigApis httpConfigApis) {
         return new ApiEditorController(null,
-                new ApiEditorValidationCallback(httpConfig),
-                new ApiEditorSubmissionCallback(httpConfig));
+                new ApiEditorValidationCallback(httpConfigApis),
+                new ApiEditorSubmissionCallback(httpConfigApis));
     }
 
     public static ApiEditorController create(@NotNull DXHttpConfigApi httpConfigApi) {

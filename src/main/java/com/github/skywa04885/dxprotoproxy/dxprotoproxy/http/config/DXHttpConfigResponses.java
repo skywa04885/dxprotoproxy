@@ -3,6 +3,8 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.DXDomUtils;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.collections.FXCollections;
+import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.HashMap;
@@ -32,6 +34,16 @@ public class DXHttpConfigResponses {
 
     public DXHttpConfigResponse getByCode(final int code) {
         return Responses.get(code);
+    }
+
+    public @NotNull Element toElement(@NotNull Document document) {
+        final var element = document.createElement(ELEMENT_TAG_NAME);
+
+        Responses.values().forEach(httpConfigResponse -> {
+            element.appendChild(httpConfigResponse.toElement(document));
+        });
+
+        return element;
     }
 
     public static DXHttpConfigResponses FromElement(final Element element) {

@@ -2,14 +2,15 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.endpoi
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigEndpoint;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigEndpoints;
 import org.jetbrains.annotations.NotNull;
 
 public class EndpointEditorControllerFactory {
-    public static @NotNull EndpointEditorController create(@NotNull DXHttpConfigApi configApi) {
+    public static @NotNull EndpointEditorController create(@NotNull HttpConfigEndpoints httpConfigEndpoints) {
         return new EndpointEditorController(
                 null,
-                new EndpointEditorSaveCallback(configApi),
-                new EndpointEditorValidationCallback(configApi)
+                new EndpointEditorSaveCallback(httpConfigEndpoints),
+                new EndpointEditorValidationCallback(httpConfigEndpoints)
         );
     }
 

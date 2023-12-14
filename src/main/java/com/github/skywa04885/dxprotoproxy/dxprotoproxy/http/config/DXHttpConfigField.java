@@ -1,6 +1,9 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config;
 
 import javafx.beans.property.SimpleStringProperty;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class DXHttpConfigField {
@@ -9,50 +12,68 @@ public class DXHttpConfigField {
     public static final String NAME_ATTRIBUTE_NAME = "Name";
     public static final String VALUE_ATTRIBUTE_NAME = "Value";
 
-    public final SimpleStringProperty Path;
-    public final SimpleStringProperty Name;
-    public final SimpleStringProperty Value;
+    public final @NotNull SimpleStringProperty Path;
+    public final @NotNull SimpleStringProperty Name;
+    public final @NotNull SimpleStringProperty Value;
 
-    public DXHttpConfigField(final String path, final String name, final String value) {
+    public DXHttpConfigField(@NotNull String path, @NotNull String name, @Nullable String value) {
         Path = new SimpleStringProperty(null, "Pad", path);
         Name = new SimpleStringProperty(null, "Naam", name);
         Value = new SimpleStringProperty(null, "Waarde", value);
     }
 
-    public String path() {
+    public @NotNull String path() {
         return Path.get();
     }
 
-    public String name() {
+    public @NotNull String name() {
         return Name.get();
     }
 
-    public String value() {
+    public @Nullable String value() {
         return Value.get();
     }
 
-    public void setPath(String path) {
+    public void setPath(@NotNull String path) {
         this.Path.set(path);
     }
 
-    public void setValue(String value) {
+    public void setValue(@NotNull String value) {
         this.Value.set(value);
     }
 
-    public void setName(String name) {
+    public void setName(@Nullable String name) {
         this.Name.set(name);
     }
 
+    public @NotNull Element toElement(@NotNull Document document) {
+        final var element = document.createElement(ELEMENT_TAG_NAME);
+
+        element.setAttribute(PATH_ATTRIBUTE_NAME, path());
+        element.setAttribute(NAME_ATTRIBUTE_NAME, name());
+
+        if (value() != null) {
+            element.setAttribute(VALUE_ATTRIBUTE_NAME, value());
+        }
+
+        return element;
+    }
+
     public static DXHttpConfigField FromElement(final Element element) {
-        if (!element.getTagName().equals(ELEMENT_TAG_NAME))
+        if (!element.getTagName().equals(ELEMENT_TAG_NAME)) {
             throw new RuntimeException("Tag name mismatch, expected " + ELEMENT_TAG_NAME + ", got: "
                     + element.getTagName());
+        }
 
         final String path = element.getAttribute(PATH_ATTRIBUTE_NAME).trim();
-        if (path.isEmpty()) throw new RuntimeException("Path attribute missing from body field");
+        if (path.isEmpty()) {
+            throw new RuntimeException("Path attribute missing from body field");
+        }
 
         final String name = element.getAttribute(NAME_ATTRIBUTE_NAME).trim();
-        if (name.isEmpty()) throw new RuntimeException("Name attribute missing from body field");
+        if (name.isEmpty()) {
+            throw new RuntimeException("Name attribute missing from body field");
+        }
 
         String value = element.getAttribute(VALUE_ATTRIBUTE_NAME).trim();
         value = value.isEmpty() ? null : value;

@@ -6,19 +6,19 @@ import org.jetbrains.annotations.NotNull;
 public interface IPrimaryTreeContextMenuCallbacks {
     void createResponse(DXHttpConfigRequest request);
 
-    void createApi(@NotNull DXHttpConfig httpConfig);
+    void createApi(@NotNull HttpConfigApis httpConfigApis);
 
     void modifyApi(@NotNull DXHttpConfigApi httpConfigApi);
 
     void deleteApi(@NotNull DXHttpConfigApi httpConfigApi);
 
-    void createInstance(@NotNull DXHttpConfigApi httpConfigApi);
+    void createInstance(@NotNull HttpConfigInstances httpConfigInstances);
 
     void modifyInstance(@NotNull DXHttpConfigInstance httpConfigInstance);
 
     void deleteInstance(@NotNull DXHttpConfigInstance httpConfigInstance);
 
-    void createEndpoint(@NotNull DXHttpConfigApi httpConfigApi);
+    void createEndpoint(@NotNull HttpConfigEndpoints httpConfigEndpoints);
 
     /**
      * Deletes the given endpoint.

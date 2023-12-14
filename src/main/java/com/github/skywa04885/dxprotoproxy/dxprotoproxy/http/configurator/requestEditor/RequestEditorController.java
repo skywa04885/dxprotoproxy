@@ -494,6 +494,7 @@ public class RequestEditorController implements Initializable {
             final List<EditorQueryParameter> queryParameters = configRequest
                     .uri()
                     .queryParameters()
+                    .children()
                     .values()
                     .stream()
                     .map(EditorQueryParameterFactory::create)
@@ -514,8 +515,7 @@ public class RequestEditorController implements Initializable {
      */
     private void initializePath() {
         if (configRequest != null) {
-            final var pathTemplateRenderer = new DXHttpPathTemplateRenderer(configRequest.uri().path());
-            pathTextField.setText(pathTemplateRenderer.Render(Collections.emptyMap()));
+            pathTextField.setText(configRequest.uri().path().stringOfSegments());
         }
     }
 

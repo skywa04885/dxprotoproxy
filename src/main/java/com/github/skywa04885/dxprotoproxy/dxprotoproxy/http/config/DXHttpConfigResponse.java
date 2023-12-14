@@ -9,6 +9,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.util.List;
@@ -17,20 +20,20 @@ public class DXHttpConfigResponse implements IDXTreeItem {
     public static final String ELEMENT_NAME = "Response";
     public static final String CODE_ATTRIBUTE_NAME = "Code";
 
-    public final DXHttpConfigResponses parent;
-    public final SimpleIntegerProperty Code;
-    public final DXHttpConfigFields Fields;
-    public final DXHttpConfigHeaders Headers;
+    public final @NotNull DXHttpConfigResponses parent;
+    public final @NotNull SimpleIntegerProperty Code;
+    public final @NotNull DXHttpConfigFields Fields;
+    public final @NotNull DXHttpConfigHeaders Headers;
 
-    public DXHttpConfigResponse(DXHttpConfigResponses parent, int code, DXHttpConfigFields fields,
-                                DXHttpConfigHeaders headers) {
+    public DXHttpConfigResponse(@Nullable DXHttpConfigResponses parent, int code, @NotNull DXHttpConfigFields fields,
+                                @NotNull DXHttpConfigHeaders headers) {
         this.parent = parent;
         Code = new SimpleIntegerProperty(null, "Code", code);
         Fields = fields;
         Headers = headers;
     }
 
-    public DXHttpConfigResponses parent() {
+    public @Nullable DXHttpConfigResponses parent() {
         return parent;
     }
 
@@ -42,12 +45,23 @@ public class DXHttpConfigResponse implements IDXTreeItem {
         this.Code.set(code);
     }
 
-    public DXHttpConfigHeaders headers() {
+    public @NotNull DXHttpConfigHeaders headers() {
         return Headers;
     }
 
-    public DXHttpConfigFields fields() {
+    public @NotNull DXHttpConfigFields fields() {
         return Fields;
+    }
+
+    public @NotNull Element toElement(@NotNull Document document) {
+        final var element = document.createElement(ELEMENT_NAME);
+
+        element.setAttribute(CODE_ATTRIBUTE_NAME, Integer.toString(code()));
+
+        element.appendChild(fields().toElement(document));
+        element.appendChild(headers().toElement(document));
+
+        return element;
     }
 
     public static DXHttpConfigResponse FromElement(DXHttpConfigResponses parent, Element element) {

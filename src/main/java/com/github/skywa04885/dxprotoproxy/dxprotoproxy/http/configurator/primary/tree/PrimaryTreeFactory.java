@@ -1,6 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.tree;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.ConfigRoot;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.*;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.*;
 import javafx.collections.MapChangeListener;
@@ -42,8 +43,10 @@ public class PrimaryTreeFactory {
                 .map(this::createForHttpConfigResponse).toList());
 
         configRequest.responses().childrenProperty().addListener((MapChangeListener<Integer, DXHttpConfigResponse>) change -> {
-            if (change.wasAdded()) requestTreeItem.getChildren().add(createForHttpConfigResponse(change.getValueAdded()));
-            if (change.wasRemoved()) requestTreeItem.getChildren().removeIf(v -> v.getValue() == change.getValueRemoved());
+            if (change.wasAdded())
+                requestTreeItem.getChildren().add(createForHttpConfigResponse(change.getValueAdded()));
+            if (change.wasRemoved())
+                requestTreeItem.getChildren().removeIf(v -> v.getValue() == change.getValueRemoved());
         });
 
         return requestTreeItem;
@@ -57,49 +60,118 @@ public class PrimaryTreeFactory {
         configEndpointTreeItem.getChildren().addAll(configEndpoint.requests().values().stream().map(this::createForHttpConfigRequest).toList());
 
         configEndpoint.requestsProperty().addListener((MapChangeListener<DXHttpRequestMethod, DXHttpConfigRequest>) change -> {
-            if (change.wasAdded()) configEndpointTreeItem.getChildren().add(createForHttpConfigRequest(change.getValueAdded()));
-            if (change.wasRemoved()) configEndpointTreeItem.getChildren().removeIf(v -> v.getValue() == change.getValueRemoved());
+            if (change.wasAdded())
+                configEndpointTreeItem.getChildren().add(createForHttpConfigRequest(change.getValueAdded()));
+            if (change.wasRemoved())
+                configEndpointTreeItem.getChildren().removeIf(v -> v.getValue() == change.getValueRemoved());
         });
 
         return configEndpointTreeItem;
     }
 
+    public TreeItem<IDXTreeItem> createForHttpConfigEndpoints(HttpConfigEndpoints configEndpoints) {
+        final var endpointsTreeItem = new TreeItem<IDXTreeItem>(configEndpoints);
+
+        endpointsTreeItem.getChildren().addAll(configEndpoints
+                .children()
+                .values()
+                .stream()
+                .map(this::createForHttpConfigEndpoint)
+                .toList());
+
+        configEndpoints.childrenProperty().addListener((MapChangeListener<String, DXHttpConfigEndpoint>) change -> {
+            if (change.wasAdded())
+                endpointsTreeItem.getChildren().add(createForHttpConfigEndpoint(change.getValueAdded()));
+            if (change.wasRemoved())
+                endpointsTreeItem.getChildren().removeIf(v -> v.getValue() == change.getValueRemoved());
+        });
+
+        return endpointsTreeItem;
+    }
+
+    public TreeItem<IDXTreeItem> createForHttpConfigInstances(HttpConfigInstances configInstances) {
+        final var instancesTreeItem = new TreeItem<IDXTreeItem>(configInstances);
+
+        instancesTreeItem
+                .getChildren()
+                .addAll(configInstances
+                        .children()
+                        .values()
+                        .stream()
+                        .map(this::createForHttpConfigInstance)
+                        .toList());
+
+        configInstances.childrenProperty().addListener((MapChangeListener<String, DXHttpConfigInstance>) change -> {
+            if (change.wasAdded()) {
+                instancesTreeItem
+                        .getChildren()
+                        .add(createForHttpConfigInstance(change.getValueAdded()));
+            }
+
+            if (change.wasRemoved()) {
+                instancesTreeItem
+                        .getChildren()
+                        .removeIf(v -> v.getValue() == change.getValueRemoved());
+            }
+        });
+
+        return instancesTreeItem;
+    }
 
     public TreeItem<IDXTreeItem> createForHttpConfigApi(DXHttpConfigApi httpConfigApi) {
         final var apiTreeItem = new TreeItem<IDXTreeItem>(httpConfigApi);
 
         if (expand) apiTreeItem.setExpanded(true);
 
-        apiTreeItem.getChildren().addAll(httpConfigApi.instances().values().stream().map(this::createForHttpConfigInstance).toList());
-        apiTreeItem.getChildren().addAll(httpConfigApi.endpoints().values().stream().map(this::createForHttpConfigEndpoint).toList());
-
-        httpConfigApi.instancesProperty().addListener((MapChangeListener<String, DXHttpConfigInstance>) change -> {
-            if (change.wasAdded()) apiTreeItem.getChildren().add(createForHttpConfigInstance(change.getValueAdded()));
-            if (change.wasRemoved()) apiTreeItem.getChildren().removeIf(v -> v.getValue() == change.getValueRemoved());
-        });
-
-        httpConfigApi.endpointsProperty().addListener((MapChangeListener<String, DXHttpConfigEndpoint>) change -> {
-            if (change.wasAdded())
-                apiTreeItem.getChildren().add(createForHttpConfigEndpoint(change.getValueAdded()));
-            if (change.wasRemoved())
-                apiTreeItem.getChildren().removeIf(v -> v.getValue() == change.getValueRemoved());
-        });
+        apiTreeItem.getChildren().add(createForHttpConfigEndpoints(httpConfigApi.endpoints()));
+        apiTreeItem.getChildren().add(createForHttpConfigInstances(httpConfigApi.instances()));
 
         return apiTreeItem;
     }
 
-    public TreeItem<IDXTreeItem> createForConfig(DXHttpConfig httpConfig) {
-        final var configTreeItem = new TreeItem<IDXTreeItem>(httpConfig);
+    public TreeItem<IDXTreeItem> createForHttpConfigApis(HttpConfigApis httpConfigApis) {
+        final var httpConfigApisTreeItem = new TreeItem<IDXTreeItem>(httpConfigApis);
 
-        if (expand) configTreeItem.setExpanded(true);
+        httpConfigApisTreeItem.getChildren().addAll(httpConfigApis.children().values().stream().map(this::createForHttpConfigApi).toList());
 
-        configTreeItem.getChildren().addAll(httpConfig.httpApis().values().stream().map(this::createForHttpConfigApi).toList());
+        httpConfigApis
+                .childrenProperty()
+                .addListener((MapChangeListener<String, DXHttpConfigApi>) change -> {
+                    if (change.wasAdded()) {
+                        httpConfigApisTreeItem
+                                .getChildren()
+                                .add(createForHttpConfigApi(change.getValueAdded()));
+                    }
 
-        httpConfig.httpApisProperty().addListener((MapChangeListener<String, DXHttpConfigApi>) change -> {
-            if (change.wasAdded()) configTreeItem.getChildren().add(createForHttpConfigApi(change.getValueAdded()));
-            if (change.wasRemoved()) configTreeItem.getChildren().removeIf(v -> v.getValue() == change.getValueRemoved());
-        });
+                    if (change.wasRemoved()) {
+                        httpConfigApisTreeItem
+                                .getChildren()
+                                .removeIf(v -> v.getValue() == change.getValueRemoved());
+                    }
+                });
 
-        return configTreeItem;
+        return httpConfigApisTreeItem;
+    }
+
+    public TreeItem<IDXTreeItem> createForHttpConfig(DXHttpConfig httpConfig) {
+        final var httpConfigTreeItem = new TreeItem<IDXTreeItem>(httpConfig);
+
+        if (expand) httpConfigTreeItem.setExpanded(true);
+
+        httpConfigTreeItem.getChildren().add(createForHttpConfigApis(httpConfig.httpConfigApis()));
+
+        return httpConfigTreeItem;
+    }
+
+    public TreeItem<IDXTreeItem> createForConfigRoot(ConfigRoot configRoot) {
+        final var configRootTreeItem = new TreeItem<IDXTreeItem>(configRoot);
+
+        if (expand) {
+            configRootTreeItem.setExpanded(true);
+        }
+
+        configRootTreeItem.getChildren().add(createForHttpConfig(configRoot.httpConfig()));
+
+        return configRootTreeItem;
     }
 }

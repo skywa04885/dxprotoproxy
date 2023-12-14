@@ -1,34 +1,36 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfig;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigApis;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public class ApiEditorSubmissionCallback implements IApiEditorSubmissionCallback {
-    private final @NotNull DXHttpConfig httpConfig;
+    private final @NotNull HttpConfigApis httpConfigApis;
     private final @Nullable DXHttpConfigApi httpConfigApi;
 
-    public ApiEditorSubmissionCallback(@NotNull DXHttpConfig httpConfig, @Nullable DXHttpConfigApi httpConfigApi) {
-        this.httpConfig = httpConfig;
+    public ApiEditorSubmissionCallback(@NotNull HttpConfigApis httpConfigApis, @Nullable DXHttpConfigApi httpConfigApi) {
+        this.httpConfigApis = httpConfigApis;
         this.httpConfigApi = httpConfigApi;
     }
 
-    public ApiEditorSubmissionCallback(@NotNull DXHttpConfig httpConfig) {
-        this(httpConfig, null);
+    public ApiEditorSubmissionCallback(@NotNull HttpConfigApis httpConfigApis) {
+        this(httpConfigApis, null);
     }
 
     public ApiEditorSubmissionCallback(@NotNull DXHttpConfigApi httpConfigApi) {
-        this(httpConfigApi.parent(), httpConfigApi);
+        this(Objects.requireNonNull(httpConfigApi.parent()), httpConfigApi);
     }
 
     private void modify(@NotNull String name, @NotNull String httpVersion) {
         assert httpConfigApi != null;
 
         if (!httpConfigApi.name().equals(name)) {
-            httpConfig.httpApis().remove(httpConfigApi.name());
+            httpConfigApis.children().remove(httpConfigApi.name());
             httpConfigApi.setName(name);
-            httpConfig.httpApis().put(name, httpConfigApi);
+            httpConfigApis.children().put(name, httpConfigApi);
         }
 
         if (!httpConfigApi.httpVersion().equals(httpVersion)) {
@@ -37,8 +39,9 @@ public class ApiEditorSubmissionCallback implements IApiEditorSubmissionCallback
     }
 
     private void create(@NotNull String name, @NotNull String httpVersion) {
-        final var configApi = new DXHttpConfigApi(httpConfig, name, httpVersion);
-        httpConfig.httpApis().put(configApi.name(), configApi);
+        final var configApi = new DXHttpConfigApi(name, httpVersion);
+        configApi.setParent(httpConfigApis);
+        httpConfigApis.children().put(configApi.name(), configApi);
     }
 
     @Override

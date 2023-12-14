@@ -28,10 +28,12 @@ public class PrimaryWindowFactory {
 
             // Creates the request editor window.
             final var window = new PrimaryWindow(controller, stage);
+            controller.setWindow(window);
 
             // Returns the window.
             return window;
         } catch (IOException ioException) {
+            ioException.printStackTrace();
             throw new Error("Failed to load response editor view");
         }
     }
