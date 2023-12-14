@@ -32,7 +32,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class PrimaryController implements Initializable {
-    public SimpleObjectProperty<ConfigRoot> config = new SimpleObjectProperty<>(null, "Configuration", new ConfigRoot());
+    public SimpleObjectProperty<ConfigRoot> config;
 
     @FXML
     public TreeView<IDXTreeItem> endpointsTreeView;
@@ -43,6 +43,10 @@ public class PrimaryController implements Initializable {
     private final PrimaryTreeClipboard treeClipboard = new PrimaryTreeClipboard();
     private @Nullable PrimaryWindow window;
     private final FileChooser fileChooser = new FileChooser();
+
+    public PrimaryController(@NotNull ConfigRoot configRoot) {
+        this.config = new SimpleObjectProperty<>(null, "Configuration", configRoot);
+    }
 
     public ConfigRoot configRoot() {
         return config.getValue();

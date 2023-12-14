@@ -45,6 +45,10 @@ public class HttpConfigInstances implements IDXTreeItem {
         return children;
     }
 
+    public @Nullable DXHttpConfigInstance getChildByName(final @NotNull String name) {
+        return children().get(name);
+    }
+
     public static @NotNull HttpConfigInstances fromElement(@NotNull Element element) {
         final var configInstances = new HttpConfigInstances();
 

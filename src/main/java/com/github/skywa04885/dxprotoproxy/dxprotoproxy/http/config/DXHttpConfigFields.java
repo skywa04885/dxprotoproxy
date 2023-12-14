@@ -48,6 +48,10 @@ public class DXHttpConfigFields {
         return Fields.get(name);
     }
 
+    public boolean isEmpty() {
+        return children().isEmpty();
+    }
+
     public @NotNull Element toElement(@NotNull Document document) {
         final var element = document.createElement(ELEMENT_TAG_NAME);
 

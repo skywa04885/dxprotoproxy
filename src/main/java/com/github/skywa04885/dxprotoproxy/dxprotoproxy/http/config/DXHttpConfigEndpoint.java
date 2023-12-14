@@ -79,9 +79,8 @@ public class DXHttpConfigEndpoint implements IDXTreeItem {
         return requests;
     }
 
-    @NotNull
-    public DXHttpConfigRequest GetRequestByMethod(DXHttpRequestMethod method) {
-        return requests.get(method);
+    public @Nullable DXHttpConfigRequest getRequestByMethod(DXHttpRequestMethod method) {
+        return requests().get(method);
     }
 
     public static DXHttpConfigEndpoint FromElement(@NotNull Element element) {

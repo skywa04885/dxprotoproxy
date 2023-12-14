@@ -1,4 +1,4 @@
-package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.swagger;
+package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.swagger;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpPathTemplateParser;
@@ -15,7 +15,6 @@ import io.swagger.v3.parser.core.models.SwaggerParseResult;
 import io.swagger.v3.parser.util.SchemaTypeUtil;
 
 import java.io.File;
-import java.nio.file.FileSystemLoopException;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;

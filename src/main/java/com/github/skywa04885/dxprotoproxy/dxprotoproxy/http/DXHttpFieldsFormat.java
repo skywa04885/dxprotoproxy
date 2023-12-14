@@ -1,5 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http;
 
+import org.jetbrains.annotations.NotNull;
+
 public enum DXHttpFieldsFormat {
     JSON("JSON", "application/json"),
     XML("XML", "application/xml"),
@@ -12,6 +14,10 @@ public enum DXHttpFieldsFormat {
     DXHttpFieldsFormat(final String name, final String mimeType) {
         Name = name;
         MimeType = mimeType;
+    }
+
+    public @NotNull String mimeType() {
+        return MimeType;
     }
 
     public static DXHttpFieldsFormat GetByName(String name) {

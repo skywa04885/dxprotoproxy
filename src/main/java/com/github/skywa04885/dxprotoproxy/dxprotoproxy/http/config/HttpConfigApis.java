@@ -46,6 +46,16 @@ public class HttpConfigApis implements IDXTreeItem {
         return children;
     }
 
+    /**
+     * Attempts to get an API that has the given name.
+     *
+     * @param name the name of the API.
+     * @return the API or null if it does not exist.
+     */
+    public @Nullable DXHttpConfigApi getChildByName(final @NotNull String name) {
+        return children().get(name);
+    }
+
     public static @NotNull HttpConfigApis fromElement(@NotNull Element element) {
         if (!element.getTagName().equals(TAG_NAME)) {
             throw new RuntimeException("Tag name mismatch, expected " + TAG_NAME + " got " + element.getTagName());

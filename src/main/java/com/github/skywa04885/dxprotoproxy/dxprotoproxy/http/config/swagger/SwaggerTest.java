@@ -1,4 +1,4 @@
-package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.swagger;
+package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.swagger;
 
 import java.io.File;
 

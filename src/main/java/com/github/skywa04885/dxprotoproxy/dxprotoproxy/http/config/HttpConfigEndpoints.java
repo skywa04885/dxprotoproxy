@@ -46,6 +46,10 @@ public class HttpConfigEndpoints implements IDXTreeItem {
         return children;
     }
 
+    public @Nullable DXHttpConfigEndpoint getChildByName(final @NotNull String name) {
+        return children().get(name);
+    }
+
     public static @NotNull HttpConfigEndpoints fromElement(@NotNull Element element) {
         final var children = new HashMap<String, DXHttpConfigEndpoint>();
 

@@ -17,7 +17,7 @@ public class DXHttpPathTemplate {
         return segments;
     }
 
-    public boolean ShouldSubstitute() {
+    public boolean shouldSubstitute() {
         return segments.stream().anyMatch(segment -> segment instanceof DXHttpPathTemplatePlaceholderSegment);
     }
 

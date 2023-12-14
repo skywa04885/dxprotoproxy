@@ -18,6 +18,7 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     requires io.swagger.v3.oas.models;
     requires java.logging;
     requires syntheticafx.theme.standard;
+    requires java.net.http;
 
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator;
@@ -38,6 +39,9 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config;
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor;
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.net;
 
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.config;
+    opens com.github.skywa04885.dxprotoproxy.dxprotoproxy to javafx.fxml;
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.client;
 }
