@@ -2,8 +2,8 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primar
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.ConfigRoot;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.*;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.*;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.*;
 import javafx.collections.MapChangeListener;
 import javafx.scene.control.TreeItem;
 

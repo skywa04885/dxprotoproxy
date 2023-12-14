@@ -1,6 +1,6 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigHeader;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigHeader;
 import javafx.beans.property.SimpleStringProperty;
 
 public class EditorHeader {

@@ -1,6 +1,6 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.instanceEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigInstance;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigInstance;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

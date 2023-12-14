@@ -1,16 +1,9 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.tree;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.*;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.*;
 import javafx.scene.control.*;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
-import kotlin.Pair;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PrimaryTreeContextMenuFactory {
     private final @NotNull IPrimaryTreeContextMenuCallbacks callbacks;

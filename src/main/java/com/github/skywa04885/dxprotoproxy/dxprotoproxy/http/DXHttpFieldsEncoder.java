@@ -1,7 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigField;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigFields;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigField;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigFields;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;

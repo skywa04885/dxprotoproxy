@@ -1,6 +1,6 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigHeader;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigHeader;
 
 public class EditorHeaderFactory {
     public static EditorHeader create(DXHttpConfigHeader configHeader) {

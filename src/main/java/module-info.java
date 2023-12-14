@@ -36,12 +36,17 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.endpointEditor to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor;
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor to javafx.fxml;
-    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config;
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http;
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor;
-    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.net;
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.server.net;
+
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.server;
+    opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.server to javafx.fxml;
 
     exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.config;
     opens com.github.skywa04885.dxprotoproxy.dxprotoproxy to javafx.fxml;
-    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.client;
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.server.http.client;
+    exports com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator;
+    opens com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator to javafx.fxml;
 }

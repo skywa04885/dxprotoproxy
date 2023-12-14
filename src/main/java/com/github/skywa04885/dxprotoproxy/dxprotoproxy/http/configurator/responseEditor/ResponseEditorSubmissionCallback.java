@@ -1,7 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor;
 
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.*;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.*;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorField;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorHeader;
 import org.jetbrains.annotations.NotNull;

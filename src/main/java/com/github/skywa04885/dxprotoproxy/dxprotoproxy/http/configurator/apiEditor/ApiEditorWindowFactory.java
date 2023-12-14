@@ -1,8 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfig;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigApis;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigApi;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.HttpConfigApis;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

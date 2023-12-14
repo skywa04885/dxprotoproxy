@@ -1,8 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.instanceEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigInstance;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigValidators;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigInstances;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigInstance;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.HttpConfigValidators;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.HttpConfigInstances;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,15 +36,15 @@ public class InstanceEditorValidationCallback implements IInstanceEditorValidati
      */
     @Override
     public @Nullable String validate(@NotNull String name, @NotNull String host, int port, @NotNull String protocol) {
-        if (!DXHttpConfigValidators.isNameValid(name)) {
+        if (!HttpConfigValidators.isNameValid(name)) {
             return "Invalid name";
         }
 
-        if (!DXHttpConfigValidators.isValidHost(host)) {
+        if (!HttpConfigValidators.isValidHost(host)) {
             return "Invalid host";
         }
 
-        if (!DXHttpConfigValidators.isProtocolValid(protocol)) {
+        if (!HttpConfigValidators.isProtocolValid(protocol)) {
             return "Invalid protocol";
         }
 

@@ -1,9 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpPathTemplateRenderer;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpRequestMethod;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigRequest;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigRequest;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -18,7 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.net.URL;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 

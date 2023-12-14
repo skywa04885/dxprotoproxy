@@ -1,7 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigEndpoint;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigRequest;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigEndpoint;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigRequest;
 import org.jetbrains.annotations.NotNull;
 
 public class RequestEditorControllerFactory {

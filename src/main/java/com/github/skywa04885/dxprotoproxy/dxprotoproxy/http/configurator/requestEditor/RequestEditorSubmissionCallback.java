@@ -1,7 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor;
 
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.*;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.*;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.*;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorField;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorHeader;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.EditorQueryParameter;

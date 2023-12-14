@@ -1,7 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigRequest;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigResponse;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigRequest;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigResponse;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

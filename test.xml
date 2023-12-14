@@ -2,33 +2,54 @@
 <Root>
     <Http>
         <Apis>
-            <Api HttpVersion="http/1.1" Name="MIR">
+            <Api HttpVersion="HTTP/1.1" Name="Weather">
                 <Instances>
-                    <Instance Host="127.0.0.1" Name="Inst1" Port="80" Protocol="http"/>
+                    <Instance Host="api.openweathermap.org1" Name="OpenWeatherMap1" Port="5000" Protocol="https"/>
+                    <Instance Host="api.openweathermap.org" Name="OpenWeatherMap" Port="443" Protocol="https"/>
+                    <Instance Host="api.openweathermap.org3" Name="OpenWeatherMap2" Port="443" Protocol="https"/>
                 </Instances>
                 <Endpoints>
-                    <Endpoint Name="EP1">
+                    <Endpoint Name="Current">
                         <Request Method="GET">
-                            <Uri Path="test/{abc}">
+                            <Uri Path="data/2.5/weather">
                                 <QueryParameters>
-                                    <Parameter Key="value" Value="asdasjdasuiodi"/>
+                                    <Parameter Key="appid" Value="ddee795da0b9247de0e2c614267b0976"/>
+                                    <Parameter Key="lon" Value=""/>
+                                    <Parameter Key="units" Value="metric"/>
+                                    <Parameter Key="lang" Value="nl"/>
+                                    <Parameter Key="lat" Value=""/>
                                 </QueryParameters>
                             </Uri>
                             <Responses>
+                                <Response Code="401">
+                                    <Fields Format="JSON">
+                                        <Field Name="Message" Path="message"/>
+                                        <Field Name="Code" Path="cod"/>
+                                    </Fields>
+                                    <Headers/>
+                                </Response>
                                 <Response Code="200">
-                                    <Fields Format="JSON"/>
+                                    <Fields Format="JSON">
+                                        <Field Name="Timezone" Path="timezone"/>
+                                        <Field Name="Temperature" Path="main.temp"/>
+                                        <Field Name="Humidity" Path="main.humidity"/>
+                                        <Field Name="WindSpeed" Path="wind.speed"/>
+                                        <Field Name="Pressure" Path="main.pressure"/>
+                                    </Fields>
                                     <Headers/>
                                 </Response>
                             </Responses>
-                            <Fields Format="JSON">
-                                <Field Name="asd1239012378912" Path="asdasd" Value="body"/>
-                            </Fields>
+                            <Fields Format="None"/>
                             <Headers>
-                                <Header Key="test" Name="header" Value="With Value"/>
+                                <Header Key="nigga" Name="123" Value=""/>
                             </Headers>
                         </Request>
                     </Endpoint>
                 </Endpoints>
+            </Api>
+            <Api HttpVersion="HTTP/1.1" Name="Test">
+                <Instances/>
+                <Endpoints/>
             </Api>
         </Apis>
     </Http>

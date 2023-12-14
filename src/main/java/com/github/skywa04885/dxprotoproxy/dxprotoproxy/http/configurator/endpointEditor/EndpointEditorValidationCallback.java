@@ -1,9 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.endpointEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigEndpoint;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigValidators;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigEndpoints;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigEndpoint;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.HttpConfigValidators;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.HttpConfigEndpoints;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +46,7 @@ public class EndpointEditorValidationCallback implements IEndpointEditorValidati
     public @Nullable String validate(@NotNull String name) {
 
         // Validates the name.
-        if (!DXHttpConfigValidators.isNameValid(name)) {
+        if (!HttpConfigValidators.isNameValid(name)) {
             return "Invalid name";
         }
 

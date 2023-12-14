@@ -1,8 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigRequest;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigResponse;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigRequest;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigResponse;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

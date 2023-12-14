@@ -2,10 +2,9 @@ package com.github.skywa04885.dxprotoproxy.dxprotoproxy.config;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.DXDomUtils;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.IDXTreeItem;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfig;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfig;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.ConfiguratorImageCache;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableStringValue;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;

@@ -1,8 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigEndpoint;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigRequest;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigValidators;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigEndpoint;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigRequest;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.HttpConfigValidators;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpRequestMethod;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.*;
@@ -77,7 +77,7 @@ public class RequestEditorValidationCallback implements IRequestEditorValidation
         }
 
         // Validates the template path.
-        if (error == null && !DXHttpConfigValidators.isValidTemplatePath(path)) {
+        if (error == null && !HttpConfigValidators.isValidTemplatePath(path)) {
             error = "Invalid template path";
         }
 

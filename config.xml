@@ -1,51 +1,76 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Root>
-    <Http host="0.0.0.0" port="8080">
+    <Http>
         <Apis>
-            <Api Name="Weather" HttpVersion="HTTP/1.1">
+            <Api HttpVersion="HTTP/1.1" Name="Weather">
                 <Instances>
-                    <Instance Name="OpenWeatherMap" Host="api.openweathermap.org" Port="443" Protocol="https" />
-                    <Instance Name="OpenWeatherMap1" Host="api.openweathermap.org1" Port="5000" Protocol="https" />
-                    <Instance Name="OpenWeatherMap2" Host="api.openweathermap.org3" Port="443" Protocol="https" />
+                    <Instance Host="api.openweathermap.org1" Name="OpenWeatherMap1" Port="5000" Protocol="https"/>
+                    <Instance Host="api.openweathermap.org" Name="OpenWeatherMap" Port="443" Protocol="https"/>
+                    <Instance Host="api.openweathermap.org3" Name="OpenWeatherMap2" Port="443" Protocol="https"/>
                 </Instances>
                 <Endpoints>
                     <Endpoint Name="Current">
                         <Request Method="GET">
-                            <Uri Path="/data/2.5/weather">
+                            <Uri Path="data/2.5/weather">
                                 <QueryParameters>
-                                    <Parameter Key="lat" />
-                                    <Parameter Key="lon" />
-                                    <Parameter Key="appid" Value="ddee795da0b9247de0e2c614267b0976" />
-                                    <Parameter Key="units" Value="metric" />
-                                    <Parameter Key="lang" Value="nl" />
+                                    <Parameter Key="appid" Value="ddee795da0b9247de0e2c614267b0976"/>
+                                    <Parameter Key="lon"/>
+                                    <Parameter Key="units" Value="metric"/>
+                                    <Parameter Key="lang" Value="nl"/>
+                                    <Parameter Key="lat"/>
                                 </QueryParameters>
                             </Uri>
                             <Responses>
-                                <Response Code="200">
-                                    <Fields Format="json">
-                                        <Field Name="Humidity" Path="main.humidity" />
-                                        <Field Name="Temperature" Path="main.temp" />
-                                        <Field Name="Pressure" Path="main.pressure" />
-                                        <Field Name="WindSpeed" Path="wind.speed" />
-                                        <Field Name="Timezone" Path="timezone" />
-                                    </Fields>
-                                </Response>
                                 <Response Code="401">
-                                    <Fields Format="json">
-                                        <Field Name="Code" Path="cod" />
-                                        <Field Name="Message" Path="message" />
+                                    <Fields Format="JSON">
+                                        <Field Name="Message" Path="message"/>
+                                        <Field Name="Code" Path="cod"/>
                                     </Fields>
+                                    <Headers/>
+                                </Response>
+                                <Response Code="200">
+                                    <Fields Format="JSON">
+                                        <Field Name="Timezone" Path="timezone"/>
+                                        <Field Name="Temperature" Path="main.temp"/>
+                                        <Field Name="Humidity" Path="main.humidity"/>
+                                        <Field Name="WindSpeed" Path="wind.speed"/>
+                                        <Field Name="Pressure" Path="main.pressure"/>
+                                    </Fields>
+                                    <Headers/>
                                 </Response>
                             </Responses>
+                            <Fields Format="None"/>
+                            <Headers/>
                         </Request>
                     </Endpoint>
                 </Endpoints>
             </Api>
-            <Api Name="Test" HttpVersion="HTTP/1.1">
+            <Api HttpVersion="HTTP/1.1" Name="Test">
+                <Instances/>
+                <Endpoints/>
+            </Api>
+            <Api HttpVersion="http/1.1" Name="Rien">
                 <Instances>
+                    <Instance Host="127.0.0.1" Name="Rien" Port="8080" Protocol="http"/>
                 </Instances>
                 <Endpoints>
-
+                    <Endpoint Name="Rien">
+                        <Request Method="GET">
+                            <Uri Path="test">
+                                <QueryParameters/>
+                            </Uri>
+                            <Responses>
+                                <Response Code="200">
+                                    <Fields Format="JSON">
+                                        <Field Name="Test" Path="test" Value=""/>
+                                    </Fields>
+                                    <Headers/>
+                                </Response>
+                            </Responses>
+                            <Fields Format="JSON"/>
+                            <Headers/>
+                        </Request>
+                    </Endpoint>
                 </Endpoints>
             </Api>
         </Apis>

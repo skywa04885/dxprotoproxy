@@ -1,9 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.apiEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfig;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigValidators;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigApis;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigApi;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.HttpConfigValidators;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.HttpConfigApis;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,11 +27,11 @@ public class ApiEditorValidationCallback implements IApiEditorValidationCallback
 
     @Override
     public @Nullable String validate(@NotNull String name, @NotNull String httpVersion) {
-        if (!DXHttpConfigValidators.isNameValid(name)) {
+        if (!HttpConfigValidators.isNameValid(name)) {
             return "Name is invalid";
         }
 
-        if (!DXHttpConfigValidators.isHttpVersionValid(httpVersion)) {
+        if (!HttpConfigValidators.isHttpVersionValid(httpVersion)) {
             return "HTTP version is invalid";
         }
 

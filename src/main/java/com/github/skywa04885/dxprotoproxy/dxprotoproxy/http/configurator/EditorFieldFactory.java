@@ -1,6 +1,6 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigField;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigField;
 
 public class EditorFieldFactory {
     /**

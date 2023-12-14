@@ -1,6 +1,6 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.primary.tree;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.*;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.*;
 import org.jetbrains.annotations.NotNull;
 
 public interface IPrimaryTreeContextMenuCallbacks {

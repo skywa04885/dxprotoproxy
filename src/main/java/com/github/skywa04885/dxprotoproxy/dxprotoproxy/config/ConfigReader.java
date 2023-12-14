@@ -1,6 +1,5 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.config;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfig;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilderFactory;

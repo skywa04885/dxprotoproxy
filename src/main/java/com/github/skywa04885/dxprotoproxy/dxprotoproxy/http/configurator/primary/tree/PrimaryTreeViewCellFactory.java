@@ -30,12 +30,10 @@ public class PrimaryTreeViewCellFactory implements Callback<TreeView<IDXTreeItem
             }
         };
 
-        treeCell.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.SECONDARY && !treeCell.isEmpty()) {
-                final var contextmenu = configuratorTreeContextMenuPicker.getContextMenuForTreeCell(treeCell);
-                contextmenu.setUserData(treeCell);
-                contextmenu.show(treeCell, event.getScreenX(), event.getScreenY());
-            }
+        treeCell.setOnContextMenuRequested(event -> {
+            final var contextmenu = configuratorTreeContextMenuPicker.getContextMenuForTreeCell(treeCell);
+            contextmenu.setUserData(treeCell);
+            contextmenu.show(treeCell, event.getScreenX(), event.getScreenY());
         });
 
         return treeCell;

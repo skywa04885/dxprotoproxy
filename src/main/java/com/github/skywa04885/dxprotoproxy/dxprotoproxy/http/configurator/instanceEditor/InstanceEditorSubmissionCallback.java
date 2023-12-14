@@ -1,9 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.instanceEditor;
 
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigApi;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigInstance;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigApis;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.HttpConfigInstances;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigInstance;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.HttpConfigInstances;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

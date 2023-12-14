@@ -1,7 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.responseEditor;
 
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.DXHttpFieldsFormat;
-import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.config.DXHttpConfigResponse;
+import com.github.skywa04885.dxprotoproxy.dxprotoproxy.config.http.DXHttpConfigResponse;
 import com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
