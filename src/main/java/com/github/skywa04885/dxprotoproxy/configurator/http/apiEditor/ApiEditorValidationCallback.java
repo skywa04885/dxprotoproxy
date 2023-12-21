@@ -2,7 +2,7 @@ package com.github.skywa04885.dxprotoproxy.configurator.http.apiEditor;
 
 import com.github.skywa04885.dxprotoproxy.config.http.DXHttpConfigApi;
 import com.github.skywa04885.dxprotoproxy.config.http.HttpConfigApis;
-import com.github.skywa04885.dxprotoproxy.config.http.HttpConfigValidators;
+import com.github.skywa04885.dxprotoproxy.GlobalConstants;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,11 +27,11 @@ public class ApiEditorValidationCallback implements IApiEditorValidationCallback
 
     @Override
     public @Nullable String validate(@NotNull String name, @NotNull String httpVersion) {
-        if (!HttpConfigValidators.isNameValid(name)) {
+        if (!GlobalConstants.isNameValid(name)) {
             return "Name is invalid";
         }
 
-        if (!HttpConfigValidators.isHttpVersionValid(httpVersion)) {
+        if (!GlobalConstants.isHttpVersionValid(httpVersion)) {
             return "HTTP version is invalid";
         }
 

@@ -49,6 +49,15 @@ public class MQTTSubscriptionConfig {
     }
 
     /**
+     * Sets the topic.
+     *
+     * @param topic the new topic.
+     */
+    public void setTopic(@NotNull String topic) {
+        topicProperty.set(topic);
+    }
+
+    /**
      * Gets the parent.
      *
      * @return the parent.

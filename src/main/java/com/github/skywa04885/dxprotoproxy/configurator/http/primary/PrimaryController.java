@@ -1,6 +1,8 @@
 package com.github.skywa04885.dxprotoproxy.configurator.http.primary;
 
 import com.github.skywa04885.dxprotoproxy.config.http.*;
+import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
+import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
 import com.github.skywa04885.dxprotoproxy.configurator.http.endpointEditor.EndpointEditorWindowFactory;
 import com.github.skywa04885.dxprotoproxy.configurator.http.primary.tree.*;
 import com.github.skywa04885.dxprotoproxy.configurator.http.requestEditor.RequestEditorWindowFactory;
@@ -13,6 +15,7 @@ import com.github.skywa04885.dxprotoproxy.configurator.http.apiEditor.ApiEditorW
 import com.github.skywa04885.dxprotoproxy.configurator.http.instanceEditor.InstanceEditorWindowFactory;
 import com.github.skywa04885.dxprotoproxy.configurator.http.primary.tree.*;
 import com.github.skywa04885.dxprotoproxy.configurator.http.responseEditor.ResponseEditorWindowFactory;
+import com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor.MQTTClientEditorWindowFactory;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -200,6 +203,21 @@ public class PrimaryController implements Initializable {
             @Override
             public void modifyRequest(@NotNull DXHttpConfigRequest configRequest) {
                 RequestEditorWindowFactory.modify(configRequest);
+            }
+
+            @Override
+            public void createMqttClient(@NotNull MQTTClientsConfig mqttClientsConfig) {
+                MQTTClientEditorWindowFactory.create(mqttClientsConfig);
+            }
+
+            @Override
+            public void deleteMqttClient(@NotNull MQTTClientConfig mqttClientConfig) {
+                Objects.requireNonNull(mqttClientConfig.parent()).children().remove(mqttClientConfig);
+            }
+
+            @Override
+            public void modifyMqttClient(@NotNull MQTTClientConfig mqttClientConfig) {
+                MQTTClientEditorWindowFactory.update(mqttClientConfig);
             }
         };
 

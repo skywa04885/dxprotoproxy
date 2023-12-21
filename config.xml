@@ -100,8 +100,7 @@
     </Http>
     <MQTT>
         <MQTTClients>
-            <MQTTClient ClientHostname="127.0.0.1" ClientPort="7000"
-                        BrokerHostname="127.0.0.1" BrokerPort="3000">
+            <MQTTClient BrokerHostname="127.0.0.1" BrokerPort="3000" ClientHostname="127.0.0.1" ClientPort="7000">
                 <MQTTSubscription>test</MQTTSubscription>
             </MQTTClient>
         </MQTTClients>

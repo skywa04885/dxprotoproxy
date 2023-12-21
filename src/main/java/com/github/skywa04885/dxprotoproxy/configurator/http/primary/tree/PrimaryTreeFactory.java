@@ -4,9 +4,14 @@ import com.github.skywa04885.dxprotoproxy.IDXTreeItem;
 import com.github.skywa04885.dxprotoproxy.config.ConfigRoot;
 import com.github.skywa04885.dxprotoproxy.config.http.*;
 import com.github.skywa04885.dxprotoproxy.config.http.*;
+import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
+import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
+import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTConfig;
 import com.github.skywa04885.dxprotoproxy.http.DXHttpRequestMethod;
+import javafx.collections.ListChangeListener;
 import javafx.collections.MapChangeListener;
 import javafx.scene.control.TreeItem;
+import org.jetbrains.annotations.NotNull;
 
 public class PrimaryTreeFactory {
     private final boolean expand;
@@ -170,6 +175,82 @@ public class PrimaryTreeFactory {
         return httpConfigTreeItem;
     }
 
+
+    /**
+     * Constructs the mqtt clients config tree item for the given mqtt client config.
+     *
+     * @param mqttClientsConfig the mqtt client config to use.
+     * @return the tree item associated with it.
+     */
+    public @NotNull TreeItem<IDXTreeItem> createForMqttClientConfig(@NotNull MQTTClientConfig mqttClientConfig) {
+        final var mqttClientConfigTreeItem = new TreeItem<IDXTreeItem>(mqttClientConfig);
+
+        if (expand) {
+            mqttClientConfigTreeItem.setExpanded(true);
+        }
+
+        return mqttClientConfigTreeItem;
+    }
+
+    /**
+     * Constructs the mqtt clients config tree item for the given mqtt clients config.
+     *
+     * @param mqttClientsConfig the mqtt clients config to use.
+     * @return the tree item associated with it.
+     */
+    public @NotNull TreeItem<IDXTreeItem> createForMqttClientsConfig(@NotNull MQTTClientsConfig mqttClientsConfig) {
+        // Creates the new tree item.
+        final var mqttClientsConfigTreeItem = new TreeItem<IDXTreeItem>(mqttClientsConfig);
+
+        // Expands it if needed.
+        if (expand) {
+            mqttClientsConfigTreeItem.setExpanded(true);
+        }
+
+        // Creates all the tree items for the children.
+        mqttClientsConfigTreeItem.getChildren().addAll(mqttClientsConfig.children().stream().map(
+                this::createForMqttClientConfig).toList());
+
+        // Listens for changes in the children.
+        mqttClientsConfig.childrenProperty().addListener(new ListChangeListener<MQTTClientConfig>() {
+            @Override
+            public void onChanged(Change<? extends MQTTClientConfig> change) {
+                while (change.next()) {
+                    if (change.wasAdded()) {
+                        mqttClientsConfigTreeItem.getChildren().add(createForMqttClientConfig(
+                                change.getAddedSubList().get(0)));
+                    }
+
+                    if (change.wasRemoved()) {
+                        mqttClientsConfigTreeItem.getChildren()
+                                .removeIf(item -> item.getValue() == change.getRemoved().get(0));
+                    }
+                }
+            }
+        });
+
+        // Returns the tree item.
+        return mqttClientsConfigTreeItem;
+    }
+
+    /**
+     * Constructs the mqtt tree item for the given mqtt config.
+     *
+     * @param mqttConfig the mqtt config.
+     * @return the tree item.
+     */
+    public @NotNull TreeItem<IDXTreeItem> createForMqttConfig(@NotNull MQTTConfig mqttConfig) {
+        final var mqttConfigTreeItem = new TreeItem<IDXTreeItem>(mqttConfig);
+
+        if (expand) {
+            mqttConfigTreeItem.setExpanded(true);
+        }
+
+        mqttConfigTreeItem.getChildren().add(createForMqttClientsConfig(mqttConfig.mqttClientsConfig()));
+
+        return mqttConfigTreeItem;
+    }
+
     public TreeItem<IDXTreeItem> createForConfigRoot(ConfigRoot configRoot) {
         final var configRootTreeItem = new TreeItem<IDXTreeItem>(configRoot);
 
@@ -178,6 +259,7 @@ public class PrimaryTreeFactory {
         }
 
         configRootTreeItem.getChildren().add(createForHttpConfig(configRoot.httpConfig()));
+        configRootTreeItem.getChildren().add(createForMqttConfig(configRoot.mqttConfig()));
 
         return configRootTreeItem;
     }

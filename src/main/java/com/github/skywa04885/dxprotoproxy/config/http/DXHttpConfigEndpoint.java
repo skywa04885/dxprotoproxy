@@ -1,6 +1,6 @@
 package com.github.skywa04885.dxprotoproxy.config.http;
 
-import com.github.skywa04885.dxprotoproxy.configurator.http.ConfiguratorImageCache;
+import com.github.skywa04885.dxprotoproxy.configurator.ConfiguratorImageCache;
 import com.github.skywa04885.dxprotoproxy.DXDomUtils;
 import com.github.skywa04885.dxprotoproxy.IDXTreeItem;
 import com.github.skywa04885.dxprotoproxy.http.DXHttpRequestMethod;

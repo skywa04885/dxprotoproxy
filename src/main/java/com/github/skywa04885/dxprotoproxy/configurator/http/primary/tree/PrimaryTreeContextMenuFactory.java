@@ -3,6 +3,8 @@ package com.github.skywa04885.dxprotoproxy.configurator.http.primary.tree;
 import com.github.skywa04885.dxprotoproxy.IDXTreeItem;
 import com.github.skywa04885.dxprotoproxy.config.http.*;
 import com.github.skywa04885.dxprotoproxy.config.http.*;
+import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
+import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
 import javafx.scene.control.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -136,8 +138,38 @@ public class PrimaryTreeContextMenuFactory {
         return contextMenu;
     }
 
+    private @NotNull ContextMenu createMqttClientsConfigContextMenu(@NotNull MQTTClientsConfig mqttClientsConfig) {
+        final var contextMenu = new ContextMenu();
+
+        final var createClientMenuItem = new MenuItem("Create client");
+
+        createClientMenuItem.setOnAction(actionEvent -> callbacks.createMqttClient(mqttClientsConfig));
+
+        contextMenu.getItems().add(createClientMenuItem);
+
+        return contextMenu;
+    }
+
+    private @NotNull ContextMenu createMqttClientConfigContextMenu(@NotNull MQTTClientConfig mqttClientConfig) {
+        final var contextMenu = new ContextMenu();
+
+        final var modifyMenuItem = new MenuItem("Modify");
+        final var deleteMenuItem = new MenuItem("Delete");
+
+        modifyMenuItem.setOnAction(actionEvent -> callbacks.modifyMqttClient(mqttClientConfig));
+        deleteMenuItem.setOnAction(actionEvent -> callbacks.deleteMqttClient(mqttClientConfig));
+
+        contextMenu.getItems().addAll(modifyMenuItem, deleteMenuItem);
+
+        return contextMenu;
+    }
+
     public ContextMenu getContextMenuForTreeCell(TreeCell<IDXTreeItem> treeCell) {
         final TreeItem<IDXTreeItem> treeItem = treeCell.getTreeItem();
+
+        if (treeItem == null) {
+            return new ContextMenu();
+        }
 
         final var value = treeItem.getValue();
 
@@ -159,6 +191,10 @@ public class PrimaryTreeContextMenuFactory {
             return createEndpointsContextMenu(httpConfigEndpoints);
         } else if (value instanceof HttpConfigApis httpConfigApis) {
             return createHttpApisContextMenu(httpConfigApis);
+        } else if (value instanceof MQTTClientsConfig mqttClientsConfig) {
+            return createMqttClientsConfigContextMenu(mqttClientsConfig);
+        } else if (value instanceof MQTTClientConfig mqttClientConfig) {
+            return createMqttClientConfigContextMenu(mqttClientConfig);
         }
 
         return createEmptyContextMenu(treeCell);

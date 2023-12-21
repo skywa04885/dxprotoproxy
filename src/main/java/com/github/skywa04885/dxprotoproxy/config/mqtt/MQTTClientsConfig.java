@@ -1,9 +1,16 @@
 package com.github.skywa04885.dxprotoproxy.config.mqtt;
 
 import com.github.skywa04885.dxprotoproxy.DXDomUtils;
+import com.github.skywa04885.dxprotoproxy.IDXTreeItem;
+import com.github.skywa04885.dxprotoproxy.configurator.ConfiguratorImageCache;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
@@ -15,7 +22,7 @@ import java.util.List;
 /**
  * This class represents the mqtt clients element in the config.
  */
-public class MQTTClientsConfig {
+public class MQTTClientsConfig implements IDXTreeItem {
     /**
      * Static constants.
      */
@@ -145,5 +152,15 @@ public class MQTTClientsConfig {
 
         // Returns the constructed clients config.
         return mqttClientsConfig;
+    }
+
+    @Override
+    public Node treeItemGraphic() {
+        return new ImageView(ConfiguratorImageCache.instance().read("icons/mqtt_clients.png"));
+    }
+
+    @Override
+    public ObservableValue<String> treeItemText() {
+        return Bindings.createStringBinding(() -> "Clients");
     }
 }

@@ -3,7 +3,7 @@ package com.github.skywa04885.dxprotoproxy.configurator.http.requestEditor;
 import com.github.skywa04885.dxprotoproxy.config.http.DXHttpConfigEndpoint;
 import com.github.skywa04885.dxprotoproxy.config.http.DXHttpConfigRequest;
 import com.github.skywa04885.dxprotoproxy.configurator.http.*;
-import com.github.skywa04885.dxprotoproxy.config.http.HttpConfigValidators;
+import com.github.skywa04885.dxprotoproxy.GlobalConstants;
 import com.github.skywa04885.dxprotoproxy.http.DXHttpFieldsFormat;
 import com.github.skywa04885.dxprotoproxy.http.DXHttpRequestMethod;
 import org.jetbrains.annotations.NotNull;
@@ -77,7 +77,7 @@ public class RequestEditorValidationCallback implements IRequestEditorValidation
         }
 
         // Validates the template path.
-        if (error == null && !HttpConfigValidators.isValidTemplatePath(path)) {
+        if (error == null && !GlobalConstants.isValidTemplatePath(path)) {
             error = "Invalid template path";
         }
 

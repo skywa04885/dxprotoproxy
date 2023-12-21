@@ -2,7 +2,7 @@ package com.github.skywa04885.dxprotoproxy.configurator.http.instanceEditor;
 
 import com.github.skywa04885.dxprotoproxy.config.http.DXHttpConfigInstance;
 import com.github.skywa04885.dxprotoproxy.config.http.HttpConfigInstances;
-import com.github.skywa04885.dxprotoproxy.config.http.HttpConfigValidators;
+import com.github.skywa04885.dxprotoproxy.GlobalConstants;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,15 +36,15 @@ public class InstanceEditorValidationCallback implements IInstanceEditorValidati
      */
     @Override
     public @Nullable String validate(@NotNull String name, @NotNull String host, int port, @NotNull String protocol) {
-        if (!HttpConfigValidators.isNameValid(name)) {
+        if (!GlobalConstants.isNameValid(name)) {
             return "Invalid name";
         }
 
-        if (!HttpConfigValidators.isValidHost(host)) {
+        if (!GlobalConstants.isValidHost(host)) {
             return "Invalid host";
         }
 
-        if (!HttpConfigValidators.isProtocolValid(protocol)) {
+        if (!GlobalConstants.isProtocolValid(protocol)) {
             return "Invalid protocol";
         }
 

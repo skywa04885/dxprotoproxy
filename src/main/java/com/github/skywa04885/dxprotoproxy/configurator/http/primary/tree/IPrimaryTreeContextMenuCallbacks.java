@@ -2,6 +2,8 @@ package com.github.skywa04885.dxprotoproxy.configurator.http.primary.tree;
 
 import com.github.skywa04885.dxprotoproxy.config.http.*;
 import com.github.skywa04885.dxprotoproxy.config.http.*;
+import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
+import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
 import org.jetbrains.annotations.NotNull;
 
 public interface IPrimaryTreeContextMenuCallbacks {
@@ -64,4 +66,25 @@ public interface IPrimaryTreeContextMenuCallbacks {
      * @param configRequest the request that needs to be modified.
      */
     void modifyRequest(@NotNull DXHttpConfigRequest configRequest);
+
+    /**
+     * Gets called when a new mqtt client needs to be created in the given clients config.
+     *
+     * @param mqttClientsConfig the clients config to create the client in.
+     */
+    void createMqttClient(@NotNull MQTTClientsConfig mqttClientsConfig);
+
+    /**
+     * Gets called when the given mqtt client needs to be deleted.
+     *
+     * @param mqttClientConfig the mqtt client to delete.
+     */
+    void deleteMqttClient(@NotNull MQTTClientConfig mqttClientConfig);
+
+    /**
+     * Gets called when the given mqtt client config needs to be modified.
+     *
+     * @param mqttClientConfig the mqtt client config that needs to be modified.
+     */
+    void modifyMqttClient(@NotNull MQTTClientConfig mqttClientConfig);
 }

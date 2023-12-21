@@ -2,7 +2,7 @@ package com.github.skywa04885.dxprotoproxy.config;
 
 import com.github.skywa04885.dxprotoproxy.config.http.DXHttpConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTConfig;
-import com.github.skywa04885.dxprotoproxy.configurator.http.ConfiguratorImageCache;
+import com.github.skywa04885.dxprotoproxy.configurator.ConfiguratorImageCache;
 import com.github.skywa04885.dxprotoproxy.DXDomUtils;
 import com.github.skywa04885.dxprotoproxy.IDXTreeItem;
 import javafx.beans.binding.Bindings;
@@ -32,6 +32,14 @@ public class ConfigRoot implements IDXTreeItem {
 
     public @NotNull DXHttpConfig httpConfig() {
         return httpConfig;
+    }
+
+    /**
+     * Gets the mqtt config.
+     * @return the mqtt config.
+     */
+    public @NotNull MQTTConfig mqttConfig() {
+        return mqttConfig;
     }
 
     private static @NotNull DXHttpConfig httpConfigFromElement(@NotNull Element element) {

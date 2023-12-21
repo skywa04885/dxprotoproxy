@@ -1,4 +1,4 @@
-package com.github.skywa04885.dxprotoproxy.configurator.http;
+package com.github.skywa04885.dxprotoproxy.configurator;
 
 import javafx.scene.image.Image;
 
