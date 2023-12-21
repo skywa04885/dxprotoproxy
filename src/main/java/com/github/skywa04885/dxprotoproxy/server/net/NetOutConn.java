@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 
-public abstract class NetOutConn extends NetConn {
+public abstract class NetOutConn {
     /**
      * This enum represents the state of an outgoing network connection.
      */
@@ -40,23 +40,14 @@ public abstract class NetOutConn extends NetConn {
     /**
      * Member variables
      */
+    private final @NotNull String hostname;
+    private final int port;
     private @NotNull State state;
     private @NotNull Producer<State> stateProducer;
 
-    /**
-     * Constructs a new connection with the given socket.
-     * @param socket the socket.
-     * @param outputStream the output stream.
-     * @param inputStream the input stream.
-     * @throws Exception the general exception.
-     */
-    public NetOutConn(@NotNull Socket socket,
-                   @NotNull NetOutputStreamWrapper outputStream,
-                   @NotNull NetInputStreamWrapper inputStream) throws Exception {
-        super(socket, outputStream, inputStream);
-
-        state = State.Disconnected;
-        stateProducer = new Producer<>();
+    public NetOutConn(@NotNull String hostname, int port) {
+        this.hostname = hostname;
+        this.port = port;
     }
 
     /**
@@ -83,11 +74,8 @@ public abstract class NetOutConn extends NetConn {
         return "Outgoing";
     }
 
-    protected abstract InetAddress getInetAddressImpl();
+    protected abstract void runImpl(@NotNull Socket socket);
 
-    protected abstract Integer getPortImpl();
-
-    @Override
     public void run() {
         while (true) {
             try {
@@ -98,10 +86,16 @@ public abstract class NetOutConn extends NetConn {
                     // Attempts to connect.
                     try {
                         // Creates the socket and connects to the remote system.
-                        final var socket = new Socket(getInetAddressImpl(), getPortImpl());
+                        final var socket = new Socket(hostname, port);
 
                         // Changes the state to connected.
                         stateProducer.produce(state = State.Connected);
+
+                        // Calls the user code for handling the socket.
+                        runImpl(socket);
+
+                        // Closes the socket since we're done with it.
+                        socket.close();
                     } catch (IOException e) {
                         // Set the state back to disconnected.;
                         stateProducer.produce(state = State.Disconnected);
@@ -111,7 +105,7 @@ public abstract class NetOutConn extends NetConn {
                     }
                 }
             } catch (InterruptedException interruptedException) {
-
+                break;
             }
         }
     }

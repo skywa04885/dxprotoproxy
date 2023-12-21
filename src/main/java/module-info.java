@@ -19,6 +19,7 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     requires java.logging;
     requires syntheticafx.theme.standard;
     requires java.net.http;
+    requires org.eclipse.paho.client.mqttv3;
 
     exports com.github.skywa04885.dxprotoproxy.http;
     exports com.github.skywa04885.dxprotoproxy;
