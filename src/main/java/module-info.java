@@ -17,9 +17,9 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     requires io.swagger.models;
     requires io.swagger.v3.oas.models;
     requires java.logging;
-    requires syntheticafx.theme.standard;
     requires java.net.http;
     requires org.eclipse.paho.client.mqttv3;
+    requires atlantafx.base;
 
     exports com.github.skywa04885.dxprotoproxy.http;
     exports com.github.skywa04885.dxprotoproxy;
@@ -40,6 +40,7 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     exports com.github.skywa04885.dxprotoproxy.configurator.http.responseEditor;
     exports com.github.skywa04885.dxprotoproxy.server.net;
     exports com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor to javafx.fxml;
+    exports com.github.skywa04885.dxprotoproxy.config.mqtt;
 
     exports com.github.skywa04885.dxprotoproxy.server;
     opens com.github.skywa04885.dxprotoproxy.server to javafx.fxml;
@@ -51,4 +52,6 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     opens com.github.skywa04885.dxprotoproxy.configurator to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.configurator.http;
     opens com.github.skywa04885.dxprotoproxy.configurator.http to javafx.fxml;
+    exports com.github.skywa04885.dxprotoproxy.fx;
+    opens com.github.skywa04885.dxprotoproxy.fx to javafx.fxml;
 }

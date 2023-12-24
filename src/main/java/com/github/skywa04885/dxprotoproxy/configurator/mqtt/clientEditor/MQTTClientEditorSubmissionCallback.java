@@ -2,7 +2,6 @@ package com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor;
 
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
-import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTSubscriptionConfig;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,26 +46,17 @@ public class MQTTClientEditorSubmissionCallback implements IMQTTClientEditorSubm
      * @param username         the username.
      * @param password         the password.
      * @param clientIdentifier the client identifier.
-     * @param subscriptions    the subscriptions.
+     * @param topics           the topics.
      */
     private void create(@NotNull String clientHostname, int clientPort,
                         @NotNull String brokerHostname, int brokerPort,
                         @Nullable String username, @Nullable String password,
                         @Nullable String clientIdentifier,
-                        @NotNull List<MQTTClientEditorSubscription> subscriptions) {
-        // Creates all the subscription configs.
-        final @NotNull List<MQTTSubscriptionConfig> mqttSubscriptionConfigs = subscriptions
-                .stream()
-                .map(editorSubscription -> editorSubscription.toConfig())
-                .collect(Collectors.toList());
-
+                        @NotNull List<String> topics) {
         // Creates the client config.
         final var mqttClientConfig = new MQTTClientConfig(clientHostname, clientPort,
                 brokerHostname, brokerPort, username, password, clientIdentifier,
-                mqttSubscriptionConfigs, mqttClientsConfig);
-
-        // Sets the parent of all the mqtt subscription configs.
-        mqttSubscriptionConfigs.forEach(subscriptionConfig -> subscriptionConfig.setParent(mqttClientConfig));
+                topics, mqttClientsConfig);
 
         // Inserts the client config into the clients.
         mqttClientsConfig.children().add(mqttClientConfig);
@@ -82,13 +72,13 @@ public class MQTTClientEditorSubmissionCallback implements IMQTTClientEditorSubm
      * @param username         the username.
      * @param password         the password.
      * @param clientIdentifier the client identifier.
-     * @param subscriptions    the subscriptions.
+     * @param topics           the topics.
      */
     private void update(@NotNull String clientHostname, int clientPort,
                         @NotNull String brokerHostname, int brokerPort,
                         @Nullable String username, @Nullable String password,
                         @Nullable String clientIdentifier,
-                        @NotNull List<MQTTClientEditorSubscription> subscriptions) {
+                        @NotNull List<String> topics) {
         // The client config should never be null.
         assert mqttClientConfig != null;
 
@@ -130,31 +120,11 @@ public class MQTTClientEditorSubmissionCallback implements IMQTTClientEditorSubm
             mqttClientConfig.setClientIdentifier(clientIdentifier);
         }
 
-        // Removes all the subscriptions that need to be removed.
-        mqttClientConfig.subscriptionConfigs().removeIf(mqttSubscriptionConfig ->
-                subscriptions.stream().noneMatch(mqttClientEditorSubscription ->
-                        Objects.equals(mqttClientEditorSubscription.mqttSubscriptionConfig(), mqttSubscriptionConfig)));
+        // Clears the existing topics.
+        mqttClientConfig.topics().clear();
 
-        // Updates all the existing subscriptions.
-        subscriptions.stream()
-                .filter(MQTTClientEditorSubscription::hasMqttSubscriptionConfig)
-                .forEach(mqttClientEditorSubscription -> {
-                    // Gets the config.
-                    final MQTTSubscriptionConfig mqttSubscriptionConfig =
-                            Objects.requireNonNull(mqttClientEditorSubscription.mqttSubscriptionConfig());
-
-                    // Updates the topic if needed.
-                    if (!mqttClientEditorSubscription.topic().equals(mqttSubscriptionConfig.topic())) {
-                        mqttSubscriptionConfig.setTopic(mqttClientEditorSubscription.topic());
-                    }
-                });
-
-        // Creates all the new subscriptions.
-        mqttClientConfig.subscriptionConfigs().addAll(subscriptions.stream()
-                .filter(MQTTClientEditorSubscription::hasNoMqttSubscriptionConfig)
-                .map(mqttClientEditorSubscription ->
-                        new MQTTSubscriptionConfig(mqttClientEditorSubscription.topic(), mqttClientConfig))
-                .toList());
+        // Creates all the new topics.
+        mqttClientConfig.topics().addAll(topics);
     }
 
     /**
@@ -167,20 +137,20 @@ public class MQTTClientEditorSubmissionCallback implements IMQTTClientEditorSubm
      * @param username         the username.
      * @param password         the password.
      * @param clientIdentifier the client identifier.
-     * @param subscriptions    the subscriptions.
+     * @param topics           the topics.
      */
     @Override
     public void submit(@NotNull String clientHostname, int clientPort,
                        @NotNull String brokerHostname, int brokerPort,
                        @Nullable String username, @Nullable String password,
                        @Nullable String clientIdentifier,
-                       @NotNull List<MQTTClientEditorSubscription> subscriptions) {
+                       @NotNull List<String> topics) {
         if (mqttClientConfig == null) {
             create(clientHostname, clientPort, brokerHostname, brokerPort, username, password, clientIdentifier,
-                    subscriptions);
+                    topics);
         } else {
             update(clientHostname, clientPort, brokerHostname, brokerPort, username, password, clientIdentifier,
-                    subscriptions);
+                    topics);
         }
     }
 }

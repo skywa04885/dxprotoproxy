@@ -22,5 +22,5 @@ public interface IMQTTClientEditorSubmissionCallback {
                 @NotNull String brokerHostname, int brokerPort,
                 @Nullable String username, @Nullable String password,
                 @Nullable String clientIdentifier,
-                @NotNull List<MQTTClientEditorSubscription> subscriptions);
+                @NotNull List<String> subscriptions);
 }

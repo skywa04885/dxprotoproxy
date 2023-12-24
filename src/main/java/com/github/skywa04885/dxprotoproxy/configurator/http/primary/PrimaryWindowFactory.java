@@ -1,37 +1,37 @@
 package com.github.skywa04885.dxprotoproxy.configurator.http.primary;
 
+import com.github.skywa04885.dxprotoproxy.fx.WindowFacade;
+import com.github.skywa04885.dxprotoproxy.fx.WindowFacadeFactory;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
 public class PrimaryWindowFactory {
-    @NotNull
-    public static PrimaryWindow create(@NotNull Stage stage, @NotNull PrimaryController controller) {
+    public static @Nullable WindowFacade<PrimaryController> create(@NotNull Stage stage) {
+        // Tries to create the window.
         try {
-            // Creates the loader and sets the controller.
-            final var loader = new FXMLLoader(PrimaryWindowFactory.class.getResource("view.fxml"));
-            loader.setController(controller);
+            // Gets the URL for the view resource.
+            final @Nullable URL viewURL = PrimaryWindowFactory.class.getResource("view.fxml");
 
-            // Sets the stage title.
-            stage.setTitle("DXProtoProxy-Configurator");
-
-            // Loads the scene, puts it in the stage and shows the stage.
-            final var scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.show();
-
-            // Creates the request editor window.
-            final var window = new PrimaryWindow(controller, stage);
-            controller.setWindow(window);
-
-            // Returns the window.
-            return window;
+            // Creates the window and returns it.
+            return WindowFacadeFactory.create(Objects.requireNonNull(viewURL),
+                    stage, "Configurator", PrimaryController.class);
         } catch (IOException ioException) {
-            ioException.printStackTrace();
-            throw new Error("Failed to load response editor view");
+            // Shows the alert indicating the failure of the loading.
+            final var alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Could not open application");
+            alert.setContentText("Failed to load resource of the primary view");
+            alert.show();
+
+            // Returns null.
+            return null;
         }
     }
 }

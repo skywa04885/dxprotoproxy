@@ -4,7 +4,6 @@ import com.github.skywa04885.dxprotoproxy.DXDomUtils;
 import com.github.skywa04885.dxprotoproxy.IDXTreeItem;
 import com.github.skywa04885.dxprotoproxy.configurator.ConfiguratorImageCache;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -33,6 +32,7 @@ public class MQTTClientConfig implements IDXTreeItem {
     public static final @NotNull String USERNAME_ATTRIBUTE_NAME = "Username";
     public static final @NotNull String PASSWORD_ATTRIBUTE_NAME = "Password";
     public static final @NotNull String CLIENT_IDENTIFIER_ATTRIBUTE_NAME = "ClientIdentifier";
+    public static final @NotNull String TOPIC_TAG_NAME = "Topic";
 
     /**
      * Member variables.
@@ -44,26 +44,26 @@ public class MQTTClientConfig implements IDXTreeItem {
     private final @NotNull SimpleStringProperty usernameProperty;
     private final @NotNull SimpleStringProperty passwordProperty;
     private final @NotNull SimpleStringProperty clientIdentifierProperty;
-    private final @NotNull SimpleListProperty<MQTTSubscriptionConfig> subscriptionConfigsProperty;
+    private final @NotNull SimpleListProperty<String> topicsProperty;
     private final @NotNull SimpleObjectProperty<MQTTClientsConfig> parentProperty;
 
     /**
      * Constructs a new mqtt client config with the given parameters.
      *
-     * @param clientHostname      the hostname of the client.
-     * @param clientPort          the port of the client.
-     * @param brokerHostname      the hostname of the broker.
-     * @param brokerPort          the port of the broker.
-     * @param username            the username to authenticate with.
-     * @param password            the password to authenticate with.
-     * @param clientIdentifier    the client identifier to authenticate with.
-     * @param subscriptionConfigs the subscription configurations.
-     * @param parent              the parent.
+     * @param clientHostname   the hostname of the client.
+     * @param clientPort       the port of the client.
+     * @param brokerHostname   the hostname of the broker.
+     * @param brokerPort       the port of the broker.
+     * @param username         the username to authenticate with.
+     * @param password         the password to authenticate with.
+     * @param clientIdentifier the client identifier to authenticate with.
+     * @param topics           the topics.
+     * @param parent           the parent.
      */
     public MQTTClientConfig(@NotNull String clientHostname, @NotNull Integer clientPort,
                             @NotNull String brokerHostname, @NotNull Integer brokerPort, @Nullable String username,
                             @Nullable String password, @Nullable String clientIdentifier,
-                            @NotNull List<MQTTSubscriptionConfig> subscriptionConfigs,
+                            @NotNull List<String> topics,
                             @Nullable MQTTClientsConfig parent) {
         clientHostnameProperty = new SimpleStringProperty(null, "clientHostname", clientHostname);
         clientPortProperty = new SimpleIntegerProperty(null, "clientPort", clientPort);
@@ -72,8 +72,8 @@ public class MQTTClientConfig implements IDXTreeItem {
         usernameProperty = new SimpleStringProperty(null, "username", username);
         passwordProperty = new SimpleStringProperty(null, "password", password);
         clientIdentifierProperty = new SimpleStringProperty(null, "clientIdentifier", clientIdentifier);
-        subscriptionConfigsProperty = new SimpleListProperty<>(null, "subscriptionConfigs",
-                FXCollections.observableList(subscriptionConfigs));
+        topicsProperty = new SimpleListProperty<>(null, "topics",
+                FXCollections.observableList(topics));
         parentProperty = new SimpleObjectProperty<>(null, "parent", parent);
     }
 
@@ -285,21 +285,21 @@ public class MQTTClientConfig implements IDXTreeItem {
     }
 
     /**
-     * Gets the subscriptions.
+     * Gets the topics.
      *
-     * @return the subscriptions.
+     * @return the topics.
      */
-    public @NotNull List<MQTTSubscriptionConfig> subscriptionConfigs() {
-        return subscriptionConfigsProperty.get();
+    public @NotNull List<String> topics() {
+        return topicsProperty.get();
     }
 
     /**
-     * Gets the subscriptions property.
+     * Gets the topics-property.
      *
-     * @return the subscriptions property.
+     * @return the topics-property.
      */
-    public @NotNull SimpleListProperty<MQTTSubscriptionConfig> subscriptionConfigsProperty() {
-        return subscriptionConfigsProperty;
+    public @NotNull SimpleListProperty<String> topicsProperty() {
+        return topicsProperty;
     }
 
     /**
@@ -337,9 +337,12 @@ public class MQTTClientConfig implements IDXTreeItem {
             element.setAttribute(CLIENT_IDENTIFIER_ATTRIBUTE_NAME, clientIdentifier());
         }
 
-        // Creates all the subscription configurations.
-        subscriptionConfigs().forEach(mqttSubscriptionConfig ->
-                element.appendChild(mqttSubscriptionConfig.toElement(document)));
+        // Creates all the topic elements.
+        topics().forEach(topic -> {
+            final var topicElement = document.createElement(TOPIC_TAG_NAME);
+            topicElement.setTextContent(topic);
+            element.appendChild(topicElement);
+        });
 
         return element;
     }
@@ -411,25 +414,20 @@ public class MQTTClientConfig implements IDXTreeItem {
                 ? null
                 : element.getAttribute(CLIENT_IDENTIFIER_ATTRIBUTE_NAME);
 
-        // Gets the subscription configuration elements.
-        final @NotNull List<Element> subscriptionConfigElements = DXDomUtils.GetChildElementsWithTagName(element,
-                MQTTSubscriptionConfig.ELEMENT_TAG_NAME);
+        // Gets the topic elements.
+        final @NotNull List<Element> topicElements = DXDomUtils.GetChildElementsWithTagName(element,
+                TOPIC_TAG_NAME);
 
-        // Parses all the subscription config elements.
-        final @NotNull List<MQTTSubscriptionConfig> subscriptionConfigs = subscriptionConfigElements
+        // Parses all the topic elements.
+        final @NotNull List<String> topics = topicElements
                 .stream()
-                .map(MQTTSubscriptionConfig::fromElement)
+                .map(org.w3c.dom.Node::getTextContent)
                 .collect(Collectors.toList());
 
-        // Constructs the new mqtt client config.
-        final var mqttClientConfig = new MQTTClientConfig(clientHostname, clientPort, brokerHostname, brokerPort, username, password,
-                clientIdentifier, subscriptionConfigs, null);
-
-        // Sets the parent of all the subscription configs.
-        subscriptionConfigs.forEach(subscriptionConfig -> subscriptionConfig.setParent(mqttClientConfig));
-
-        // Returns the mqtt client config.
-        return mqttClientConfig;
+        // Constructs and returns the mqtt client config.
+        return new MQTTClientConfig(clientHostname, clientPort, brokerHostname,
+                brokerPort, username, password,
+                clientIdentifier, topics, null);
     }
 
     /**

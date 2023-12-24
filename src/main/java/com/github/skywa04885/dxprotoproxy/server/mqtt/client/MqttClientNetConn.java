@@ -1,14 +1,12 @@
 package com.github.skywa04885.dxprotoproxy.server.mqtt.client;
 
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
-import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTSubscriptionConfig;
 import com.github.skywa04885.dxprotoproxy.server.net.NetOutConn;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.jetbrains.annotations.NotNull;
 
-import java.net.InetAddress;
 import java.net.Socket;
 
 public class MqttClientNetConn extends NetOutConn {
@@ -29,8 +27,7 @@ public class MqttClientNetConn extends NetOutConn {
      * @throws MqttException gets thrown if the subscribing fails.
      */
     private void subscribeMqttClientToTopics(@NotNull MqttClient mqttClient) throws MqttException {
-        mqttClient.subscribe((String[]) mqttClientConfig.subscriptionConfigs()
-                .stream().map(MQTTSubscriptionConfig::topic).toArray());
+        mqttClient.subscribe((String[]) mqttClientConfig.topics().toArray());
     }
 
     @Override

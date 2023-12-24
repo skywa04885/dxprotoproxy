@@ -15,7 +15,10 @@ import com.github.skywa04885.dxprotoproxy.configurator.http.apiEditor.ApiEditorW
 import com.github.skywa04885.dxprotoproxy.configurator.http.instanceEditor.InstanceEditorWindowFactory;
 import com.github.skywa04885.dxprotoproxy.configurator.http.primary.tree.*;
 import com.github.skywa04885.dxprotoproxy.configurator.http.responseEditor.ResponseEditorWindowFactory;
+import com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor.MQTTClientEditorController;
 import com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor.MQTTClientEditorWindowFactory;
+import com.github.skywa04885.dxprotoproxy.fx.ControllerFacade;
+import com.github.skywa04885.dxprotoproxy.fx.WindowFacade;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -35,10 +38,10 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class PrimaryController implements Initializable {
-    private @NotNull SimpleObjectProperty<File> configFile;
+public class PrimaryController extends ControllerFacade implements Initializable {
+    private final @NotNull SimpleObjectProperty<File> configFile;
 
-    private @NotNull SimpleObjectProperty<ConfigRoot> config;
+    private final @NotNull SimpleObjectProperty<ConfigRoot> config;
 
     @FXML
     public TreeView<IDXTreeItem> endpointsTreeView;
@@ -47,7 +50,6 @@ public class PrimaryController implements Initializable {
     public @FXML MenuItem saveConfigMenuItem;
 
     private final PrimaryTreeClipboard treeClipboard = new PrimaryTreeClipboard();
-    private @Nullable PrimaryWindow window;
     private final FileChooser fileChooser = new FileChooser();
 
     public PrimaryController() {
@@ -57,10 +59,6 @@ public class PrimaryController implements Initializable {
 
     public ConfigRoot configRoot() {
         return config.getValue();
-    }
-
-    public void setWindow(@NotNull PrimaryWindow window) {
-        this.window = window;
     }
 
     @FXML
@@ -207,7 +205,14 @@ public class PrimaryController implements Initializable {
 
             @Override
             public void createMqttClient(@NotNull MQTTClientsConfig mqttClientsConfig) {
-                MQTTClientEditorWindowFactory.create(mqttClientsConfig);
+                final @Nullable WindowFacade<MQTTClientEditorController> mqttEditorWindow =
+                    MQTTClientEditorWindowFactory.create(Objects.requireNonNull(window), mqttClientsConfig);
+
+                if (mqttEditorWindow == null) {
+                    return;
+                }
+
+                mqttEditorWindow.stage().show();
             }
 
             @Override
@@ -217,7 +222,14 @@ public class PrimaryController implements Initializable {
 
             @Override
             public void modifyMqttClient(@NotNull MQTTClientConfig mqttClientConfig) {
-                MQTTClientEditorWindowFactory.update(mqttClientConfig);
+                final @Nullable WindowFacade<MQTTClientEditorController> mqttEditorWindow =
+                        MQTTClientEditorWindowFactory.update(Objects.requireNonNull(window), mqttClientConfig);
+
+                if (mqttEditorWindow == null) {
+                    return;
+                }
+
+                mqttEditorWindow.stage().show();
             }
         };
 

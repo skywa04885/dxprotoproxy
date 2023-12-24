@@ -14,6 +14,7 @@ public class GlobalConstants {
     public static Pattern HOSTNAME_PATTERN = Pattern.compile("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}" +
             "(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
     public static Pattern templatePathPattern = Pattern.compile("^((/[a-zA-Z0-9_\\-.]+)|(/\\{[a-zA-Z0-9\\-.]+\\}))+/?$");
+    public static Pattern MQTT_TOPIC_PATTERN = Pattern.compile("^[a-zA-Z0-9/]+$");
 
     public static boolean isNameValid(String name) {
         return namePattern.matcher(name).matches();

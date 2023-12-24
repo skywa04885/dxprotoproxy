@@ -1,107 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Root>
     <Http>
-        <Apis>
-            <Api HttpVersion="HTTP/1.1" Name="Weather">
-                <Instances>
-                    <Instance Host="api.openweathermap.org1" Name="OpenWeatherMap1" Port="5000" Protocol="https"/>
-                    <Instance Host="api.openweathermap.org" Name="OpenWeatherMap" Port="443" Protocol="https"/>
-                    <Instance Host="api.openweathermap.org3" Name="OpenWeatherMap2" Port="443" Protocol="https"/>
-                </Instances>
-                <Endpoints>
-                    <Endpoint Name="Current">
-                        <Request Method="GET">
-                            <Uri Path="data/2.5/weather">
-                                <QueryParameters>
-                                    <Parameter Key="appid" Value="ddee795da0b9247de0e2c614267b0976"/>
-                                    <Parameter Key="lon"/>
-                                    <Parameter Key="units" Value="metric"/>
-                                    <Parameter Key="lang" Value="nl"/>
-                                    <Parameter Key="lat"/>
-                                </QueryParameters>
-                            </Uri>
-                            <Responses>
-                                <Response Code="401">
-                                    <Fields Format="JSON">
-                                        <Field Name="Message" Path="message"/>
-                                        <Field Name="Code" Path="cod"/>
-                                    </Fields>
-                                    <Headers/>
-                                </Response>
-                                <Response Code="500">
-                                    <Fields Format="JSON"/>
-                                    <Headers>
-                                        <Header Key="test" Name="123"/>
-                                    </Headers>
-                                </Response>
-                                <Response Code="200">
-                                    <Fields Format="JSON">
-                                        <Field Name="Timezone" Path="timezone"/>
-                                        <Field Name="Temperature" Path="main.temp"/>
-                                        <Field Name="Humidity" Path="main.humidity"/>
-                                        <Field Name="WindSpeed" Path="wind.speed"/>
-                                        <Field Name="Pressure" Path="main.pressure"/>
-                                    </Fields>
-                                    <Headers/>
-                                </Response>
-                            </Responses>
-                            <Fields Format="None"/>
-                            <Headers/>
-                        </Request>
-                    </Endpoint>
-                </Endpoints>
-            </Api>
-            <Api HttpVersion="HTTP/1.1" Name="Test">
-                <Instances/>
-                <Endpoints/>
-            </Api>
-            <Api HttpVersion="http/1.1" Name="Rien">
-                <Instances>
-                    <Instance Host="127.0.0.1" Name="Rien" Port="8080" Protocol="http"/>
-                </Instances>
-                <Endpoints>
-                    <Endpoint Name="Rien">
-                        <Request Method="GET">
-                            <Uri Path="test">
-                                <QueryParameters/>
-                            </Uri>
-                            <Responses>
-                                <Response Code="200">
-                                    <Fields Format="JSON">
-                                        <Field Name="Test" Path="test"/>
-                                    </Fields>
-                                    <Headers/>
-                                </Response>
-                            </Responses>
-                            <Fields Format="JSON"/>
-                            <Headers/>
-                        </Request>
-                    </Endpoint>
-                    <Endpoint Name="Test123">
-                        <Request Method="GET">
-                            <Uri Path="pad/{hello}">
-                                <QueryParameters/>
-                            </Uri>
-                            <Responses>
-                                <Response Code="400">
-                                    <Fields Format="JSON"/>
-                                    <Headers>
-                                        <Header Key="Hello" Name="H" Value="123"/>
-                                    </Headers>
-                                </Response>
-                            </Responses>
-                            <Fields Format="JSON"/>
-                            <Headers/>
-                        </Request>
-                    </Endpoint>
-                </Endpoints>
-            </Api>
-        </Apis>
+        <Apis/>
     </Http>
     <MQTT>
         <MQTTClients>
-            <MQTTClient BrokerHostname="127.0.0.1" BrokerPort="3000" ClientHostname="127.0.0.1" ClientPort="7000">
-                <MQTTSubscription>test</MQTTSubscription>
+            <MQTTClient BrokerHostname="127.0.0.1" BrokerPort="1883" ClientHostname="127.0.0.1" ClientPort="40000">
+                <Topic>ijioj</Topic>
             </MQTTClient>
         </MQTTClients>
     </MQTT>

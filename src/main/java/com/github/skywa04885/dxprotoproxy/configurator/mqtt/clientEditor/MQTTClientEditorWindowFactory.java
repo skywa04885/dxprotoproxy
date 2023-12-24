@@ -2,65 +2,95 @@ package com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor;
 
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import com.github.skywa04885.dxprotoproxy.fx.WindowFacade;
+import com.github.skywa04885.dxprotoproxy.fx.WindowFacadeFactory;
+import javafx.scene.control.Alert;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class MQTTClientEditorWindowFactory {
     /**
-     * Constructs a new client editor window with the given stage, controller and title.
-     * @param stage the stage.
-     * @param controller the controller.
-     * @param title the title.
-     * @return the constructed window.
+     * Creates a new mqtt client editor window that's meant for creation of configurations.
+     *
+     * @param parent            the parent window.
+     * @param mqttClientsConfig the clients-configuration.
+     * @return the created window.
+     * @throws IOException gets thrown if the resource could not be loaded.
      */
-    private static @NotNull MQTTClientEditorWindow createWindow(@NotNull MQTTClientEditorController controller,
-                                                                @NotNull String title) {
+    public static @Nullable WindowFacade<MQTTClientEditorController> create(
+            @NotNull WindowFacade<?> parent,
+            @NotNull MQTTClientsConfig mqttClientsConfig) {
+        // Attempts to create the window, shows an error otherwise.
         try {
-            final var loader = new FXMLLoader(MQTTClientEditorWindowFactory.class.getResource("view.fxml"));
-            loader.setController(controller);
+            // Creates the window.
+            final WindowFacade<MQTTClientEditorController> windowFacade = WindowFacadeFactory.createPopup(
+                    Objects.requireNonNull(MQTTClientEditorWindowFactory.class.getResource("view.fxml")),
+                    parent, "Create MQTT client", MQTTClientEditorController.class);
 
-            final var stage = new Stage();
-            stage.setTitle(title);
+            // Creates the callbacks.
+            final var submissionCallback = new MQTTClientEditorSubmissionCallback(mqttClientsConfig);
 
-            final var scene = new Scene(loader.load());
-            stage.setScene(scene);
-            stage.show();
+            // Sets the callbacks.
+            final var controller = windowFacade.controller();
+            controller.setSubmissionCallback(submissionCallback);
 
-            final var window = new MQTTClientEditorWindow(controller, stage);
-
-            controller.setWindow(window);
-
-            return window;
+            // Returns the constructed window.
+            return windowFacade;
         } catch (IOException ioException) {
-            throw new Error("Failed to load client editor view");
+            // Shows the alert indicating the failure of the loading.
+            final var alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Could not create mqtt client");
+            alert.setContentText("Failed to load the view for client editor creation window");
+            alert.show();
+
+            // Returns null.
+            return null;
         }
     }
 
-    public static MQTTClientEditorWindow create(@NotNull MQTTClientsConfig mqttClientsConfig) {
-        // Creates the controller.
-        final var controller = new MQTTClientEditorController(mqttClientsConfig,
-                new MQTTClientEditorSubmissionCallback(mqttClientsConfig),
-                new MQTTClientEditorValidationCallback());
+    /**
+     * Creates a new mqtt-client-editor window that's meant for the modification of an existing mqtt client.
+     *
+     * @param parent           the parent window.
+     * @param mqttClientConfig the client-configuration to modify.
+     * @return the created window.
+     */
 
-        // Returns the window.
-        return createWindow(controller, "Create client");
-    }
+    public static @Nullable WindowFacade<MQTTClientEditorController> update(
+            @NotNull WindowFacade<?> parent,
+            @NotNull MQTTClientConfig mqttClientConfig) {
+        // Attempts to create the window, shows an error otherwise.
+        try {
+            // Creates the window.
+            final WindowFacade<MQTTClientEditorController> windowFacade = WindowFacadeFactory.createPopup(
+                    Objects.requireNonNull(MQTTClientEditorWindowFactory.class.getResource("view.fxml")),
+                    parent, "Modify MQTT client", MQTTClientEditorController.class);
 
+            // Creates the callbacks.
+            final var submissionCallback = new MQTTClientEditorSubmissionCallback(mqttClientConfig);
 
-    public static MQTTClientEditorWindow update(@NotNull MQTTClientConfig mqttClientConfig) {
-        // Creates the controller.
-        final var controller = new MQTTClientEditorController(
-                mqttClientConfig,
-                new MQTTClientEditorSubmissionCallback(mqttClientConfig),
-                new MQTTClientEditorValidationCallback());
+            // Sets the callbacks.
+            final var controller = windowFacade.controller();
+            controller.setSubmissionCallback(submissionCallback);
 
-        // Returns the window.
-        return createWindow(controller, "Modify client");
+            // Set the field values.
+            controller.setFieldValues(mqttClientConfig);
+
+            // Returns the constructed window.
+            return windowFacade;
+        } catch (IOException ioException) {
+            // Shows the alert indicating the failure of the loading.
+            final var alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Could not update mqtt client");
+            alert.setContentText("Failed to load the view for client editor modifying window");
+            alert.show();
+
+            // Returns null.
+            return null;
+        }
     }
 
 }

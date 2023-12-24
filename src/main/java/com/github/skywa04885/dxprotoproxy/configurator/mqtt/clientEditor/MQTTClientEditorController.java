@@ -2,12 +2,14 @@ package com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor;
 
 import com.github.skywa04885.dxprotoproxy.GlobalConstants;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
-import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
+import com.github.skywa04885.dxprotoproxy.fx.ControllerFacade;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
+import net.synedra.validatorfx.TooltipWrapper;
+import net.synedra.validatorfx.Validator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,8 +17,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
-public class MQTTClientEditorController implements Initializable {
+public class MQTTClientEditorController extends ControllerFacade implements Initializable {
     /**
      * Static constants.
      */
@@ -34,75 +37,46 @@ public class MQTTClientEditorController implements Initializable {
     public @FXML TextField usernameTextField;
     public @FXML TextField passwordTextField;
     public @FXML TextField clientIdentifierTextField;
-    public @FXML ListView<MQTTClientEditorSubscription> subscriptionsListView;
+    public @FXML ListView<String> topicsListView;
     public @FXML Button cancelButton;
     public @FXML Button submitButton;
     /**
      * Member variables.
      */
-    private final @NotNull MQTTClientsConfig mqttClientsConfig;
-    private final @Nullable MQTTClientConfig mqttClientConfig;
-    private final @NotNull IMQTTClientEditorSubmissionCallback submissionCallback;
-    private final @NotNull IMQTTClientEditorValidationCallback validationCallback;
-    private @Nullable MQTTClientEditorWindow window;
+    final @NotNull Validator validator = new Validator();
+    private @Nullable IMQTTClientEditorSubmissionCallback submissionCallback;
 
-    /**
-     * Constructs a new mqtt client editor controller.
-     *
-     * @param mqttClientsConfig  the clients' config.
-     * @param mqttClientConfig   the client config for when an existing client needs to be modified.
-     * @param submissionCallback the submission callback.
-     * @param validationCallback the validation callback.
-     */
-    public MQTTClientEditorController(@NotNull MQTTClientsConfig mqttClientsConfig,
-                                      @Nullable MQTTClientConfig mqttClientConfig,
-                                      @NotNull IMQTTClientEditorSubmissionCallback submissionCallback,
-                                      @NotNull IMQTTClientEditorValidationCallback validationCallback) {
-        this.mqttClientsConfig = mqttClientsConfig;
-        this.mqttClientConfig = mqttClientConfig;
+    public void setSubmissionCallback(@NotNull IMQTTClientEditorSubmissionCallback submissionCallback) {
         this.submissionCallback = submissionCallback;
-        this.validationCallback = validationCallback;
-    }
-
-    public MQTTClientEditorController(@NotNull MQTTClientsConfig mqttClientsConfig,
-                                      @NotNull IMQTTClientEditorSubmissionCallback submissionCallback,
-                                      @NotNull IMQTTClientEditorValidationCallback validationCallback) {
-        this(mqttClientsConfig, null, submissionCallback, validationCallback);
-    }
-
-    public MQTTClientEditorController(@NotNull MQTTClientConfig mqttClientConfig,
-                                      @NotNull IMQTTClientEditorSubmissionCallback submissionCallback,
-                                      @NotNull IMQTTClientEditorValidationCallback validationCallback) {
-        this(Objects.requireNonNull(mqttClientConfig.parent()), mqttClientConfig, submissionCallback, validationCallback);
     }
 
     /**
-     * Sets the window.
-     * @param window the new window.
-     */
-    public void setWindow(@Nullable MQTTClientEditorWindow window) {
-        this.window = window;
-    }
-
-    /**
-     * Updates the subscriptions list view by removing blank ones and creating a blank one
+     * Updates the topics list view by removing blank ones and creating a blank one
      * at the end.
      */
-    private void updateSubscriptionsListView() {
-        // Removes all the blank subscriptions.
-        subscriptionsListView.getItems().removeIf(MQTTClientEditorSubscription::isBlank);
+    void updateTopicsListView() {
+        // Removes all the blank topics.
+        topicsListView.getItems().removeIf(String::isBlank);
 
-        // Adds a new blank subscription to the end (for when the user wants to create a new one).
-        subscriptionsListView.getItems().add(new MQTTClientEditorSubscription());
+        // Adds a new blank topic to the end (for when the user wants to create a new one).
+        topicsListView.getItems().add("");
     }
 
     /**
      * Initializes the client hostname text field.
      */
     private void initializeClientHostnameTextField() {
-        if (mqttClientConfig != null) {
-            clientHostnameTextField.setText(mqttClientConfig.clientHostname());
-        }
+        validator.createCheck()
+                .dependsOn("clientHostname", clientHostnameTextField.textProperty())
+                .withMethod(context -> {
+                    final @NotNull String clientHostname = context.get("clientHostname");
+
+                    if (!GlobalConstants.HOSTNAME_PATTERN.matcher(clientHostname).matches()) {
+                        context.error("Client hostname is not valid");
+                    }
+                })
+                .decorates(clientHostnameTextField)
+                .immediate();
     }
 
     /**
@@ -112,20 +86,23 @@ public class MQTTClientEditorController implements Initializable {
         // Sets the value factory.
         clientPortSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(GlobalConstants.PORT_MIN,
                 GlobalConstants.PORT_MAX, CLIENT_PORT_INITIAL_VALUE, PORT_STEP));
-
-        // Changes the port to the existing port if we're modifying an existing config.
-        if (mqttClientConfig != null) {
-            clientPortSpinner.getValueFactory().setValue(mqttClientConfig.clientPort());
-        }
     }
 
     /**
      * Initializes the broker hostname text field.
      */
     private void initializeBrokerHostnameTextField() {
-        if (mqttClientConfig != null) {
-            brokerHostnameTextField.setText(mqttClientConfig.brokerHostname());
-        }
+        validator.createCheck()
+                .dependsOn("brokerHostname", brokerHostnameTextField.textProperty())
+                .withMethod(context -> {
+                    final @NotNull String brokerHostname = context.get("brokerHostname");
+
+                    if (!GlobalConstants.HOSTNAME_PATTERN.matcher(brokerHostname).matches()) {
+                        context.error("Broker hostname is not valid");
+                    }
+                })
+                .decorates(brokerHostnameTextField)
+                .immediate();
     }
 
     /**
@@ -135,55 +112,52 @@ public class MQTTClientEditorController implements Initializable {
         // Sets the value factory.
         brokerPortSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(GlobalConstants.PORT_MIN,
                 GlobalConstants.PORT_MAX, BROKER_PORT_INITIAL_VALUE, PORT_STEP));
-
-        // Changes the port to the existing port if we're modifying an existing config.
-        if (mqttClientConfig != null) {
-            brokerPortSpinner.getValueFactory().setValue(mqttClientConfig.brokerPort());
-        }
     }
 
     /**
-     * Initializes the subscriptions list view.
+     * Initializes the topics list view.
      */
-    private void initializeSubscriptionsListView() {
-        // Set the cell factory.
-        subscriptionsListView.setCellFactory(listView -> new MQTTClientEditorSubscriptionsListViewCellFactory());
-        subscriptionsListView.setOnKeyPressed(key -> {
-            if (key.getCode() == KeyCode.ENTER) {
-                updateSubscriptionsListView();
-            }
-        });
+    private void initializeTopicsListView() {
+        // Sets the cell factory.
+        topicsListView.setCellFactory(t -> new MQTTClientEditorTopicListCell(this));
 
         // Make the list editable.
-        subscriptionsListView.setEditable(true);
+        topicsListView.setEditable(true);
 
-        // If we're modifying an existing mqtt client config,
-        //  insert its subscriptions into the list.
-        if (mqttClientConfig != null) {
-            subscriptionsListView.getItems().addAll(Objects.requireNonNull(mqttClientConfig)
-                    .subscriptionConfigs().stream().map(MQTTClientEditorSubscription::fromSubscriptionConfig).toList());
-        }
-
-        // Updates the subscription list view.
-        updateSubscriptionsListView();
+        // Updates the topics list view.
+        updateTopicsListView();
     }
 
     /**
      * Initializes the username text field.
      */
     private void initializeUsernameTextField() {
-        if (mqttClientConfig != null && mqttClientConfig.username() != null) {
-            usernameTextField.setText(mqttClientConfig.username());
-        }
+        validator.createCheck()
+                .dependsOn("username", usernameTextField.textProperty())
+                .withMethod(context -> {
+                    final @NotNull String username = context.get("username");
+
+                    if (username.isBlank()) {
+                        return;
+                    }
+
+                    if (!GlobalConstants.MQTT_USERNAME.matcher(username).matches()) {
+                        context.error("Username format is not valid");
+                    }
+                })
+                .decorates(usernameTextField)
+                .immediate();
     }
 
     /**
      * Initializes the password text field.
      */
     private void initializePasswordTextField() {
-        if (mqttClientConfig != null && mqttClientConfig.password() != null) {
-            passwordTextField.setText(mqttClientConfig.password());
-        }
+        validator.createCheck()
+                .dependsOn("password", passwordTextField.textProperty())
+                .withMethod(c -> {})
+                .decorates(passwordTextField)
+                .immediate();
     }
 
 
@@ -191,9 +165,21 @@ public class MQTTClientEditorController implements Initializable {
      * Initializes the client identifier text field.
      */
     private void initializeClientIdentifierTextField() {
-        if (mqttClientConfig != null && mqttClientConfig.clientIdentifier() != null) {
-            clientIdentifierTextField.setText(mqttClientConfig.clientIdentifier());
-        }
+        validator.createCheck()
+                .dependsOn("clientIdentifier", clientIdentifierTextField.textProperty())
+                .withMethod(context -> {
+                    final @NotNull String clientIdentifier = context.get("clientIdentifier");
+
+                    if (clientIdentifier.isBlank()) {
+                        return;
+                    }
+
+                    if (!GlobalConstants.MQTT_CLIENT_IDENTIFIER.matcher(clientIdentifier).matches()) {
+                        context.error("Client identifier format is not valid");
+                    }
+                })
+                .decorates(clientIdentifierTextField)
+                .immediate();
     }
 
     /**
@@ -201,7 +187,7 @@ public class MQTTClientEditorController implements Initializable {
      */
     private void cancel() {
         // Closes the window.
-        Objects.requireNonNull(window).getStage().close();
+        Objects.requireNonNull(window).close();
     }
 
     /**
@@ -226,40 +212,28 @@ public class MQTTClientEditorController implements Initializable {
     private void submit() {
         // Gets the fields.
         final @NotNull String clientHostname = clientHostnameTextField.getText();
-        final @NotNull Integer clientPort = Objects.requireNonNull(clientPortSpinner.getValue());
+        final int clientPort = Objects.requireNonNull(clientPortSpinner.getValue());
         final @NotNull String brokerHostname = brokerHostnameTextField.getText();
-        final @NotNull Integer brokerPort = Objects.requireNonNull(brokerPortSpinner.getValue());
+        final int brokerPort = Objects.requireNonNull(brokerPortSpinner.getValue());
         final @Nullable String username = usernameTextField.getText().isBlank()
                 ? null : usernameTextField.getText();
         final @Nullable String password = passwordTextField.getText().isBlank()
                 ? null : passwordTextField.getText();
         final @Nullable String clientIdentifier = clientIdentifierTextField.getText().isBlank()
                 ? null : clientIdentifierTextField.getText();
-        final @NotNull List<MQTTClientEditorSubscription> editorSubscriptionList = subscriptionsListView
+        final @NotNull List<String> topicsList = topicsListView
                 .getItems()
                 .stream()
-                .filter(MQTTClientEditorSubscription::isNotBlank)
-                .toList();
-
-        // Validates the fields.
-        final @Nullable String error = validationCallback.validate(clientHostname, clientPort, brokerHostname,
-                brokerPort, username, password, clientIdentifier, editorSubscriptionList);
-
-        // Show an alert containing the error if the contents aren't valid.
-        if (error != null) {
-            final var alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Invalid client configuration");
-            alert.setContentText(error);
-            alert.show();
-            return;
-        }
+                .filter(t -> !t.isBlank())
+                .collect(Collectors.toList());
 
         // Submits the fields.
+        assert submissionCallback != null;
         submissionCallback.submit(clientHostname, clientPort, brokerHostname,
-                brokerPort, username, password, clientIdentifier, editorSubscriptionList);
+                brokerPort, username, password, clientIdentifier, topicsList);
 
         // Closes the window.
-        Objects.requireNonNull(window).getStage().close();
+        Objects.requireNonNull(window).close();
     }
 
     /**
@@ -276,6 +250,45 @@ public class MQTTClientEditorController implements Initializable {
      */
     private void initializeSubmitButton() {
         submitButton.setOnAction(this::submitButtonActionEventHandler);
+
+        TooltipWrapper<Button> signUpWrapper = new TooltipWrapper<>(
+                submitButton,
+                validator.containsErrorsProperty(),
+                Bindings.concat("Cannot create mqtt client:\n", validator.createStringBinding())
+        );
+    }
+
+    public void setFieldValues(@NotNull MQTTClientConfig mqttClientConfig) {
+        // Set the client hostname.
+        clientHostnameTextField.setText(mqttClientConfig.clientHostname());
+
+        // Set the client port.
+        clientPortSpinner.getValueFactory().setValue(mqttClientConfig.clientPort());
+
+        // Set the broker hostname.
+        brokerHostnameTextField.setText(mqttClientConfig.brokerHostname());
+
+        // Set the port.
+        brokerPortSpinner.getValueFactory().setValue(mqttClientConfig.brokerPort());
+
+        // Set the topics value.
+        topicsListView.getItems().addAll(Objects.requireNonNull(mqttClientConfig).topics());
+        updateTopicsListView();
+
+        // Set the username value.
+        if (mqttClientConfig.username() != null) {
+            usernameTextField.setText(mqttClientConfig.username());
+        }
+
+        // Set the password value.
+        if (mqttClientConfig.password() != null) {
+            passwordTextField.setText(mqttClientConfig.password());
+        }
+
+        // Set the client identifier value.
+        if (mqttClientConfig.clientIdentifier() != null) {
+            clientIdentifierTextField.setText(mqttClientConfig.clientIdentifier());
+        }
     }
 
     @Override
@@ -287,7 +300,7 @@ public class MQTTClientEditorController implements Initializable {
         initializeUsernameTextField();
         initializePasswordTextField();
         initializeClientIdentifierTextField();
-        initializeSubscriptionsListView();
+        initializeTopicsListView();
         initializeCancelButton();
         initializeSubmitButton();
     }
