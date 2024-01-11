@@ -19,8 +19,8 @@ public class MyMqttConnectOptionsFactory {
         connectOptions.setAutomaticReconnect(true);
         connectOptions.setCleanSession(true);
         connectOptions.setConnectionTimeout(10);
-        connectOptions.setUserName(clientConfig.username());
-        connectOptions.setPassword(clientConfig.password().toCharArray());
+        if(clientConfig.username() != null) connectOptions.setUserName(clientConfig.username());
+        if (clientConfig.password() != null) connectOptions.setPassword(clientConfig.password().toCharArray());
 
         // Returns the built connection options.
         return connectOptions;

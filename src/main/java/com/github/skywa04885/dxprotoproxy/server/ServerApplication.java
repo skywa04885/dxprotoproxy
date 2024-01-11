@@ -3,6 +3,7 @@ package com.github.skywa04885.dxprotoproxy.server;
 import com.github.skywa04885.dxprotoproxy.config.ConfigReader;
 import com.github.skywa04885.dxprotoproxy.config.ConfigRoot;
 import com.github.skywa04885.dxprotoproxy.server.http.client.HttpClientNetService;
+import com.github.skywa04885.dxprotoproxy.server.mqtt.client.MqttClientNetService;
 import com.github.skywa04885.dxprotoproxy.server.net.NetServiceRegistry;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -23,6 +24,7 @@ public class ServerApplication extends Application {
 
         NetServiceRegistry netServiceRegistry = new NetServiceRegistry();
         netServiceRegistry.register(new HttpClientNetService(configRoot.httpConfig()));
+        netServiceRegistry.register(new MqttClientNetService(configRoot.mqttConfig()));
         netServiceRegistry.activateAll();
 
         ServerWindow serverWindow = ServerWindowFactory.create(stage, new ServerController(netServiceRegistry));
