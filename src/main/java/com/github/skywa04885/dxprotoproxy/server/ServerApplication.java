@@ -3,6 +3,8 @@ package com.github.skywa04885.dxprotoproxy.server;
 import com.github.skywa04885.dxprotoproxy.config.ConfigReader;
 import com.github.skywa04885.dxprotoproxy.config.ConfigRoot;
 import com.github.skywa04885.dxprotoproxy.server.http.client.HttpClientNetService;
+import com.github.skywa04885.dxprotoproxy.server.modbus.master.ModbusMasterNetService;
+import com.github.skywa04885.dxprotoproxy.server.modbus.slave.ModbusSlaveNetService;
 import com.github.skywa04885.dxprotoproxy.server.mqtt.client.MqttClientNetService;
 import com.github.skywa04885.dxprotoproxy.server.net.NetServiceRegistry;
 import javafx.application.Application;
@@ -25,6 +27,8 @@ public class ServerApplication extends Application {
         NetServiceRegistry netServiceRegistry = new NetServiceRegistry();
         netServiceRegistry.register(new HttpClientNetService(configRoot.httpConfig()));
         netServiceRegistry.register(new MqttClientNetService(configRoot.mqttConfig()));
+        netServiceRegistry.register(new ModbusMasterNetService(configRoot.modbusConfig()));
+        netServiceRegistry.register(new ModbusSlaveNetService(configRoot.modbusConfig()));
         netServiceRegistry.activateAll();
 
         ServerWindow serverWindow = ServerWindowFactory.create(stage, new ServerController(netServiceRegistry));

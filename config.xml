@@ -1,17 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Root>
     <Http>
-        <Apis/>
+        <Apis>
+            <Api HttpVersion="http/1.1" Name="test_api">
+                <Instances>
+                    <Instance Host="127.0.0.1" Name="test_instance" Port="8000" Protocol="http"/>
+                </Instances>
+                <Endpoints>
+                    <Endpoint Name="test_endpoint">
+                        <Request Method="GET">
+                            <Uri Path="test">
+                                <QueryParameters/>
+                            </Uri>
+                            <Responses>
+                                <Response Code="200">
+                                    <Fields Format="JSON"/>
+                                    <Headers/>
+                                </Response>
+                            </Responses>
+                            <Fields Format="JSON"/>
+                            <Headers>
+                                <Header Key="asd" Name="asd"/>
+                            </Headers>
+                        </Request>
+                    </Endpoint>
+                </Endpoints>
+            </Api>
+        </Apis>
     </Http>
     <MQTT>
-        <MQTTClients/>
+        <MQTTClients>
+            <MQTTClient BrokerHostname="127.0.0.1" BrokerPort="1883" ClientHostname="127.0.0.1" ClientPort="10000">
+                <Topic>ijioj</Topic>
+            </MQTTClient>
+        </MQTTClients>
     </MQTT>
     <Modbus>
         <ModbusSlaves>
-            <ModbusSlave ControllerAddress="127.0.0.1" ControllerPort="50000" MasterAddress="127.0.0.1" MasterPort="30000"/>
+            <ModbusSlave ControllerAddress="127.0.0.1" ControllerPort="50000" MasterAddress="0.0.0.0" MasterPort="30000"/>
         </ModbusSlaves>
         <ModbusMasters>
-            <ModbusMaster ListenAddress="0.0.0.0" ListenPort="30000" ServerAddress="127.0.0.1" ServerPort="40000"/>
+            <ModbusMaster ListenAddress="127.0.0.1" ListenPort="30000" ServerAddress="127.0.0.1" ServerPort="40000"/>
         </ModbusMasters>
     </Modbus>
 </Root>

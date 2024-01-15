@@ -20,6 +20,11 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     requires java.net.http;
     requires org.eclipse.paho.client.mqttv3;
     requires atlantafx.base;
+    requires modbus.master.tcp;
+    requires modbus.slave.tcp;
+    requires modbus.core;
+    requires io.netty.common;
+    requires io.netty.buffer;
 
     exports com.github.skywa04885.dxprotoproxy.http;
     exports com.github.skywa04885.dxprotoproxy;
@@ -57,4 +62,6 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     opens com.github.skywa04885.dxprotoproxy.configurator.http to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.fx;
     opens com.github.skywa04885.dxprotoproxy.fx to javafx.fxml;
+    exports com.github.skywa04885.dxprotoproxy.server.modbus;
+    opens com.github.skywa04885.dxprotoproxy.server.modbus to javafx.fxml;
 }
