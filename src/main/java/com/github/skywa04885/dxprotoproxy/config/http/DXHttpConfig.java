@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class DXHttpConfig implements IDXTreeItem {
+public class DXHttpConfig {
     public static final String TAG_NAME = "Http";
 
     private @Nullable ConfigRoot parent;
@@ -73,15 +73,5 @@ public class DXHttpConfig implements IDXTreeItem {
         element.appendChild(httpConfigApis.toElement(document));
 
         return element;
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/manufacturing_FILL0_wght400_GRAD0_opsz24.png"));
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return new SimpleStringProperty(null, null, "HTTP");
     }
 }

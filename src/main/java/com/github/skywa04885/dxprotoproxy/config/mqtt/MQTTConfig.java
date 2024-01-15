@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class MQTTConfig implements IDXTreeItem {
+public class MQTTConfig {
     /**
      * Static constants.
      */
@@ -119,15 +119,5 @@ public class MQTTConfig implements IDXTreeItem {
 
         // Returns the mqtt config.
         return mqttConfig;
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/mqtt.png"));
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return Bindings.createStringBinding(() -> "MQTT");
     }
 }

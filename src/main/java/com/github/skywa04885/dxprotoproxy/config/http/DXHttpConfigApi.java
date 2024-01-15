@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class DXHttpConfigApi implements IDXTreeItem {
+public class DXHttpConfigApi {
     public static final String TAG_NAME = "Api";
     public static final String NAME_ATTRIBUTE = "Name";
     public static final String HTTP_VERSION_ATTRIBUTE = "HttpVersion";
@@ -141,15 +141,5 @@ public class DXHttpConfigApi implements IDXTreeItem {
         return "Name: " + this.Name.getValue() + ", HTTP Version: " + this.HttpVersion.getValue()
                 + ", Number of instances: " + this.instances().children().size()
                 + ", Number of endpoints: " + this.endpoints().children().size();
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/network_node_FILL0_wght400_GRAD0_opsz24.png"));
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return Bindings.createStringBinding(() -> name() + " - " + httpVersion(), nameProperty(), httpVersionProperty());
     }
 }

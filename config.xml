@@ -4,10 +4,14 @@
         <Apis/>
     </Http>
     <MQTT>
-        <MQTTClients>
-            <MQTTClient BrokerHostname="127.0.0.1" BrokerPort="1883" ClientHostname="127.0.0.1" ClientPort="40000">
-                <Topic>ijioj</Topic>
-            </MQTTClient>
-        </MQTTClients>
+        <MQTTClients/>
     </MQTT>
+    <Modbus>
+        <ModbusSlaves>
+            <ModbusSlave ControllerAddress="127.0.0.1" ControllerPort="50000" MasterAddress="127.0.0.1" MasterPort="30000"/>
+        </ModbusSlaves>
+        <ModbusMasters>
+            <ModbusMaster ListenAddress="0.0.0.0" ListenPort="30000" ServerAddress="127.0.0.1" ServerPort="40000"/>
+        </ModbusMasters>
+    </Modbus>
 </Root>

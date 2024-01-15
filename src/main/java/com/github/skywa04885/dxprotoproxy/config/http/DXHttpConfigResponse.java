@@ -15,7 +15,7 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class DXHttpConfigResponse implements IDXTreeItem {
+public class DXHttpConfigResponse {
     public static final String ELEMENT_NAME = "Response";
     public static final String CODE_ATTRIBUTE_NAME = "Code";
 
@@ -103,16 +103,5 @@ public class DXHttpConfigResponse implements IDXTreeItem {
         }
 
         return new DXHttpConfigResponse(parent, code, configFields, headers);
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/reply.png"));
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return Bindings.createStringBinding(() -> Code.get() + " - " + Fields.format().name(), Code,
-                Fields.formatProperty());
     }
 }

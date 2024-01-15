@@ -40,7 +40,10 @@ module com.github.skywa04885.dxprotoproxy.dxprotoproxy {
     exports com.github.skywa04885.dxprotoproxy.configurator.http.responseEditor;
     exports com.github.skywa04885.dxprotoproxy.server.net;
     exports com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor to javafx.fxml;
+    exports com.github.skywa04885.dxprotoproxy.configurator.modbus.masterEditor to javafx.fxml;
+    exports com.github.skywa04885.dxprotoproxy.configurator.modbus.slaveEditor to javafx.fxml;
     exports com.github.skywa04885.dxprotoproxy.config.mqtt;
+    exports com.github.skywa04885.dxprotoproxy.config.modbus;
 
     exports com.github.skywa04885.dxprotoproxy.server;
     opens com.github.skywa04885.dxprotoproxy.server to javafx.fxml;

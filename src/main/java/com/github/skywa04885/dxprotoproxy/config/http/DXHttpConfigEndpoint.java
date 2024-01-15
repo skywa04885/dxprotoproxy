@@ -19,7 +19,7 @@ import org.w3c.dom.Element;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DXHttpConfigEndpoint implements IDXTreeItem {
+public class DXHttpConfigEndpoint {
     public static final String TAG_NAME = "Endpoint";
     public static final String NAME_ATTRIBUTE_NAME = "Name";
 
@@ -117,15 +117,5 @@ public class DXHttpConfigEndpoint implements IDXTreeItem {
                 element.appendChild(httpConfigRequest.toElement(document)));
 
         return element;
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/globe_FILL0_wght400_GRAD0_opsz24.png"));
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return Bindings.createStringBinding(this::name, nameProperty());
     }
 }

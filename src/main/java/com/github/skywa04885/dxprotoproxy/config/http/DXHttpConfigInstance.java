@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class DXHttpConfigInstance implements IDXTreeItem {
+public class DXHttpConfigInstance {
     public static final String TAG_NAME = "Instance";
     public static final String NAME_ATTRIBUTE_NAME = "Name";
     public static final String HOST_ATTRIBUTE_NAME = "Host";
@@ -127,15 +127,5 @@ public class DXHttpConfigInstance implements IDXTreeItem {
         element.setAttribute(PROTOCOL_ATTRIBUTE_NAME, protocol());
 
         return element;
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/dns_FILL0_wght400_GRAD0_opsz24.png"));
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return nameProperty();
     }
 }

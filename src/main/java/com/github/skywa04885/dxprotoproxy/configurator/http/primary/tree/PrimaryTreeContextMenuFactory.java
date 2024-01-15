@@ -3,6 +3,10 @@ package com.github.skywa04885.dxprotoproxy.configurator.http.primary.tree;
 import com.github.skywa04885.dxprotoproxy.IDXTreeItem;
 import com.github.skywa04885.dxprotoproxy.config.http.*;
 import com.github.skywa04885.dxprotoproxy.config.http.*;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusMasterConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusMastersConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusSlaveConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusSlavesConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
 import javafx.scene.control.*;
@@ -37,7 +41,7 @@ public class PrimaryTreeContextMenuFactory {
 
         final var modifyMenuItem = new MenuItem("Edit");
         final var deleteMenuItem = new MenuItem("Delete");
-        final var addRequestMenuItem = new MenuItem("Craete request");
+        final var addRequestMenuItem = new MenuItem("Create request");
 
         modifyMenuItem.setOnAction(event -> callbacks.modifyEndpoint(httpConfigEndpoint));
         addRequestMenuItem.setOnAction(event -> callbacks.createRequest(httpConfigEndpoint));
@@ -133,9 +137,8 @@ public class PrimaryTreeContextMenuFactory {
     }
 
     private ContextMenu createConfigContextMenu(DXHttpConfig httpConfig) {
-        final var contextMenu = new ContextMenu();
 
-        return contextMenu;
+        return new ContextMenu();
     }
 
     private @NotNull ContextMenu createMqttClientsConfigContextMenu(@NotNull MQTTClientsConfig mqttClientsConfig) {
@@ -164,6 +167,58 @@ public class PrimaryTreeContextMenuFactory {
         return contextMenu;
     }
 
+    private @NotNull ContextMenu create(@NotNull ModbusMastersConfig config) {
+        final var contextMenu = new ContextMenu();
+
+        final MenuItem createNewMenuItem = new MenuItem("Create master");
+
+        createNewMenuItem.setOnAction(actionEvent -> callbacks.createModbusMaster(config));
+
+        contextMenu.getItems().addAll(createNewMenuItem);
+
+        return contextMenu;
+    }
+
+    private @NotNull ContextMenu create(@NotNull ModbusMasterConfig modbusMasterConfig) {
+        final var contextMenu = new ContextMenu();
+
+        final MenuItem modifyMenuItem = new MenuItem("Modify");
+        final MenuItem deleteMenuItem = new MenuItem("Delete");
+
+        modifyMenuItem.setOnAction(actionEvent -> callbacks.modifyModbusMaster(modbusMasterConfig));
+        deleteMenuItem.setOnAction(actionEvent -> callbacks.deleteModbusMaster(modbusMasterConfig));
+
+        contextMenu.getItems().addAll(modifyMenuItem, deleteMenuItem);
+
+        return contextMenu;
+    }
+
+    private @NotNull ContextMenu create(@NotNull ModbusSlaveConfig modbusSlaveConfig) {
+        final var contextMenu = new ContextMenu();
+
+        final MenuItem modifyMenuItem = new MenuItem("Modify");
+        final MenuItem deleteMenuItem = new MenuItem("Delete");
+
+        modifyMenuItem.setOnAction(actionEvent -> callbacks.modifyModbusSlave(modbusSlaveConfig));
+        deleteMenuItem.setOnAction(actionEvent -> callbacks.deleteModbusSlave(modbusSlaveConfig));
+
+        contextMenu.getItems().addAll(modifyMenuItem, deleteMenuItem);
+
+        return contextMenu;
+    }
+
+    private @NotNull ContextMenu create(@NotNull ModbusSlavesConfig config) {
+        final var contextMenu = new ContextMenu();
+
+        final MenuItem createNewMenuItem = new MenuItem("Create slave");
+
+        createNewMenuItem.setOnAction(actionEvent -> callbacks.createModbusSlave(config));
+
+        contextMenu.getItems().addAll(createNewMenuItem);
+
+        return contextMenu;
+    }
+
     public ContextMenu getContextMenuForTreeCell(TreeCell<IDXTreeItem> treeCell) {
         final TreeItem<IDXTreeItem> treeItem = treeCell.getTreeItem();
 
@@ -171,7 +226,7 @@ public class PrimaryTreeContextMenuFactory {
             return new ContextMenu();
         }
 
-        final var value = treeItem.getValue();
+        final var value = treeItem.getValue().value();
 
         if (value instanceof DXHttpConfigEndpoint httpConfigEndpoint) {
             return createEndpointContextMenu(httpConfigEndpoint);
@@ -195,6 +250,14 @@ public class PrimaryTreeContextMenuFactory {
             return createMqttClientsConfigContextMenu(mqttClientsConfig);
         } else if (value instanceof MQTTClientConfig mqttClientConfig) {
             return createMqttClientConfigContextMenu(mqttClientConfig);
+        } else if (value instanceof ModbusMastersConfig config) {
+            return create(config);
+        } else if (value instanceof ModbusSlavesConfig config) {
+            return create(config);
+        }else if (value instanceof ModbusMasterConfig modbusMasterConfig) {
+            return create(modbusMasterConfig);
+        }else if (value instanceof ModbusSlaveConfig modbusSlaveConfig) {
+            return create(modbusSlaveConfig);
         }
 
         return createEmptyContextMenu(treeCell);

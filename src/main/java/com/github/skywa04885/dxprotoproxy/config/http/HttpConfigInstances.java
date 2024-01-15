@@ -15,7 +15,7 @@ import org.w3c.dom.Element;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpConfigInstances implements IDXTreeItem {
+public class HttpConfigInstances {
     public static final String TAG_NAME = "Instances";
 
     private @Nullable DXHttpConfigApi parent;
@@ -78,15 +78,5 @@ public class HttpConfigInstances implements IDXTreeItem {
                 element.appendChild(configInstance.toElement(document)));
 
         return element;
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return null;
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return Bindings.createStringBinding(() -> "Instances");
     }
 }

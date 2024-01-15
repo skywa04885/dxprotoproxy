@@ -20,7 +20,7 @@ import org.w3c.dom.Element;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MQTTClientConfig implements IDXTreeItem {
+public class MQTTClientConfig {
     /**
      * Static constants.
      */
@@ -428,27 +428,5 @@ public class MQTTClientConfig implements IDXTreeItem {
         return new MQTTClientConfig(clientHostname, clientPort, brokerHostname,
                 brokerPort, username, password,
                 clientIdentifier, topics, null);
-    }
-
-    /**
-     * Gets the graphic for this config tree item.
-     *
-     * @return the graphic node.
-     */
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/mqtt_client.png"));
-    }
-
-    /**
-     * Generates the text that's being used if this config element is put in a tree.
-     *
-     * @return the text.
-     */
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return Bindings.createStringBinding(() -> clientHostname() + ":" + clientPort() + " to " + brokerHostname()
-                        + ":" + brokerPort(), clientHostnameProperty(), clientPortProperty(), brokerHostnameProperty(),
-                brokerPortProperty());
     }
 }

@@ -1,6 +1,10 @@
 package com.github.skywa04885.dxprotoproxy.configurator.http.primary;
 
 import com.github.skywa04885.dxprotoproxy.config.http.*;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusMasterConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusMastersConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusSlaveConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusSlavesConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
 import com.github.skywa04885.dxprotoproxy.configurator.http.endpointEditor.EndpointEditorWindowFactory;
@@ -10,11 +14,13 @@ import com.github.skywa04885.dxprotoproxy.IDXTreeItem;
 import com.github.skywa04885.dxprotoproxy.config.ConfigReader;
 import com.github.skywa04885.dxprotoproxy.config.ConfigRoot;
 import com.github.skywa04885.dxprotoproxy.config.ConfigWriter;
-import com.github.skywa04885.dxprotoproxy.config.http.*;
 import com.github.skywa04885.dxprotoproxy.configurator.http.apiEditor.ApiEditorWindowFactory;
 import com.github.skywa04885.dxprotoproxy.configurator.http.instanceEditor.InstanceEditorWindowFactory;
-import com.github.skywa04885.dxprotoproxy.configurator.http.primary.tree.*;
 import com.github.skywa04885.dxprotoproxy.configurator.http.responseEditor.ResponseEditorWindowFactory;
+import com.github.skywa04885.dxprotoproxy.configurator.modbus.masterEditor.ModbusMasterEditorController;
+import com.github.skywa04885.dxprotoproxy.configurator.modbus.masterEditor.ModbusMasterEditorWindowFactory;
+import com.github.skywa04885.dxprotoproxy.configurator.modbus.slaveEditor.ModbusSlaveEditorController;
+import com.github.skywa04885.dxprotoproxy.configurator.modbus.slaveEditor.ModbusSlaveEditorWindowFactory;
 import com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor.MQTTClientEditorController;
 import com.github.skywa04885.dxprotoproxy.configurator.mqtt.clientEditor.MQTTClientEditorWindowFactory;
 import com.github.skywa04885.dxprotoproxy.fx.ControllerFacade;
@@ -230,6 +236,57 @@ public class PrimaryController extends ControllerFacade implements Initializable
                 }
 
                 mqttEditorWindow.stage().show();
+            }
+
+            @Override
+            public void createModbusSlave(@NotNull ModbusSlavesConfig modbusSlavesConfig) {
+                final @Nullable WindowFacade<ModbusSlaveEditorController> mqttEditorWindow =
+                        ModbusSlaveEditorWindowFactory.create(Objects.requireNonNull(window), modbusSlavesConfig);
+
+                if (mqttEditorWindow == null) return;
+
+                mqttEditorWindow.stage().show();
+            }
+
+            @Override
+            public void createModbusMaster(@NotNull ModbusMastersConfig config) {
+                final @Nullable WindowFacade<ModbusMasterEditorController> mqttEditorWindow =
+                        ModbusMasterEditorWindowFactory.create(Objects.requireNonNull(window), config);
+
+                if (mqttEditorWindow == null) return;
+
+                mqttEditorWindow.stage().show();
+            }
+
+            @Override
+            public void modifyModbusMaster(@NotNull ModbusMasterConfig modbusMasterConfig) {
+                final @Nullable WindowFacade<ModbusMasterEditorController> mqttEditorWindow =
+                        ModbusMasterEditorWindowFactory.update(Objects.requireNonNull(window), modbusMasterConfig);
+
+                if (mqttEditorWindow == null) return;
+
+                mqttEditorWindow.stage().show();
+            }
+
+            @Override
+            public void deleteModbusMaster(@NotNull ModbusMasterConfig modbusMasterConfig) {
+                Objects.requireNonNull(modbusMasterConfig.parent()).children().remove(modbusMasterConfig);
+            }
+
+            @Override
+            public void modifyModbusSlave(@NotNull ModbusSlaveConfig modbusSlaveConfig) {
+                final @Nullable WindowFacade<ModbusSlaveEditorController> mqttEditorWindow =
+                        ModbusSlaveEditorWindowFactory.update(Objects.requireNonNull(window), modbusSlaveConfig);
+
+                if (mqttEditorWindow == null) return;
+
+                mqttEditorWindow.stage().show();
+            }
+
+            @Override
+            public void deleteModbusSlave(@NotNull ModbusSlaveConfig modbusSlaveConfig) {
+                Objects.requireNonNull(modbusSlaveConfig.parent()).children().remove(modbusSlaveConfig);
+
             }
         };
 

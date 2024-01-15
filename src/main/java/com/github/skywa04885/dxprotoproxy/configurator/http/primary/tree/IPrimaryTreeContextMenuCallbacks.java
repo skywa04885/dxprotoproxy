@@ -2,6 +2,10 @@ package com.github.skywa04885.dxprotoproxy.configurator.http.primary.tree;
 
 import com.github.skywa04885.dxprotoproxy.config.http.*;
 import com.github.skywa04885.dxprotoproxy.config.http.*;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusMasterConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusMastersConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusSlaveConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusSlavesConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTClientsConfig;
 import org.jetbrains.annotations.NotNull;
@@ -87,4 +91,24 @@ public interface IPrimaryTreeContextMenuCallbacks {
      * @param mqttClientConfig the mqtt client config that needs to be modified.
      */
     void modifyMqttClient(@NotNull MQTTClientConfig mqttClientConfig);
+
+    /**
+     * Gets called when a new modbus slave should be created.
+     * @param config the slaves-config.
+     */
+    void createModbusSlave(@NotNull ModbusSlavesConfig config);
+
+    /**
+     * Gets called when an ew modbus master should be created.
+     * @param config the masters-config.
+     */
+    void createModbusMaster(@NotNull ModbusMastersConfig config);
+
+    void modifyModbusMaster(@NotNull ModbusMasterConfig modbusMasterConfig);
+
+    void deleteModbusMaster(@NotNull ModbusMasterConfig modbusMasterConfig);
+
+    void modifyModbusSlave(@NotNull ModbusSlaveConfig modbusMasterConfig);
+
+    void deleteModbusSlave(@NotNull ModbusSlaveConfig modbusMasterConfig);
 }

@@ -7,4 +7,6 @@ public interface IDXTreeItem {
     Node treeItemGraphic();
 
     ObservableValue<String> treeItemText();
+
+    Object value();
 }

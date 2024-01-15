@@ -17,7 +17,7 @@ import org.w3c.dom.Element;
 import java.util.HashMap;
 import java.util.List;
 
-public class DXHttpConfigRequest implements IDXTreeItem {
+public class DXHttpConfigRequest {
     public static final String ELEMENT_TAG_NAME = "Request";
     public static final String METHOD_ATTRIBUTE_NAME = "Method";
 
@@ -146,15 +146,5 @@ public class DXHttpConfigRequest implements IDXTreeItem {
         element.appendChild(headers().toElement(document));
 
         return element;
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/send.png"));
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return Bindings.createStringBinding(() -> method().label() + " " + uri().path().stringOfSegments(), methodProperty(), uri().pathProperty());
     }
 }

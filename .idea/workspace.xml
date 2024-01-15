@@ -5,17 +5,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55238971-0895-45d2-97e0-6105313dd9bc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MqttClientMessageHeader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MqttClientMessageHeaderReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MqttClientMessageHeaderWriter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MqttClientNetConnMqttCallback.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MqttClientNetService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/modbus/ModbusConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/modbus/ModbusMasterConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/modbus/ModbusMastersConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/modbus/ModbusSlaveConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/modbus/ModbusSlavesConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/masterEditor/IModbusMasterEditorSubmissionCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/masterEditor/ModbusMasterEditorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/masterEditor/ModbusMasterEditorSubmissionCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/masterEditor/ModbusMasterEditorWindowFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/slaveEditor/IModbusSlaveEditorSubmissionCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/slaveEditor/ModbusSlaveEditorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/slaveEditor/ModbusSlaveEditorSubmissionCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/slaveEditor/ModbusSlaveEditorWindowFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/configurator/modbus/masterEditor/view.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/ServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/ServerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MqttClientNetConn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MqttClientNetConn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MyMqttConnectOptionsFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MyMqttConnectOptionsFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/net/NetOutConn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/net/NetOutConn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/net/NetOutService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/net/NetOutService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2190be82-5cfa-4a55-9e6c-c4bff5900dee-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/3bae20d7-c974-43fb-9490-5f274620424a-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/43064d72-d636-4f97-b3c6-65d166fa7e36-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/47c36857-e6fa-4e56-85e3-3ac6b00909c9-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/57dd1b41-5151-42d1-9a11-f48a23b3b8ef-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/67636953-c26a-4bd1-8e26-3da57e1237d8-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/79e0b271-8fc1-42ce-9d1b-03729a2a2fa7-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/b6a8330a-5802-453d-bbd5-c81d40439eeb-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/c552d8d6-09f6-4c2c-ab71-ea218bad4154-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cb7c158d-0241-4319-9467-f0a85c6aa213-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cfdf65f5-5568-4ece-be88-20322b553774-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/f3db5d67-edb4-437c-afb0-617438208d73-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/f42712e7-135c-47af-a7b8-04a7a14ea1c3-tcp1270011883/.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/IDXTreeItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/IDXTreeItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/ConfigRoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/ConfigRoot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigEndpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigEndpoint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/DXHttpConfigResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/HttpConfigApis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/HttpConfigApis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/HttpConfigEndpoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/HttpConfigEndpoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/HttpConfigInstances.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/http/HttpConfigInstances.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/mqtt/MQTTClientConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/mqtt/MQTTClientConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/mqtt/MQTTClientsConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/mqtt/MQTTClientsConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/mqtt/MQTTConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/config/mqtt/MQTTConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/http/primary/PrimaryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/http/primary/PrimaryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/http/primary/tree/IPrimaryTreeContextMenuCallbacks.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/http/primary/tree/IPrimaryTreeContextMenuCallbacks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/http/primary/tree/PrimaryTreeContextMenuFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/http/primary/tree/PrimaryTreeContextMenuFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/http/primary/tree/PrimaryTreeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/http/primary/tree/PrimaryTreeFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MyMqttClientFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/mqtt/client/MyMqttClientFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/net/NetConn.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/net/NetInConn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/server/net/NetInConn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,9 +69,9 @@
         <option value="Record" />
         <option value="JavaScript File" />
         <option value="Enum" />
-        <option value="FxmlFile" />
         <option value="package-info" />
         <option value="module-info" />
+        <option value="FxmlFile" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -60,7 +100,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last.edited.regexp&quot;: &quot;Sample Text&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/luker/Projecten/Duflex/dxprotoproxy/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/configurator/icons&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/luker/Projecten/Duflex/dxprotoproxy/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/slaveEditor&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -75,11 +115,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/configurator/modbus/slaveEditor" />
       <recent name="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/configurator/icons" />
       <recent name="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http/configurator/images" />
       <recent name="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/dxprotoproxy/configurator/icons" />
       <recent name="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/github/skywa04885/dxprotoproxy/dxprotoproxy/http" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/com/github/skywa04885/dxprotoproxy/configurator/icons" />
@@ -96,12 +136,14 @@
       <recent name="com.github.skywa04885.dxprotoproxy.dxprotoproxy" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.github.skywa04885.dxprotoproxy.configurator.modbus.masterEditor" />
+      <recent name="com.github.skywa04885.dxprotoproxy.config.modbus" />
       <recent name="com.github.skywa04885.dxprotoproxy.dxprotoproxy.http.configurator.requestEditor" />
       <recent name="com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator.http.endpointEditor" />
       <recent name="com.github.skywa04885.dxprotoproxy.dxprotoproxy.configurator" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ServerApplication">
+  <component name="RunManager" selected="Application.com.github.skywa04885.dxprotoproxy.configurator.ConfiguratorApplication">
     <configuration name="ServerApplication" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.github.skywa04885.dxprotoproxy.server.ServerApplication" />
       <module name="dxprotoproxy" />
@@ -172,7 +214,9 @@
       <workItem from="1703144421563" duration="23497000" />
       <workItem from="1703335096132" duration="10977000" />
       <workItem from="1703417908837" duration="6010000" />
-      <workItem from="1704978913691" duration="5215000" />
+      <workItem from="1704978913691" duration="10037000" />
+      <workItem from="1705303208796" duration="7193000" />
+      <workItem from="1705310850612" duration="945000" />
     </task>
     <servers />
   </component>

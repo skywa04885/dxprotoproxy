@@ -24,6 +24,6 @@ public class MyMqttClientFactory {
                 : UUID.randomUUID().toString();
 
         // Creates the mqtt client.
-        return new MqttClient(connectionUri, clientIdentifier);
+        return new MqttClient(connectionUri, clientIdentifier, null);
     }
 }

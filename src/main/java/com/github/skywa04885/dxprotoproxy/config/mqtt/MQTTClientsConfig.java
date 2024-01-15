@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * This class represents the mqtt clients element in the config.
  */
-public class MQTTClientsConfig implements IDXTreeItem {
+public class MQTTClientsConfig {
     /**
      * Static constants.
      */
@@ -152,15 +152,5 @@ public class MQTTClientsConfig implements IDXTreeItem {
 
         // Returns the constructed clients config.
         return mqttClientsConfig;
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/mqtt_clients.png"));
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return Bindings.createStringBinding(() -> "Clients");
     }
 }

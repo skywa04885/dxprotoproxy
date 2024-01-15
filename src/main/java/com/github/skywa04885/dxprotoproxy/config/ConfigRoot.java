@@ -1,6 +1,7 @@
 package com.github.skywa04885.dxprotoproxy.config;
 
 import com.github.skywa04885.dxprotoproxy.config.http.DXHttpConfig;
+import com.github.skywa04885.dxprotoproxy.config.modbus.ModbusConfig;
 import com.github.skywa04885.dxprotoproxy.config.mqtt.MQTTConfig;
 import com.github.skywa04885.dxprotoproxy.configurator.ConfiguratorImageCache;
 import com.github.skywa04885.dxprotoproxy.DXDomUtils;
@@ -15,19 +16,22 @@ import org.w3c.dom.Element;
 
 import java.util.List;
 
-public class ConfigRoot implements IDXTreeItem {
+public class ConfigRoot {
     public static final String TAG_NAME = "Root";
 
     private final @NotNull DXHttpConfig httpConfig;
     private final @NotNull MQTTConfig mqttConfig;
+    private final @NotNull ModbusConfig modbusConfig;
 
-    public ConfigRoot(@NotNull DXHttpConfig httpConfig, @NotNull MQTTConfig mqttConfig) {
+    public ConfigRoot(@NotNull DXHttpConfig httpConfig, @NotNull MQTTConfig mqttConfig,
+                      @NotNull ModbusConfig modbusConfig) {
         this.httpConfig = httpConfig;
         this.mqttConfig = mqttConfig;
+        this.modbusConfig = modbusConfig;
     }
 
     public ConfigRoot() {
-        this(new DXHttpConfig(), new MQTTConfig());
+        this(new DXHttpConfig(), new MQTTConfig(), new ModbusConfig());
     }
 
     public @NotNull DXHttpConfig httpConfig() {
@@ -40,6 +44,10 @@ public class ConfigRoot implements IDXTreeItem {
      */
     public @NotNull MQTTConfig mqttConfig() {
         return mqttConfig;
+    }
+
+    public @NotNull ModbusConfig modbusConfig() {
+        return modbusConfig;
     }
 
     private static @NotNull DXHttpConfig httpConfigFromElement(@NotNull Element element) {
@@ -75,11 +83,22 @@ public class ConfigRoot implements IDXTreeItem {
         return MQTTConfig.fromElement(mqttConfigElements.get(0));
     }
 
+    private static @NotNull ModbusConfig modbusConfigFromElement(@NotNull Element element) {
+        final @NotNull List<Element> elements = DXDomUtils.GetChildElementsWithTagName(element,
+                ModbusConfig.ELEMENT_TAG_NAME);
+
+        if (elements.isEmpty()) throw new RuntimeException("Modbus config missing");
+        else if (elements.size() > 1) throw new RuntimeException("Too many modbus configs present");
+
+        return ModbusConfig.fromElement(elements.get(0));
+    }
+
     public static @NotNull ConfigRoot fromElement(@NotNull Element element) {
         final @NotNull DXHttpConfig httpConfig = httpConfigFromElement(element);
         final @NotNull MQTTConfig mqttConfig = mqttConfigFromElement(element);
+        final @NotNull ModbusConfig modbusConfig = modbusConfigFromElement(element);
 
-        final var configRoot = new ConfigRoot(httpConfig, mqttConfig);
+        final var configRoot = new ConfigRoot(httpConfig, mqttConfig, modbusConfig);
 
         httpConfig.setParent(configRoot);
         mqttConfig.setParent(configRoot);
@@ -92,17 +111,8 @@ public class ConfigRoot implements IDXTreeItem {
 
         element.appendChild(httpConfig.toElement(document));
         element.appendChild(mqttConfig.toElement(document));
+        element.appendChild(modbusConfig.toElement(document));
 
         return element;
-    }
-
-    @Override
-    public Node treeItemGraphic() {
-        return new ImageView(ConfiguratorImageCache.instance().read("icons/settings.png"));
-    }
-
-    @Override
-    public ObservableValue<String> treeItemText() {
-        return Bindings.createStringBinding(() -> "Config");
     }
 }
